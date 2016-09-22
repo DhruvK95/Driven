@@ -1,0 +1,281 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<div class="container">
+    <h1>Documentation</h1>
+    <hr>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <h2>Brief description</h2>
+        <hr>
+        This SOAP service provides 3 different search functions, which search the Australian Government released
+        PSMA
+        Geocoded National Address File (G-NAF) Database.
+        <h2>Link to the WSDL document of the service</h2>
+        <hr>
+        <a href="http://localhost:8080/GNAFService/GNAFAddressingService?wsdl">http://localhost:8080/GNAFService/GNAFAddressingService?wsdl</a>
+
+        <br>
+        <h2>addressExistsInFile( )</h2>
+        <hr>
+        <blockquote>
+        The input for this is comma separated and follows the format <code>street number,street name,suburb name,
+        state,postcode</code>.
+
+        <h3 style="color:#4b73f9">Input 1</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Field Name</th>
+                <th>Type</th>
+                <th>Value</th>
+
+            </tr>
+            <tr>
+                <td>StreetNumber</td>
+                <td>String</td>
+                <td><code>17,billabong street,lawson,act,2617</code></td>
+            </tr>
+        </table>
+        </table>
+        <h3 style="color:#4b73f9">Output 1</h3>
+        <h4><code>Found Address: 17,billabong street,lawson,act,2617</code></h4>
+        <hr>
+
+        <h3 style="color:#4b73f9">Input 2</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Field Name</th>
+                <th>Type</th>
+                <th>Value</th>
+
+            </tr>
+            <tr>
+                <td>StreetNumber</td>
+                <td>String</td>
+                <td><code>4570,BLACK STUMP WAY,COOLAH,NSW,2843</code></td>
+            </tr>
+        </table>
+        </table>
+        <h3 style="color:#4b73f9">Output 2</h3>
+        <h4><code>Found Address: 4570,BLACK STUMP WAY,COOLAH,NSW,2843</code></h4>
+        <hr>
+
+        </blockquote>
+        <br>
+        <h2>similarAddressesInFile( )</h2>
+        <hr>
+        <blockquote>Street Number and Street Name are REQUIRED. SOAP Faults are presented if they are not present.
+        <h3 style="color:#4b73f9">Input 1</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Field Name</th>
+                <th>Type</th>
+                <th>Value</th>
+
+            </tr>
+            <tr>
+                <td>StreetNumber</td>
+                <td>String</td>
+                <td><code>1</code></td>
+            </tr>
+            <tr>
+                <td>StreetName</td>
+                <td>String</td>
+                <td><code>C</code></td>
+            </tr>
+            <tr>
+                <td>SuburbName</td>
+                <td>String</td>
+                <td><code>Mascot</code></td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>String</td>
+                <td><code>NSW</code></td>
+            </tr>
+            <tr>
+                <td>Postcode</td>
+                <td>String</td>
+                <td><code>2</code></td>
+            </tr>
+        </table>
+        <h3 style="color:#4b73f9">Output 1</h3>
+        <h4><code>
+        SimilarAddress1 (string):	1,CARINYA AVENUE,MASCOT,NSW,2020<br>
+        SimilarAddress2 (string):	13,CARINYA AVENUE,MASCOT,NSW,2020<br>
+        SimilarAddress3 (string):	21,CARINYA AVENUE,MASCOT,NSW,2020<br>
+        </code></h4>
+        <hr>
+        <h3 style="color:#4b73f9">Input 2</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Field Name</th>
+                <th>Type</th>
+                <th>Value</th>
+
+            </tr>
+            <tr>
+                <td>StreetNumber</td>
+                <td>String</td>
+                <td><code>1</code></td>
+            </tr>
+            <tr>
+                <td>StreetName</td>
+                <td>String</td>
+                <td><code>T</code></td>
+            </tr>
+            <tr>
+                <td>SuburbName</td>
+                <td>String</td>
+                <td><code>T</code></td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>String</td>
+                <td><code>ACT</code></td>
+            </tr>
+            <tr>
+                <td>Postcode</td>
+                <td>String</td>
+                <td><code>2</code></td>
+            </tr>
+        </table>
+        <h3 style="color:#4b73f9">Output 2</h3>
+        <h4><code>
+            SimilarAddress1 (string):	1,TRUMPER STREET,HOLT,ACT,2615<br>
+            SimilarAddress2 (string):	18,TRUMPER STREET,HOLT,ACT,2615<br>
+            SimilarAddress3 (string):	3,TRUMPER STREET,HOLT,ACT,2615<br>
+        </code></h4>
+            <hr>
+            <h3 style="color:#4b73f9">Input 3</h3>
+            <table class="table table-striped">
+                <tr>
+                    <th>Field Name</th>
+                    <th>Type</th>
+                    <th>Value</th>
+
+                </tr>
+                <tr>
+                    <td>StreetNumber</td>
+                    <td>String</td>
+                    <td><code>1</code></td>
+                </tr>
+                <tr>
+                    <td>StreetName</td>
+                    <td>String</td>
+                    <td><code>tallowood</code></td>
+                </tr>
+                <tr>
+                    <td>SuburbName</td>
+                    <td>String</td>
+                    <td><code>EMPTY</code></td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>String</td>
+                    <td><code>EMPTY</code></td>
+                </tr>
+                <tr>
+                    <td>Postcode</td>
+                    <td>String</td>
+                    <td><code>EMPTY</code></td>
+                </tr>
+            </table>
+            <h3 style="color:#4b73f9">Output 3</h3>
+            <h4><code>
+                SimilarAddress1 (string):	1,TALLOWOOD DRIVE,NULKABA,NSW,2325<br>
+                SimilarAddress2 (string):	13,TALLOWOOD LANE,TUCABIA,NSW,2462<br>
+                SimilarAddress3 (string):	15,TALLOWOOD LANE,TUCABIA,NSW,2462<br>
+            </code></h4>
+        <hr>
+        </blockquote>
+
+        <br>
+        <h2>returnPostcodeInfo( )</h2>
+        <hr>
+        <blockquote>
+        <h3 style="color:#4b73f9">Input 1</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Field Name</th>
+                <th>Type</th>
+                <th>Value</th>
+
+            </tr>
+            <tr>
+                <td>SuburbName</td>
+                <td>String</td>
+                <td><code>Fadden</code></td>
+            </tr>
+            <tr>
+                <td>StateName</td>
+                <td>String</td>
+                <td><code>ACT</code></td>
+            </tr>
+        </table>
+        <h3 style="color:#4b73f9">Output 1</h3>
+        <h4><code>2904</code></h4>
+        <hr>
+        <h3 style="color:#4b73f9">Input 2</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Field Name</th>
+                <th>Type</th>
+                <th>Value</th>
+
+            </tr>
+            <tr>
+                <td>SuburbName</td>
+                <td>String</td>
+                <td><code>Macot</code></td>
+            </tr>
+            <tr>
+                <td>StateName</td>
+                <td>String</td>
+                <td><code>NSW</code></td>
+            </tr>
+        </table>
+        <h3 style="color:#4b73f9">Output 2</h3>
+        <h4><code>2020</code></h4>
+            <hr>
+        <br>
+        </blockquote>
+        <h2>Errors</h2>
+        <hr>
+        <table class="table table-striped">
+            <tr>
+                <th>Error Code</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>ERROR 0</code></td>
+                <td>There are no entries are found in the Database corresponding to the input.
+                </td>
+            </tr>
+            <tr>
+                <td><code>ERROR 1</code></td>
+                <td>Mandatory input fields are empty
+                </td>
+            </tr>
+            <tr>
+                <td><code>ERROR 2</code></td>
+                <td>Input values are not the right format. (e.g., postcodes are numbers, state names are characters, etc.)
+                </td>
+            </tr>
+        </table>
+
+        <div class="col-sm-1">
+        </div>
+        <br>
+        <hr>
+        <footer class="pull-right">
+            COMP9322 - Assignment 1 by Dhruv Kaushik (z5017483)
+        </footer>
+    </div>
+</div>

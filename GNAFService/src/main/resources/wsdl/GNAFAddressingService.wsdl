@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://GNAFAddressingService.soacourse.unsw.edu.au"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  name="TopDownSimpleService" targetNamespace="http://GNAFAddressingService.soacourse.unsw.edu.au">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://GNAFAddressingService.soacourse.unsw.edu.au">
+            <!-- Input and Outputs for each function -->
+            <xsd:element name="addressExistsInFileRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="FullAddress" nillable="false" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="addressExistsInFileResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="MatchingAddress" nillable="false" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="similarAddressesInFileRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- Sequence elements define the name of each Input/Output field -->
+                        <xsd:element name="StreetNumber" nillable="false" type="xsd:string"/>
+                        <xsd:element name="StreetName" nillable="false" type="xsd:string"/>
+                        <xsd:element name="SuburbName" nillable="false" type="xsd:string"/>
+                        <xsd:element name="State" nillable="false" type="xsd:string"/>
+                        <xsd:element name="Postcode" nillable="false" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="similarAddressesInFileResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="SimilarAddress1" nillable="false" type="xsd:string"/>
+                        <xsd:element name="SimilarAddress2" nillable="false" type="xsd:string"/>
+                        <xsd:element name="SimilarAddress3" nillable="false" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="returnPostcodeInfoRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="SuburbName" nillable="false" type="xsd:string"/>
+                        <xsd:element name="StateName" nillable="false" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="returnPostcodeInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Postcode" nillable="false" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <!-- Definitions for the fault messages -->
+            <xsd:complexType name="serviceFaultType">
+                <xsd:sequence>
+                    <xsd:element name="errcode" type="xsd:string"></xsd:element>
+                    <xsd:element name="errtext" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="addressExistsFault" type="tns:serviceFaultType"></xsd:element>
+            <xsd:element name="similarAddressesFault" type="tns:serviceFaultType"></xsd:element>
+            <xsd:element name="returnPostcodeFault" type="tns:serviceFaultType"></xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <!-- wsdl:message sections also contains the Fault messages -->
+    <wsdl:message name="addressExistsInFileRequestMsg">
+        <wsdl:part name="parameters" element="tns:addressExistsInFileRequest" />
+    </wsdl:message>
+    <wsdl:message name="addressExistsInFileResponseMsg">
+        <wsdl:part name="parameters" element="tns:addressExistsInFileResponse" />
+    </wsdl:message>
+    <wsdl:message name="addressExistsFaultMsg">
+        <wsdl:part name="parameters" element="tns:addressExistsFault"/>
+    </wsdl:message>
+    <wsdl:message name="similarAddressesInFileRequestMsg">
+        <wsdl:part name="parameters" element="tns:similarAddressesInFileRequest" />
+    </wsdl:message>
+    <wsdl:message name="similarAddressesInFileResponseMsg">
+        <wsdl:part name="parameters" element="tns:similarAddressesInFileResponse" />
+    </wsdl:message>
+    <wsdl:message name="similarAddressesFaultMsg">
+        <wsdl:part name="parameters" element="tns:similarAddressesFault"/>
+    </wsdl:message>
+    <wsdl:message name="returnPostcodeInfoRequestMsg">
+        <wsdl:part name="parameters" element="tns:returnPostcodeInfoRequest" />
+    </wsdl:message>
+    <wsdl:message name="returnPostcodeInfoResponseMsg">
+        <wsdl:part name="parameters" element="tns:returnPostcodeInfoResponse" />
+    </wsdl:message>
+    <wsdl:message name="returnPostcodeFaultMsg">
+        <wsdl:part name="parameters" element="tns:returnPostcodeFault"/>
+    </wsdl:message>
+    <wsdl:portType name="GNAFAddressingService">
+        <!-- For each operation, a fault message is a possible option -->
+        <wsdl:operation name="addressExistsInFile">
+            <wsdl:input message="tns:addressExistsInFileRequestMsg"/>
+            <wsdl:output message="tns:addressExistsInFileResponseMsg"/>
+            <wsdl:fault name="invalidInputFault" message="tns:addressExistsFaultMsg"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="similarAddressesInFile">
+            <wsdl:input message="tns:similarAddressesInFileRequestMsg"/>
+            <wsdl:output message="tns:similarAddressesInFileResponseMsg"/>
+            <wsdl:fault name="invalidInputFault" message="tns:similarAddressesFaultMsg"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="returnPostcodeInfo">
+            <wsdl:input message="tns:returnPostcodeInfoRequestMsg"/>
+            <wsdl:output message="tns:returnPostcodeInfoResponseMsg"/>
+            <wsdl:fault name="invalidInputFault" message="tns:returnPostcodeFaultMsg"></wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="GNAFAddressingServiceSOAP" type="tns:GNAFAddressingService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="addressExistsInFile">
+            <soap:operation soapAction="http://GNAFAddressingService.soacourse.unsw.edu.au/addressExistsInFile"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="invalidInputFault">
+                <soap:fault name="invalidInputFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="similarAddressesInFile">
+            <soap:operation soapAction="http://GNAFAddressingService.soacourse.unsw.edu.au/similarAddressesInFile"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="invalidInputFault">
+                <soap:fault name="invalidInputFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="returnPostcodeInfo">
+            <soap:operation soapAction="http://GNAFAddressingService.soacourse.unsw.edu.au/returnPostcodeInfo"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="invalidInputFault">
+                <soap:fault name="invalidInputFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="GNAFAddressingService">
+        <wsdl:port binding="tns:GNAFAddressingServiceSOAP" name="GNAFAddressingServiceSOAP">
+            <soap:address location="http://www.localhost:8080/SimpleServices/GNAFAddressingService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
