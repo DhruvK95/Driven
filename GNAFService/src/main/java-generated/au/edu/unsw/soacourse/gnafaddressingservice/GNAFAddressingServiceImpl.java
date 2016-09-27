@@ -114,11 +114,11 @@ public class GNAFAddressingServiceImpl implements GNAFAddressingService{
                         System.out.println(counter.toString() + " " + street_name);
                         counter++;
                         //street number, street name, suburb name, state, postcode
-                        if (rs.getString("street_number").equalsIgnoreCase(m.group(1)) &&
-                                street_name.equalsIgnoreCase(m.group(2)) &&
-                                rs.getString("suburb_name").equalsIgnoreCase(m.group(3)) &&
-                                rs.getString("state").equalsIgnoreCase(m.group(4)) &&
-                                rs.getString("postcode").equalsIgnoreCase(m.group(5))
+                        if (rs.getString("street_number").equalsIgnoreCase(m.group(1).trim()) &&
+                                street_name.equalsIgnoreCase(m.group(2).trim()) &&
+                                rs.getString("suburb_name").equalsIgnoreCase(m.group(3).trim()) &&
+                                rs.getString("state").equalsIgnoreCase(m.group(4).trim()) &&
+                                rs.getString("postcode").equalsIgnoreCase(m.group(5).trim())
                                 ) {
                             System.out.println("Found Exact match!!!!!!!!!!!!!!");
                             outputMessage = ("Found Address: " + parameters.getFullAddress());
