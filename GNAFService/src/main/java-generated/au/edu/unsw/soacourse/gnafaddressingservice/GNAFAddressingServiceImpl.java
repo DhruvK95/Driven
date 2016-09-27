@@ -1,9 +1,7 @@
 package au.edu.unsw.soacourse.gnafaddressingservice;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.cxf.common.util.SortedArraySet;
 import org.apache.cxf.transport.http.DestinationRegistry;
 import org.sqlite.core.DB;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.*;
 import java.util.regex.Matcher;
