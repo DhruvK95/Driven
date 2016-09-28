@@ -87,6 +87,11 @@ public class Main {
         return rList;
     }
 
+    /**
+     * Updates the Email field in the XML file for a given rID
+     * @param rID Integer ID for a Car registration entry
+     * @param updatedEmail New Email String
+     */
     public static void updateEmail(Integer rID, String updatedEmail) {
         assert rID > 0;
         try {
@@ -127,10 +132,6 @@ public class Main {
                 }
             }
 
-            // System.out.println(Entry.getTextContent());
-            // NodeList nl2 = Entry.getChildNodes();
-            // System.out.println(nl2);
-
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -139,44 +140,6 @@ public class Main {
             e.printStackTrace();
         }
     }
-    // public static void updateEmail(Integer rID, String updatedEmail) {
-    //     NodeList nL = constructNodeList();
-    //     for (int i = 0; i < nL.getLength(); i++) {
-    //         Node nNode = nL.item(i);
-    //         if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-    //             Element currEntry = (Element) nNode;
-    //             Integer currRID = Integer.parseInt(currEntry.getElementsByTagName("_rid").item(0).getTextContent());
-    //             if (currRID == rID) {
-    //                 if (currEntry.getNodeType() == Node.ELEMENT_NODE) {
-    //                     Element currDriver = (Element) currEntry;
-    //                     System.out.println(currDriver.getNodeName());
-    //
-    //                     if ("Email".equals(currDriver.getNodeName())) {
-    //                         System.out.println("Email found");
-    //                         currDriver.setTextContent(updatedEmail);
-    //                         System.out.println("Updating Email...");
-    //                         // Write to XML file
-    //                         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-    //                         System.out.println("Before try");
-    //                         try {
-    //                             Transformer transformer = transformerFactory.newTransformer();
-    //                             DOMSource source = new DOMSource(buildDoc());
-    //                             String filepath = "src/CarRegistrations.xml";
-    //                             StreamResult result = new StreamResult(new File(filepath));
-    //                             transformer.transform(source, result);
-    //                             System.out.println("Done");
-    //
-    //                         } catch (TransformerConfigurationException e) {
-    //                             e.printStackTrace();
-    //                         } catch (TransformerException e) {
-    //                             e.printStackTrace();
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
     public static void updateAddress(Integer rID) {
 
