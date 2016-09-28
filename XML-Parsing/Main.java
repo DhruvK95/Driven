@@ -108,14 +108,13 @@ public class Main {
                             System.out.println(nod1.getTextContent());
                             nod1.setTextContent(updateString);
                             TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                            System.out.println("Before try");
                             try {
                                 Transformer transformer = transformerFactory.newTransformer();
                                 DOMSource source = new DOMSource(doc);
                                 System.out.println(filePath);
                                 StreamResult result = new StreamResult(new File(filePath));
                                 transformer.transform(source, result);
-                                System.out.println("Done");
+                                System.out.println(elementName + " Updated");
 
                             } catch (TransformerConfigurationException e) {
                                 e.printStackTrace();
@@ -149,7 +148,47 @@ public class Main {
         updateDriverField(rID,updatedAddress, "Address");
     }
 
-    public static void updateRegistrationValidTill(Integer rID) {
+    public static void updateRegistrationValidTill(Integer rID, Date updatedDate) {
+        //TODO: Test function
+        assert rID > 0;
+        try {
+            String filePath1 = new File("").getAbsolutePath();
+            String filePath = filePath1.concat("/src/CarRegistrations.xml");
+
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(filePath);
+            Node Entry = doc.getElementsByTagName("Entry").item(rID - 1);
+            NodeList nodeList = Entry.getChildNodes();
+            for (int i = 0; nodeList != null && i < nodeList.getLength(); i++) {
+                Node nod = nodeList.item(i);
+                if (nod.getNodeType() == Node.ELEMENT_NODE && nod.getNodeName().equals("RegistrationValidTill")) {
+                    nod.setTextContent(updatedDate.toString());
+
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    try {
+                        Transformer transformer = transformerFactory.newTransformer();
+                        DOMSource source = new DOMSource(doc);
+                        System.out.println(filePath);
+                        StreamResult result = new StreamResult(new File(filePath));
+                        transformer.transform(source, result);
+
+                    } catch (TransformerConfigurationException e) {
+                        e.printStackTrace();
+                    } catch (TransformerException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
