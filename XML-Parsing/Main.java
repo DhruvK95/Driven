@@ -34,7 +34,7 @@ public class Main {
         List<Registration> rList = new ArrayList<Registration>();
         rList = makeRegistrationList();
         System.out.println(rList);
-        updateEmail(2, "zXXXXXXX@unsw.edu.au");
+        updateAddress(2, "zXXXXXXX@unsw.edu.au");
     }
 
     /**
@@ -87,12 +87,7 @@ public class Main {
         return rList;
     }
 
-    /**
-     * Updates the Email field in the XML file for a given rID
-     * @param rID Integer ID for a Car registration entry
-     * @param updatedEmail New Email String
-     */
-    public static void updateEmail(Integer rID, String updatedEmail) {
+    private static void updateDriverField(Integer rID, String updateString, String elementName) {
         assert rID > 0;
         try {
             String filePath1 = new File("").getAbsolutePath();
@@ -109,9 +104,9 @@ public class Main {
                     NodeList nodeList2 = nod.getChildNodes();
                     for (int j = 0; nodeList2 != null && j < nodeList2.getLength(); j++) {
                         Node nod1 = nodeList2.item(j);
-                        if (nod1.getNodeName().equals("Email")) {
+                        if (nod1.getNodeName().equals(elementName)) {
                             System.out.println(nod1.getTextContent());
-                            nod1.setTextContent(updatedEmail);
+                            nod1.setTextContent(updateString);
                             TransformerFactory transformerFactory = TransformerFactory.newInstance();
                             System.out.println("Before try");
                             try {
@@ -139,10 +134,19 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+    /**
+     * Updates the Email field in the XML file for a given rID
+     * @param rID Integer ID for a Car registration entry
+     * @param updatedEmail New Email String
+     */
+    public static void updateEmail(Integer rID, String updatedEmail) {
+        updateDriverField(rID,updatedEmail, "Email");
     }
 
-    public static void updateAddress(Integer rID) {
-
+    public static void updateAddress(Integer rID, String updatedAddress) {
+        updateDriverField(rID,updatedAddress, "Address");
     }
 
     public static void updateRegistrationValidTill(Integer rID) {
