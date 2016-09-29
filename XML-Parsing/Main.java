@@ -34,7 +34,8 @@ public class Main {
         List<Registration> rList = new ArrayList<Registration>();
         rList = makeRegistrationList();
         System.out.println(rList);
-        updateAddress(2, "zXXXXXXX@unsw.edu.au");
+        // updateRegistrationValidTill(2,rList.get(0).getValidTill());
+        // updateAddress(2, "zXXXXXXX@unsw.edu.au");
     }
 
     /**
@@ -135,6 +136,7 @@ public class Main {
         }
 
     }
+
     /**
      * Updates the Email field in the XML file for a given rID
      * @param rID Integer ID for a Car registration entry
@@ -150,6 +152,10 @@ public class Main {
 
     public static void updateRegistrationValidTill(Integer rID, Date updatedDate) {
         //TODO: Test function
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+        String date = sdf.format(updatedDate);
+        // System.out.println("New Date: " + date);
+
         assert rID > 0;
         try {
             String filePath1 = new File("").getAbsolutePath();
@@ -163,15 +169,16 @@ public class Main {
             for (int i = 0; nodeList != null && i < nodeList.getLength(); i++) {
                 Node nod = nodeList.item(i);
                 if (nod.getNodeType() == Node.ELEMENT_NODE && nod.getNodeName().equals("RegistrationValidTill")) {
-                    nod.setTextContent(updatedDate.toString());
+                    nod.setTextContent(date);
 
                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                     try {
                         Transformer transformer = transformerFactory.newTransformer();
                         DOMSource source = new DOMSource(doc);
-                        System.out.println(filePath);
+                        // System.out.println(filePath);
                         StreamResult result = new StreamResult(new File(filePath));
                         transformer.transform(source, result);
+                        System.out.println("Valid till updated");
 
                     } catch (TransformerConfigurationException e) {
                         e.printStackTrace();
