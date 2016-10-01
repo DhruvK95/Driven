@@ -20,6 +20,7 @@ public class App
 
         // DB Testing
         DB_Handler db = new DB_Handler();
-        db.createTables();
+        db.dropTables();
+        // db.createTables();
     }
 }
