@@ -26,7 +26,6 @@ public class App
         db.addRenewalNotice(5, "xD");
         // SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
         Date currDate = new Date();
-        System.out.println(currDate.toString());
         db.addPayment(0, 200, 198231, "Dhruv", 222, currDate);
     }
 }

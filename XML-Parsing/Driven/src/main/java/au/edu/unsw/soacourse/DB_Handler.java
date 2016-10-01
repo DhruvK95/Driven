@@ -91,8 +91,7 @@ try {
     public void addPayment(Integer nid, Integer amount, Integer credit_card_number, String credit_card_name, Integer
             credit_card_ccv, Date paid_date) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-        String d = sdf.format(paid_date);
-        System.out.println(d);
+        String strDate = sdf.format(paid_date);
         Connection c = null;
         Statement stmt = null;
         try {
@@ -109,12 +108,12 @@ try {
                     + credit_card_number.toString() + ","
                     + "'" + credit_card_name + "'" + ","
                     + credit_card_ccv.toString() + ","
-                    + "'" + d + "'"
+                    + "'" + strDate + "'"
                     + ");";
             //Insert Close code
             stmt.executeUpdate(sql);
             if (getPaymentsRows() > paymentID)
-                System.out.println("DBh: Payment successfully added");
+                System.out.println("DBh/addPayment: Payment successfully added");
             stmt.close();
             c.close();
         } catch ( Exception e ) {
