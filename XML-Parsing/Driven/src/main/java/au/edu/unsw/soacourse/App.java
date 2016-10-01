@@ -20,7 +20,8 @@ public class App
 
         // DB Testing
         DB_Handler db = new DB_Handler();
-        db.dropTables();
+        // db.dropTables();
         // db.createTables();
+        db.addRenewalNotice(5, "xD");
     }
 }
