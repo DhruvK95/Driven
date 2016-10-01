@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -87,6 +88,41 @@ try {
 
     }
 
+    public void addPayment(Integer nid, Integer amount, Integer credit_card_number, String credit_card_name, Integer
+            credit_card_ccv, Date paid_date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+        String d = sdf.format(paid_date);
+        System.out.println(d);
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            System.out.println("DBh/addRenewalNotice: Opened database successfully");
+            stmt = c.createStatement();
+            Integer paymentID = getPaymentsRows();
+            //INSERT INTO Renewal_Notices (nid, rid, status) VALUES (0, 0, 'String');
+            String sql = "INSERT INTO Payments (pid, nid, amount, credit_card_number, credit_card_name, credit_card_ccv, paid_date) VALUES ("
+                    + paymentID.toString() + ","
+                    + nid.toString() + ","
+                    + amount.toString() + ","
+                    + credit_card_number.toString() + ","
+                    + "'" + credit_card_name + "'" + ","
+                    + credit_card_ccv.toString() + ","
+                    + "'" + d + "'"
+                    + ");";
+            //Insert Close code
+            stmt.executeUpdate(sql);
+            if (getPaymentsRows() > paymentID)
+                System.out.println("DBh: Payment successfully added");
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.out.println("addPayment ERROR");
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
 
     public void addRenewalNotice(Integer rid, String status) {
         Connection c = null;
