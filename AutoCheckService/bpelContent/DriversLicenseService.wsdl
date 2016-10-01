@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://driverslicense.assign2.soacourse.unsw.edu.au"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="DriversLicenseService" targetNamespace="http://driverslicense.assign2.soacourse.unsw.edu.au">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://driverslicense.assign2.soacourse.unsw.edu.au">
+			<xsd:element name="validateDriversLicenseRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="fullName" nillable="false" type="xsd:string" />
+						<xsd:element name="licenseNumber" nillable="false" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="validateDriversLicenseResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="isValid" nillable="false" type="xsd:boolean" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="validateDriversLicenseRequestMsg">
+		<wsdl:part name="parameters" element="tns:validateDriversLicenseRequest" />
+	</wsdl:message>
+	<wsdl:message name="validateDriversLicenseResponseMsg">
+		<wsdl:part name="parameters" element="tns:validateDriversLicenseResponse" />
+	</wsdl:message>
+	<wsdl:portType name="DriversLicenseService">
+		<wsdl:operation name="validateDriversLicense">
+			<wsdl:input message="tns:validateDriversLicenseRequestMsg" />
+			<wsdl:output message="tns:validateDriversLicenseResponseMsg" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="DriversLicenseService" type="tns:DriversLicenseService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="validateDriversLicense">
+			<soap:operation
+				soapAction="http://driverslicense.assign2.soacourse.unsw.edu.au/validateDriversLicense" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="DriversLicenseService">
+		<wsdl:port binding="tns:DriversLicenseService" name="DriversLicenseService">
+			<soap:address location="http://localhost:8080/DriversLicenseService/DriversLicenseService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
