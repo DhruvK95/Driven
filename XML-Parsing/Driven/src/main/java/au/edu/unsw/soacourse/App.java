@@ -42,8 +42,9 @@ public class App
         System.out.println("Renewal Notice List: " + rnl);
 
             // deleteRenewalNotice testing
-
+        db.deleteRenewalNotice(3);
             // deletePayment testing
+        db.deletePayment(0);
 
     }
 }

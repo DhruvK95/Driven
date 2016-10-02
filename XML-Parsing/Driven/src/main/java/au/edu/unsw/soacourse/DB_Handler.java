@@ -208,12 +208,52 @@ try {
             stmt.close();
             c.close();
         } catch ( Exception e ) {
+            System.out.println("getPaymentsList ERROR");
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
         return lp;
     }
 
+    public void deletePayment(Integer pid) {
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            System.out.println("DBh/deletePayment: Opened database successfully");
+            stmt = c.createStatement();
+            String sql = "DELETE FROM Payments WHERE pid=" + pid.toString() + ";";
+            stmt.executeUpdate(sql);
+            System.out.println("DBh/deletePayment: " + pid.toString() + "deleteRenewalNotice completed");
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.out.println("deletePayment ERROR");
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+    public void deleteRenewalNotice(Integer nid) {
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            System.out.println("DBh/deleteRenewalNotice: Opened database successfully");
+            stmt = c.createStatement();
+            String sql = "DELETE FROM Renewal_Notices WHERE nid=" + nid.toString() + ";";
+            stmt.executeUpdate(sql);
+            System.out.println("DBh/deleteRenewalNotice: " + nid.toString() + "deleteRenewalNotice completed");
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.out.println("deleteRenewalNotice ERROR");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
     private Integer getRenewalNoticesRows () {
         Integer i = 0;
         Connection c = null;
