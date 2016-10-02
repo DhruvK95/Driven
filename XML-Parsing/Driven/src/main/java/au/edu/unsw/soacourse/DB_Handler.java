@@ -215,7 +215,6 @@ try {
     }
 
     private Integer getRenewalNoticesRows () {
-        // TODO: Change function to find max id (current impl will fail if final rows are deleted)
         Integer i = 0;
         Connection c = null;
         Statement stmt = null;
@@ -224,8 +223,8 @@ try {
             c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
             System.out.println("DBh/getRenewalNoticesRows: Opened database successfully");
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS COUNT FROM Renewal_Notices;");
-            i = rs.getInt("COUNT");
+            ResultSet rs = stmt.executeQuery("SELECT MAX(nid) AS MAX FROM Renewal_Notices;");
+            i = rs.getInt("MAX") + 1;
             stmt.close();
             c.close();
             return i;
@@ -239,7 +238,6 @@ try {
     }
 
     private Integer getPaymentsRows () {
-        // TODO: Change function to find max id (current impl will fail if final rows are deleted)
         Integer i = 0;
         Connection c = null;
         Statement stmt = null;
@@ -248,8 +246,8 @@ try {
             c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
             System.out.println("DBh/getPaymentsRows: Opened database successfully");
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS COUNT FROM Payments;");
-            i = rs.getInt("COUNT");
+            ResultSet rs = stmt.executeQuery("SELECT MAX(pid) AS MAX FROM Payments;");
+            i = rs.getInt("MAX") + 1;
             stmt.close();
             c.close();
             return i;
