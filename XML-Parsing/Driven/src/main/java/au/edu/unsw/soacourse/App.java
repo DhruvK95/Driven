@@ -21,11 +21,29 @@ public class App
 
         // DB Testing
         DB_Handler db = new DB_Handler();
+
+            // Create/Drop Tables testing
         // db.dropTables();
         // db.createTables();
+
+            // addRenewalNotice/addPayment testing
         db.addRenewalNotice(5, "xD");
-        // SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
         Date currDate = new Date();
         db.addPayment(0, 200, 198231, "Dhruv", 222, currDate);
+
+            // getPaymentsList Testing
+        List<Payment> p = new ArrayList<Payment>();
+        p = db.getPaymentsList();
+        System.out.println("Payment List: " + p);
+
+            // getRenewalNoticesList testing
+        List<RenewalNotice> rnl = new ArrayList<RenewalNotice>();
+        rnl = db.getRenewalNoticesList();
+        System.out.println("Renewal Notice List: " + rnl);
+
+            // deleteRenewalNotice testing
+
+            // deletePayment testing
+
     }
 }

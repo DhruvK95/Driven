@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Dhruv on 1/10/2016. Driven
@@ -88,6 +92,32 @@ try {
 
     }
 
+    public List<RenewalNotice> getRenewalNoticesList () {
+        List<RenewalNotice> rnl = new ArrayList<RenewalNotice>();
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            System.out.println("DBh/getRenewalNoticesList: Opened database successfully");
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Renewal_Notices;");
+            while (rs.next()) {
+                Integer nid = rs.getInt("nid");
+                Integer rid = rs.getInt("rid");
+                String strStatus = rs.getString("status");
+                // RenewalNotice.Status s = new RenewalNotice.Status(A)
+                RenewalNotice rn = new RenewalNotice(nid, rid, strStatus);
+                rnl.add(rn);
+            }
+                c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        return rnl;
+    }
+
     public void addPayment(Integer nid, Integer amount, Integer credit_card_number, String credit_card_name, Integer
             credit_card_ccv, Date paid_date) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
@@ -151,7 +181,41 @@ try {
         }
     }
 
+    public List<Payment> getPaymentsList() {
+        Connection c = null;
+        Statement stmt = null;
+        List<Payment> lp = new ArrayList<Payment>();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            System.out.println("DBh/getPaymentsList: Opened database successfully");
+            stmt = c.createStatement();
+            // String sql = "";
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Payments;");
+            while (rs.next()) {
+                Integer pid = rs.getInt("pid");
+                Integer nid = rs.getInt("nid");
+                Integer amount = rs.getInt("amount");
+                Integer credit_card_number = rs.getInt("credit_card_number");
+                String credit_card_name = rs.getString("credit_card_name");
+                Integer credit_card_ccv = rs.getInt("credit_card_ccv");
+                String strDate = rs.getString("paid_date");
+                DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+                Date date = format.parse(strDate);
+                Payment p = new Payment(pid, nid, amount, credit_card_number, credit_card_name, credit_card_ccv, date);
+                lp.add(p);
+            }
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        return lp;
+    }
+
     private Integer getRenewalNoticesRows () {
+        // TODO: Change function to find max id (current impl will fail if final rows are deleted)
         Integer i = 0;
         Connection c = null;
         Statement stmt = null;
@@ -175,6 +239,7 @@ try {
     }
 
     private Integer getPaymentsRows () {
+        // TODO: Change function to find max id (current impl will fail if final rows are deleted)
         Integer i = 0;
         Connection c = null;
         Statement stmt = null;
@@ -196,4 +261,5 @@ try {
         }
         return i;
     }
+
 }
