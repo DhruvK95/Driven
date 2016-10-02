@@ -64,6 +64,7 @@ try {
             stmt.executeUpdate(sql);
             c.close();
         } catch (Exception e) {
+            System.out.println("Create Tables ERROR");
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
@@ -85,6 +86,7 @@ try {
             stmt.close();
             c.close();
         } catch (Exception e) {
+            System.out.println("Drop tables ERROR");
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
@@ -112,9 +114,11 @@ try {
             }
                 c.close();
         } catch ( Exception e ) {
+            System.out.println("getRenewalNoticesList ERROR");
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
+        System.out.println("Successfully returning RenewalNoticesList");
         return rnl;
     }
 
@@ -151,6 +155,7 @@ try {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
+        System.out.println("Payment added successfully");
     }
 
     public void addRenewalNotice(Integer rid, String status) {
@@ -285,6 +290,7 @@ try {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
+        System.out.println("Returning Payments List");
         return lp;
     }
 
@@ -294,7 +300,7 @@ try {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
-            System.out.println("DBh/deletePayment: Opened database successfully");
+            // System.out.println("DBh/deletePayment: Opened database successfully");
             stmt = c.createStatement();
             String sql = "DELETE FROM Payments WHERE pid=" + pid.toString() + ";";
             stmt.executeUpdate(sql);
