@@ -46,5 +46,14 @@ public class App
             // deletePayment testing
         db.deletePayment(0);
 
+            // Overloaded function testing
+        RenewalNotice r = new RenewalNotice(0, 12, "confirmed");
+        db.addRenewalNotice(r);
+
+        Payment p2 = p.get(0);
+        p2.setAmount(999999);
+        db.addPayment(p2);
+        db.addPayment(p2);
+
     }
 }

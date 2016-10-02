@@ -127,7 +127,7 @@ try {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
-            System.out.println("DBh/addRenewalNotice: Opened database successfully");
+            // System.out.println("DBh/addRenewalNotice: Opened database successfully");
             stmt = c.createStatement();
             Integer paymentID = getPaymentsRows();
             //INSERT INTO Renewal_Notices (nid, rid, status) VALUES (0, 0, 'String');
@@ -159,7 +159,7 @@ try {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
-            System.out.println("DBh/addRenewalNotice: Opened database successfully");
+            // System.out.println("DBh/addRenewalNotice: Opened database successfully");
             stmt = c.createStatement();
             Integer notice_ID = getRenewalNoticesRows();
             //INSERT INTO Renewal_Notices (nid, rid, status) VALUES (0, 0, 'String');
@@ -176,6 +176,79 @@ try {
             c.close();
         } catch ( Exception e ) {
             System.out.println("addRenewalNotice ERROR");
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Overloaded addPayment method, takes in a Payment object. The pid in the object is disregarded, the
+     * function calculates the pid itself.
+     * @param payment Payment object
+     */
+    public void addPayment(Payment payment) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+        String strDate = sdf.format(payment.getPaid_date());
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            // System.out.println("DBh/addPayment_o: Opened database successfully");
+            stmt = c.createStatement();
+            Integer paymentID = getPaymentsRows();
+            String sql = "INSERT INTO Payments (pid, nid, amount, credit_card_number, credit_card_name, credit_card_ccv, paid_date) VALUES ("
+                    + paymentID.toString() + ","
+                    + payment.getNid().toString() + ","
+                    + payment.getAmount().toString() + ","
+                    + payment.getCredit_card_number().toString() + ","
+                    + "'" + payment.getCredit_card_name() + "'" + ","
+                    + payment.getCredit_card_ccv().toString() + ","
+                    + "'" + strDate + "'"
+                    + ");";
+            //Insert Close code
+            stmt.executeUpdate(sql);
+            if (getPaymentsRows() > paymentID)
+                System.out.println("DBh/addPayment_o: Payment successfully added");
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.out.println("addPayment_o ERROR adding " + payment.toString());
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+
+    /**
+     * Overloaded addRenewalNotice method, takes in a RenewalNotice object. The nid in the object is disregarded, the
+     * function calculates the nid itself.
+     * @param renewalNotice RenewalNotice object
+     */
+    public void addRenewalNotice(RenewalNotice renewalNotice) {
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            // System.out.println("DBh/addRenewalNotice_o: Opened database successfully");
+            stmt = c.createStatement();
+            Integer notice_ID = getRenewalNoticesRows();
+            //INSERT INTO Renewal_Notices (nid, rid, status) VALUES (0, 0, 'String');
+            String sql = "INSERT INTO Renewal_Notices (nid, rid, status) VALUES ("
+                    + notice_ID.toString() + ","
+                    + renewalNotice.getRid().toString() + ","
+                    + "'" + renewalNotice.getStatus() + "'"
+                    + ");";
+            //Insert Close code
+            stmt.executeUpdate(sql);
+            if (getRenewalNoticesRows() > notice_ID)
+                System.out.println("DBh: Renewal notice " + renewalNotice.getNid().toString() + " " + renewalNotice.getStatus()
+                        + " " + "successfully added");
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.out.println("addRenewalNotice_o ERROR adding " + renewalNotice.toString());
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
@@ -225,7 +298,7 @@ try {
             stmt = c.createStatement();
             String sql = "DELETE FROM Payments WHERE pid=" + pid.toString() + ";";
             stmt.executeUpdate(sql);
-            System.out.println("DBh/deletePayment: " + pid.toString() + "deleteRenewalNotice completed");
+            System.out.println("DBh/deletePayment: " + pid.toString() + " deleteRenewalNotice completed");
             stmt.close();
             c.close();
         } catch ( Exception e ) {
@@ -245,7 +318,7 @@ try {
             stmt = c.createStatement();
             String sql = "DELETE FROM Renewal_Notices WHERE nid=" + nid.toString() + ";";
             stmt.executeUpdate(sql);
-            System.out.println("DBh/deleteRenewalNotice: " + nid.toString() + "deleteRenewalNotice completed");
+            System.out.println("DBh/deleteRenewalNotice: " + nid.toString() + " deleteRenewalNotice completed");
             stmt.close();
             c.close();
         } catch (Exception e) {
@@ -254,6 +327,7 @@ try {
             System.exit(0);
         }
     }
+
     private Integer getRenewalNoticesRows () {
         Integer i = 0;
         Connection c = null;
@@ -261,7 +335,7 @@ try {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
-            System.out.println("DBh/getRenewalNoticesRows: Opened database successfully");
+            // System.out.println("DBh/getRenewalNoticesRows: Opened database successfully");
             stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT MAX(nid) AS MAX FROM Renewal_Notices;");
             i = rs.getInt("MAX") + 1;
@@ -284,7 +358,7 @@ try {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
-            System.out.println("DBh/getPaymentsRows: Opened database successfully");
+            // System.out.println("DBh/getPaymentsRows: Opened database successfully");
             stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT MAX(pid) AS MAX FROM Payments;");
             i = rs.getInt("MAX") + 1;
