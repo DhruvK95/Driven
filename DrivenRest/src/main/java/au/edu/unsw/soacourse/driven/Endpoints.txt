@@ -1,0 +1,5 @@
+Driven.com/
+
+* /staff/generate/ - POST
+    Officer posts something and initiates the generation of notices.
+    A link to each notice is returned to the Officer.
