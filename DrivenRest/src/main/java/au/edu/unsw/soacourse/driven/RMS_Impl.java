@@ -33,13 +33,15 @@ public class RMS_Impl {
 
         // For each driver.validTill ..., if <condition>
         for (Registration reg : rList) {
-            // (Date in <RegistrationValidTill>) - 30 days <= TODAY's DATE <= (Date in <RegistrationValidTill>)
+            // (Date in <RegistrationValidTill>) - 30 days < TODAY's DATE < (Date in <RegistrationValidTill>)
             Calendar cal = Calendar.getInstance();
             cal.setTime(reg.getValidTill());
             cal.add(Calendar.DATE, -30);
             // rDate is (Date in <RegistrationValidTill>) - 30 days
-            Date rDate = cal.getTime();
-            if (rDate.equals(currDate) || rDate.before(currDate) || currDate.before(reg.getValidTill())) {
+            Date validTill_30 = cal.getTime();
+            if ((validTill_30.equals(currDate) || validTill_30.before(currDate)) &&
+                    (currDate.before(reg.getValidTill()) || currDate.equals(reg.getValidTill()))) {
+
                 // Create new renewal notice
                 System.out.println("Notice generation condition met");
                 RenewalNotice rn = new RenewalNotice(db.getRenewalNoticesRows(), reg.getrID(), "created");

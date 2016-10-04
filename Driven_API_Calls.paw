@@ -143,7 +143,7 @@
     </object>
     <object type="LMREQUEST" id="z111">
         <attribute name="uuid" type="string">07203FC5-7FC5-45DC-A633-BF7CEBD6B62B</attribute>
-        <attribute name="url" type="string">http://localhost:8080/DrivenRest/driven/notices?nid=6</attribute>
+        <attribute name="url" type="string">http://localhost:8080/DrivenRest/driven/notices?nid=1</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>

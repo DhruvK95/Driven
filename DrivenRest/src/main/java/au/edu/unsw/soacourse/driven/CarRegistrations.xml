@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!-- Car Registrations --><Registrations>
+<!-- Car Registrations -->
+<Registrations>
    <Entry>
       <_rid>001</_rid>
       <RegistrationNumber>YYZ908</RegistrationNumber>
@@ -18,10 +19,10 @@
         <LastName>Chopra</LastName>
         <FirstName>Anthony Singh</FirstName>
         <DriversLicenseNo>M3456789</DriversLicenseNo>
-        <Address>zXXXXXXX@unsw.edu.au</Address>
+        <Address>11 TALLOWOOD COURT, GOONELLABAH, NSW, 2480</Address>
         <Email>addyour@mail.here</Email>
       </Driver>
-      <RegistrationValidTill>14/10/2016</RegistrationValidTill>
+      <RegistrationValidTill>28/11/2016</RegistrationValidTill>
    </Entry>
    <Entry>
       <_rid>003</_rid>
