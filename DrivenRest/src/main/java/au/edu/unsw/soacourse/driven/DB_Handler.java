@@ -32,6 +32,8 @@ try {
     System.exit(0);
 }
      */
+    // Find DB via:
+    // find ~/ -type f -name "Driven.db"
 
     public void createTables () {
         Connection c = null;
@@ -334,7 +336,7 @@ try {
         }
     }
 
-    private Integer getRenewalNoticesRows () {
+    public Integer getRenewalNoticesRows () {
         Integer i = 0;
         Connection c = null;
         Statement stmt = null;
@@ -357,7 +359,7 @@ try {
         return i;
     }
 
-    private Integer getPaymentsRows () {
+    public Integer getPaymentsRows () {
         Integer i = 0;
         Connection c = null;
         Statement stmt = null;
