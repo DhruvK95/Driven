@@ -46,4 +46,18 @@ public class RenewalNotice {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RenewalNotice that = (RenewalNotice) o;
+
+        if (!rid.equals(that.rid)) return false;
+        return status.equals(that.status);
+
+    }
+
+
 }

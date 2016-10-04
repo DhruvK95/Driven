@@ -18,29 +18,25 @@ public class HelloWorld {
     public Response generateNotices() {
         // TODO: This endpoint may require auth
 
-        List<Registration> rList = new ArrayList<Registration>();
-        XML_Handler xh = new XML_Handler();
-        rList = xh.makeRegistrationList();
-        System.out.println("Registrations:");
-        // System.out.println(rList);
-
-        System.out.println("TestDB");
-        DB_Handler db = new DB_Handler();
-        // db.createTables();
-        db.addRenewalNotice(5, "Test...");
-        Date currDate = new Date();
-        db.addPayment(0, 200, 198231, "Dhruv", 222, currDate);
-
-        // getPaymentsList Testing
-        List<Payment> p = new ArrayList<Payment>();
-        p = db.getPaymentsList();
-        System.out.println("Payment List: " + p);
-
         RMS_Impl rms = new RMS_Impl();
-        rms.generateNotices();
-        // TODO: Take response list from function and encapsulate into RenewalNoticeResponse Objects (with links)
+        List<RenewalNotice> generatedNotices = rms.generateNotices();
+        ResponseBuilder builder = Response.serverError();
 
-        ResponseBuilder builder = Response.ok().entity(rList);
+        List<RenewalNoticeResponse> renewalNoticeResponses = new ArrayList<>();
+        if (generatedNotices.size() > 0) {
+            // Take response list from function and encapsulate into RenewalNoticeResponse Objects (with links)
+            for (RenewalNotice aRN : generatedNotices) {
+                RenewalNoticeResponse renewalNoticeResponse = new RenewalNoticeResponse(aRN,
+                        "http://localhost:8080/DrivenRest/driven/notices?nid=" + aRN.getNid().toString());
+                renewalNoticeResponses.add(renewalNoticeResponse);
+                System.out.println(renewalNoticeResponses);
+            }
+            // Add all to the response
+            builder = Response.ok().entity(renewalNoticeResponses);
+        } else {
+            // ERROR
+            builder = Response.status(Response.Status.NOT_MODIFIED);
+        }
 
         return builder.build();
     }
