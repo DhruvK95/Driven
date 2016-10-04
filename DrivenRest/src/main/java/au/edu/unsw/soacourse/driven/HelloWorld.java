@@ -1,6 +1,9 @@
 package au.edu.unsw.soacourse.driven;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,12 +14,18 @@ import java.util.Date;
 
 @Path("/driven")
 public class HelloWorld {
+    private final static String OFFICER_KEY = "RMSofficer";
+    private final static String DRIVER_KEY = "driver";
 
     @POST
-    @Path("/staff/generate")
+    @Path("/notices/generate")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response generateNotices() {
-        // TODO: This endpoint may require auth
+    public Response generateNotices(@Context HttpHeaders headers) {
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+
+        if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
+        if (!auth.equals(OFFICER_KEY)) return Response.status(Response.Status.UNAUTHORIZED).build(); // Auth
 
         RMS_Impl rms = new RMS_Impl();
         List<RenewalNotice> generatedNotices = rms.generateNotices();
@@ -42,14 +51,16 @@ public class HelloWorld {
     }
 
     @GET
-    @Path("/notices/")
+    @Path("/notices")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getRenewalNotice (@QueryParam("nid") Integer nid) throws ParserConfigurationException{
+    public Response getRenewalNotice (@QueryParam("nid") Integer nid) throws
+            ParserConfigurationException {
+
+        // Check required fields
         if (nid == null) {
             ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
             return builder.build();
         }
-        // System.out.println("getRenewalNotice QueryParam: " + nid.toString());
 
         // Get all RenewalNotices from the DB
         DB_Handler db = new DB_Handler();
