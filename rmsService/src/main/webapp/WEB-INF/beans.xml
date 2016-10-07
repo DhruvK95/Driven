@@ -8,9 +8,18 @@
 
         <import resource="classpath:META-INF/cxf/cxf.xml" />
 
+<!-- 
+		<jaxws:endpoint 
+          id="autoCheck" 
+          implementor="au.edu.unsw.soacourse.assign2.autocheck.AutoCheckServiceImpl" 
+          address="/autoCheck" /> -->
         <jaxws:endpoint 
           id="helloWorld" 
           implementor="au.edu.unsw.soacourse.assign2.addressservice.AddressServiceImpl" 
-          address="/HelloWorld" />
+          address="/address" />
+        <jaxws:endpoint 
+          id="helloWorld1" 
+          implementor="au.edu.unsw.soacourse.assign2.driverslicense.DriversLicenseServiceImpl" 
+          address="/driver" />
           
 </beans>

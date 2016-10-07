@@ -52,7 +52,7 @@
 	</wsdl:binding>
 	<wsdl:service name="DriversLicenseService">
 		<wsdl:port binding="tns:DriversLicenseService" name="DriversLicenseService">
-			<soap:address location="http://localhost:8080/GNAFAddressingService/driver" />
+			<soap:address location="http://localhost:8080/DriversLicenseService/DriversLicenseService" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

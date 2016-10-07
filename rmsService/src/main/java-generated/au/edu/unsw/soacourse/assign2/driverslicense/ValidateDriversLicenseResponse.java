@@ -1,5 +1,5 @@
 
-package au.edu.unsw.soacourse.assign2.addressservice;
+package au.edu.unsw.soacourse.assign2.driverslicense;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,8 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="fullName" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="isValid" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -30,63 +30,54 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "address",
-    "fullName"
+    "message",
+    "isValid"
 })
-@XmlRootElement(name = "validateAddressRequest")
-public class ValidateAddressRequest {
+@XmlRootElement(name = "validateDriversLicenseResponse")
+public class ValidateDriversLicenseResponse {
 
     @XmlElement(required = true)
-    protected String address;
-    @XmlElement(required = true)
-    protected String fullName;
+    protected String message;
+    protected boolean isValid;
 
     /**
-     * Gets the value of the address property.
+     * Gets the value of the message property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAddress() {
-        return address;
+    public String getMessage() {
+        return message;
     }
 
     /**
-     * Sets the value of the address property.
+     * Sets the value of the message property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAddress(String value) {
-        this.address = value;
+    public void setMessage(String value) {
+        this.message = value;
     }
 
     /**
-     * Gets the value of the fullName property.
+     * Gets the value of the isValid property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getFullName() {
-        return fullName;
+    public boolean isIsValid() {
+        return isValid;
     }
 
     /**
-     * Sets the value of the fullName property.
+     * Sets the value of the isValid property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setFullName(String value) {
-        this.fullName = value;
+    public void setIsValid(boolean value) {
+        this.isValid = value;
     }
 
 }

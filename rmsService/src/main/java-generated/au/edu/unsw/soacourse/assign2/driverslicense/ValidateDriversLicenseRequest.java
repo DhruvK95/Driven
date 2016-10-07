@@ -1,5 +1,5 @@
 
-package au.edu.unsw.soacourse.assign2.addressservice;
+package au.edu.unsw.soacourse.assign2.driverslicense;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="fullName" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="licenseNumber" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -31,15 +32,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "address",
-    "fullName"
+    "fullName",
+    "licenseNumber"
 })
-@XmlRootElement(name = "validateAddressRequest")
-public class ValidateAddressRequest {
+@XmlRootElement(name = "validateDriversLicenseRequest")
+public class ValidateDriversLicenseRequest {
 
     @XmlElement(required = true)
     protected String address;
     @XmlElement(required = true)
     protected String fullName;
+    @XmlElement(required = true)
+    protected String licenseNumber;
 
     /**
      * Gets the value of the address property.
@@ -87,6 +91,30 @@ public class ValidateAddressRequest {
      */
     public void setFullName(String value) {
         this.fullName = value;
+    }
+
+    /**
+     * Gets the value of the licenseNumber property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    /**
+     * Sets the value of the licenseNumber property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLicenseNumber(String value) {
+        this.licenseNumber = value;
     }
 
 }
