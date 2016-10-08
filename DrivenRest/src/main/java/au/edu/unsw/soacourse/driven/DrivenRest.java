@@ -13,7 +13,7 @@ import java.util.Date;
 
 
 @Path("/driven")
-public class HelloWorld {
+public class DrivenRest {
     private final static String OFFICER_KEY = "RMSofficer";
     private final static String DRIVER_KEY = "driver";
 
@@ -53,13 +53,28 @@ public class HelloWorld {
     @GET
     @Path("/notices")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getRenewalNotice (@QueryParam("nid") Integer nid) throws
-            ParserConfigurationException {
+    public Response getRenewalNotice (@QueryParam("nid") Integer nid, @Context HttpHeaders
+            headers) {
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
 
+        System.out.println("In function");
         // Check required fields
         if (nid == null) {
-            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-            return builder.build();
+            if (auth.equals(OFFICER_KEY)) { // Return all notices to an officer
+                // Get all RenewalNotices from the DB
+                DB_Handler db = new DB_Handler();
+                List<RenewalNotice> rnl = new ArrayList<>();
+                RenewalNotice respRenewalNotice = null;
+                rnl = db.getRenewalNoticesList();
+
+                ResponseBuilder builder = Response.ok().entity(rnl);
+                return builder.build();
+            } else {
+                ResponseBuilder builder = Response.status(Response.Status.UNAUTHORIZED);
+                System.out.println("getRenewalNotice: BAD request");
+                return builder.build();
+            }
         }
 
         // Get all RenewalNotices from the DB
