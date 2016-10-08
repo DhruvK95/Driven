@@ -53,8 +53,10 @@ public class DrivenRest {
     @GET
     @Path("/notices")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getRenewalNotice (@QueryParam("nid") Integer nid, @Context HttpHeaders
-            headers) {
+    public Response getRenewalNotice (@QueryParam("nid") Integer nid,
+                                      @QueryParam("status") String status,
+                                      @Context HttpHeaders headers)
+            throws ParserConfigurationException {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
 
@@ -62,16 +64,36 @@ public class DrivenRest {
         // Check required fields
         if (nid == null) {
             if (auth.equals(OFFICER_KEY)) { // Return all notices to an officer
+
                 // Get all RenewalNotices from the DB
                 DB_Handler db = new DB_Handler();
                 List<RenewalNotice> rnl = new ArrayList<>();
                 RenewalNotice respRenewalNotice = null;
                 rnl = db.getRenewalNoticesList();
+                ResponseBuilder builder = null;
 
-                ResponseBuilder builder = Response.ok().entity(rnl);
+                if (!status.equals(null)) { // If a particular status is queried
+                    for (RenewalNotice aRnl : rnl) {
+                        if (aRnl.getStatus().equals(status)) {
+                            builder = Response.ok().entity(aRnl);
+                        }
+                    }
+                    if (builder != null) {
+                        return builder.build();
+                    } else {
+                        ResponseBuilder builder2 = Response.status(Response.Status.NOT_FOUND).entity("No notices with" +
+                                " specified status found");
+                        return builder2.build();
+                    }
+                }
+
+                // If status is not queried, return all notices.
+                builder = Response.ok().entity(rnl);
                 return builder.build();
-            } else {
-                ResponseBuilder builder = Response.status(Response.Status.UNAUTHORIZED);
+
+            } else if (auth.equals(null) || auth.equals(DRIVER_KEY)) {
+                ResponseBuilder builder = Response.status(Response.Status.UNAUTHORIZED).entity("Driver must supply a " +
+                        "Notice ID(nid)");
                 System.out.println("getRenewalNotice: BAD request");
                 return builder.build();
             }
