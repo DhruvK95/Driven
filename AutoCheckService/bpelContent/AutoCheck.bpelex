@@ -6,7 +6,7 @@
   </extensions>
   <extensions>
     <extendedObject href="AutoCheck.bpel#/"/>
-    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:ProcessExtension" modificationStamp="1475913319000"/>
+    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:ProcessExtension" modificationStamp="1475933260000"/>
   </extensions>
   <extensions>
     <extendedObject href="AutoCheck.bpel#//@variables/@children.1"/>

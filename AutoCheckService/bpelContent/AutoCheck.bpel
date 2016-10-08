@@ -135,7 +135,7 @@
 			            </bpel:copy>
 			            <bpel:copy>
 			                <bpel:from part="payload" variable="output">
-			                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:messageStatus]]></bpel:query>
+			                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:message]]></bpel:query>
 			                </bpel:from>
 			                <bpel:to part="parameters" variable="SimilarMatchServiceLinkRequest">
 			                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[address]]></bpel:query>
