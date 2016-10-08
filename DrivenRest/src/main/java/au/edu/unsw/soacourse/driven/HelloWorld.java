@@ -18,7 +18,7 @@ public class HelloWorld {
     private final static String DRIVER_KEY = "driver";
 
     @POST
-    @Path("/notices/generate")
+    @Path("/notices/newNotices")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response generateNotices(@Context HttpHeaders headers) {
         System.out.println(headers.toString());
@@ -64,6 +64,7 @@ public class HelloWorld {
 
         // Get all RenewalNotices from the DB
         DB_Handler db = new DB_Handler();
+        // db.createTables();
         List<RenewalNotice> rnl = new ArrayList<>();
         RenewalNotice respRenewalNotice = null;
         rnl = db.getRenewalNoticesList();
