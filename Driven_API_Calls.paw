@@ -302,8 +302,9 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z111"></relationship>
     </object>
     <object type="LMREQUEST" id="z127">
+        <attribute name="body" type="string">[{"data":{"keyValues":[[["nid"],["3"],true],[["status"],["under-review"],true]]},"identifier":"com.luckymarmot.BodyFormKeyValueDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">BCCD95E7-049B-4CC7-AD74-69290968B2F6</attribute>
-        <attribute name="url" type="string">http://localhost:8080/DrivenRest/driven/notices/?nid=2\u2600status=under-review</attribute>
+        <attribute name="url" type="string">http://localhost:8080/DrivenRest/driven/notices/</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>

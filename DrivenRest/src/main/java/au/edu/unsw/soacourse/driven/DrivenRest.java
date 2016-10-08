@@ -1,10 +1,8 @@
 package au.edu.unsw.soacourse.driven;
+
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.*;
 import javax.ws.rs.HeaderParam;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ArrayList;
@@ -120,14 +118,18 @@ public class DrivenRest {
 
     @PUT
     @Path("/notices")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response updateRenewalNotice(@QueryParam("nid") Integer nid,
-                                        @QueryParam("status") String status,
+    public Response updateRenewalNotice(@FormParam("nid") Integer form_nid,
+                                        @FormParam("status") String form_status,
                                         @Context HttpHeaders headers) {
         ResponseBuilder builder = null;
 
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
+
+        System.out.println("form_nid: " + form_nid.toString());
+        System.out.println("form_status" + form_status);
 
         if (!auth.equals(OFFICER_KEY) && !auth.equals(DRIVER_KEY)) {
             builder = Response.status(Response.Status.UNAUTHORIZED);
@@ -137,7 +139,7 @@ public class DrivenRest {
             List<RenewalNotice> renewalNoticesList = db.getRenewalNoticesList();
             Boolean found = Boolean.FALSE;
             for (int i = 0; i < renewalNoticesList.size(); i++) {
-                if (renewalNoticesList.get(i).getNid().equals(nid)) {
+                if (renewalNoticesList.get(i).getNid().equals(form_nid)) {
                     RenewalNotice currNotice = renewalNoticesList.get(i);
                     found = Boolean.TRUE;
                     if (auth.equals(DRIVER_KEY) && currNotice.getStatus().equals("under-review")) {
@@ -147,7 +149,7 @@ public class DrivenRest {
                     }
                     // If found send to RMS to update.
                     RMS_Impl rms = new RMS_Impl();
-                    RenewalNotice updatedRN = rms.updateRenewalNotice(currNotice, auth, status);
+                    RenewalNotice updatedRN = rms.updateRenewalNotice(currNotice, auth, form_status);
                     builder = Response.ok().entity(updatedRN);
                 }
             }
