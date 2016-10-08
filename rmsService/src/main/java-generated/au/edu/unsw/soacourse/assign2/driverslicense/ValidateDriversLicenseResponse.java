@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="isValid" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *         &lt;element name="messageStatus" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -31,14 +31,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "message",
-    "isValid"
+    "messageStatus"
 })
 @XmlRootElement(name = "validateDriversLicenseResponse")
 public class ValidateDriversLicenseResponse {
 
     @XmlElement(required = true)
     protected String message;
-    protected boolean isValid;
+    @XmlElement(required = true)
+    protected String messageStatus;
 
     /**
      * Gets the value of the message property.
@@ -65,19 +66,27 @@ public class ValidateDriversLicenseResponse {
     }
 
     /**
-     * Gets the value of the isValid property.
+     * Gets the value of the messageStatus property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isIsValid() {
-        return isValid;
+    public String getMessageStatus() {
+        return messageStatus;
     }
 
     /**
-     * Sets the value of the isValid property.
+     * Sets the value of the messageStatus property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setIsValid(boolean value) {
-        this.isValid = value;
+    public void setMessageStatus(String value) {
+        this.messageStatus = value;
     }
 
 }

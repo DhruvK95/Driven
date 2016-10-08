@@ -72,9 +72,8 @@
                 	<bpel:literal xml:space="preserve">
 	               		<tns:AutoCheckResponse xmlns:tns="http://assign2.soacourse.unsw.edu.au/autocheck" 
 	               				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-						  <tns:isValid>false</tns:isValid>
-						  <tns:message>message</tns:message>
-						  
+	             		  <tns:message>message</tns:message>  				
+						  <tns:messageStatus>false</tns:messageStatus>
 						</tns:AutoCheckResponse>
 					</bpel:literal>
 				</bpel:from>
@@ -85,9 +84,7 @@
          <bpel:sequence><bpel:assign validate="no" name="AssignDLRequest">
 		            <bpel:copy>
 		                <bpel:from><bpel:literal><tns:validateDriversLicenseRequest xmlns:tns="http://driverslicense.assign2.soacourse.unsw.edu.au" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-						  <address>address</address>						  
-						  <fullName>fullName</fullName>
-						  <licenseNumber>licenseNumber</licenseNumber>
+						  <address>address</address>
 						</tns:validateDriversLicenseRequest>
 						</bpel:literal></bpel:from>
 		                <bpel:to variable="DriversLicenseServiceLinkRequest" part="parameters"></bpel:to>
@@ -99,22 +96,6 @@
 		                </bpel:from>
 		                <bpel:to part="parameters" variable="DriversLicenseServiceLinkRequest">
 		                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[address]]></bpel:query>
-		                </bpel:to>
-		            </bpel:copy>
-		            <bpel:copy>
-		                <bpel:from part="payload" variable="input">
-		                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:fullName]]></bpel:query>
-		                </bpel:from>
-		                <bpel:to part="parameters" variable="DriversLicenseServiceLinkRequest">
-		                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[fullName]]></bpel:query>
-		                </bpel:to>
-		            </bpel:copy>
-		            <bpel:copy>
-		                <bpel:from part="payload" variable="input">
-		                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:driversLicense]]></bpel:query>
-		                </bpel:from>
-		                <bpel:to part="parameters" variable="DriversLicenseServiceLinkRequest">
-		                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[licenseNumber]]></bpel:query>
 		                </bpel:to>
 		            </bpel:copy>
 	        	</bpel:assign>
@@ -129,10 +110,10 @@
                         </bpel:to>
                     </bpel:copy>
                     <bpel:copy><bpel:from part="parameters" variable="DriversLicenseServiceLinkResponse">
-                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[isValid]]></bpel:query>
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[messageStatus]]></bpel:query>
                         </bpel:from>
                         <bpel:to part="payload" variable="output">
-                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:isValid]]></bpel:query>
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:messageStatus]]></bpel:query>
                         </bpel:to>
                     </bpel:copy>        
                 </bpel:assign>
@@ -142,27 +123,19 @@
             
            
      		<bpel:if name="IfDriversLicense">
-        	<bpel:condition>bpel:getVariableData('output', 'payload', 'tns:message')!='message'</bpel:condition>
+        	<bpel:condition>bpel:getVariableData('output', 'payload', 'tns:messageStatus')='no'</bpel:condition>
             <bpel:sequence><bpel:assign validate="no" name="AssignAdrRequest"><bpel:copy>
 			                <bpel:from>
 			                    <bpel:literal>
 			                        <tns:validateAddressRequest xmlns:tns="http://addressservice.assign2.soacourse.unsw.edu.au" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			  							<address>address</address>
-			  							<fullName>fullName</fullName>
 			                        </tns:validateAddressRequest>
 			                    </bpel:literal>
 			                </bpel:from><bpel:to variable="AddressServiceLinkRequest" part="parameters"></bpel:to>
 			            </bpel:copy>
 			            <bpel:copy>
 			                <bpel:from part="payload" variable="output">
-			                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:message]]></bpel:query>
-			                </bpel:from>
-			                <bpel:to part="parameters" variable="AddressServiceLinkRequest">
-			                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[fullName]]></bpel:query>
-			                </bpel:to>
-			            </bpel:copy><bpel:copy>
-			                <bpel:from part="payload" variable="output">
-			                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:message]]></bpel:query>
+			                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:messageStatus]]></bpel:query>
 			                </bpel:from>
 			                <bpel:to part="parameters" variable="AddressServiceLinkRequest">
 			                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[address]]></bpel:query>
@@ -184,10 +157,10 @@
                         </bpel:copy>
                         <bpel:copy>
                             <bpel:from part="parameters" variable="AddressServiceLinkResponse">
-                                <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[isValid]]></bpel:query>
+                                <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[messageStatus]]></bpel:query>
                             </bpel:from>
                             <bpel:to part="payload" variable="output">
-                                <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:isValid]]></bpel:query>
+                                <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:messageStatus]]></bpel:query>
                             </bpel:to>
                         </bpel:copy>
                     </bpel:assign>

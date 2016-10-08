@@ -19,8 +19,6 @@
                 <complexType>
                     <sequence>
                         <element name="address" type="string"/>
-                        <element name="fullName" type="string"/>
-                        <element name="driversLicense" type="string"/>
                     </sequence>
                 </complexType>
             </element>
@@ -29,7 +27,7 @@
                 <complexType>
                     <sequence>
                         <element name="message" type="string"/>                    
-                        <element name="isValid" type="boolean"/>
+                        <element name="messageStatus" type="string"/>
                     </sequence>
                 </complexType>
             </element>

@@ -6,7 +6,7 @@
   </extensions>
   <extensions>
     <extendedObject href="AutoCheck.bpel#/"/>
-    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:ProcessExtension" modificationStamp="1475835571000"/>
+    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:ProcessExtension" modificationStamp="1475895527000"/>
   </extensions>
   <extensions>
     <extendedObject href="AutoCheck.bpel#//@variables/@children.1"/>
@@ -61,14 +61,6 @@
     <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:CopyExtension"/>
   </extensions>
   <extensions>
-    <extendedObject href="AutoCheck.bpel#//@activity/@activities.2/@activities.0/@copy.2"/>
-    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:CopyExtension"/>
-  </extensions>
-  <extensions>
-    <extendedObject href="AutoCheck.bpel#//@activity/@activities.2/@activities.0/@copy.3"/>
-    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:CopyExtension"/>
-  </extensions>
-  <extensions>
     <extendedObject href="AutoCheck.bpel#//@activity/@activities.2/@activities.1"/>
     <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:ActivityExtension"/>
   </extensions>
@@ -98,10 +90,6 @@
   </extensions>
   <extensions>
     <extendedObject href="AutoCheck.bpel#//@activity/@activities.3/@activity/@activities.0/@copy.1"/>
-    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:CopyExtension"/>
-  </extensions>
-  <extensions>
-    <extendedObject href="AutoCheck.bpel#//@activity/@activities.3/@activity/@activities.0/@copy.2"/>
     <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:CopyExtension"/>
   </extensions>
   <extensions>

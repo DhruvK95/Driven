@@ -8,16 +8,15 @@
 			<xsd:element name="validateAddressRequest">
 				<xsd:complexType>
 					<xsd:sequence>
-						<xsd:element name="address" nillable="false" type="xsd:string" />										
-						<xsd:element name="fullName" nillable="false" type="xsd:string" />
+						<xsd:element name="address" nillable="false" type="xsd:string" />
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element name="validateAddressResponse">
 				<xsd:complexType>
 					<xsd:sequence>
-						<xsd:element name="isValid" nillable="false" type="xsd:boolean" />						
-						<xsd:element name="message" nillable="false" type="xsd:string" />											
+						<xsd:element name="message" nillable="false" type="xsd:string" />
+						<xsd:element name="messageStatus" nillable="false" type="xsd:string" />											
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>

@@ -8,9 +8,7 @@
 			<xsd:element name="validateDriversLicenseRequest">
 				<xsd:complexType>
 					<xsd:sequence>
-						<xsd:element name="address" nillable="false" type="xsd:string" />					
-						<xsd:element name="fullName" nillable="false" type="xsd:string" />
-						<xsd:element name="licenseNumber" nillable="false" type="xsd:string" />
+						<xsd:element name="address" nillable="false" type="xsd:string" />
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
@@ -18,7 +16,7 @@
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="message" nillable="false" type="xsd:string" />
-						<xsd:element name="isValid" nillable="false" type="xsd:boolean" />
+						<xsd:element name="messageStatus" nillable="false" type="xsd:string" />
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>

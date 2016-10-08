@@ -10,9 +10,14 @@ public class AddressServiceImpl implements AddressService {
 	public ValidateAddressResponse validateAddress(
 			ValidateAddressRequest parameters) {
 		ValidateAddressResponse res  = factory.createValidateAddressResponse();
-		System.out.println("ValidateAddressResponse--> " + parameters.address + parameters.fullName);
-		res.message="LOL";
-		res.isValid=false;
+		System.out.println("ValidateAddressResponse--> " + parameters.address);
+		res.message="\n Exact Address Not Found "
+				+ "\n Similair Address Found";
+		res.messageStatus="Output Closed";
+		
+		
+		
+		
 		return res;
 	}
 

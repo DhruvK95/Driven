@@ -18,8 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="isValid" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
  *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="messageStatus" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -30,31 +30,16 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "isValid",
-    "message"
+    "message",
+    "messageStatus"
 })
 @XmlRootElement(name = "validateAddressResponse")
 public class ValidateAddressResponse {
 
-    protected boolean isValid;
     @XmlElement(required = true)
     protected String message;
-
-    /**
-     * Gets the value of the isValid property.
-     * 
-     */
-    public boolean isIsValid() {
-        return isValid;
-    }
-
-    /**
-     * Sets the value of the isValid property.
-     * 
-     */
-    public void setIsValid(boolean value) {
-        this.isValid = value;
-    }
+    @XmlElement(required = true)
+    protected String messageStatus;
 
     /**
      * Gets the value of the message property.
@@ -78,6 +63,30 @@ public class ValidateAddressResponse {
      */
     public void setMessage(String value) {
         this.message = value;
+    }
+
+    /**
+     * Gets the value of the messageStatus property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getMessageStatus() {
+        return messageStatus;
+    }
+
+    /**
+     * Sets the value of the messageStatus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setMessageStatus(String value) {
+        this.messageStatus = value;
     }
 
 }
