@@ -1,6 +1,14 @@
 # Driven
 COMP9322 - Assignment 2 RMS Car Registration Service
 
+## BPEL services setup
+1. Import `rmsService` into Eclipse as a Maven project
+2. Run `Maven Install`
+3. Deploy to Tomcat 7
+4. Import `AutoCheckService` as a an Existing (generic) project
+5. Deploy to ODE server using "Add/Remove"
+6. Go to [http://localhost:6060/ode/deployment/bundles/](http://localhost:6060/ode/deployment/bundles/)
+
 ## Links
 * [Specification](https://webcms3.cse.unsw.edu.au/COMP9322/16s2/resources/4329)
 
@@ -63,4 +71,3 @@ COMP9322 - Assignment 2 RMS Car Registration Service
 * `/registrations/` __PUT__
   * param eg. `?rid=2`
   * Email, Address and RegistrationValidTill can be updated (by REST services only)
-
