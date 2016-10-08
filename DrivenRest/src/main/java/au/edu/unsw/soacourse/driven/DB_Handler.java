@@ -296,6 +296,25 @@ try {
         return lp;
     }
 
+    public void updateNotice(Integer nid, String status) {
+
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            System.out.println("DBh: Opened database successfully");
+            stmt = c.createStatement();
+            String sql = "UPDATE Renewal_Notices SET status ='" + status + "' where nid=" + nid.toString();
+            stmt.executeUpdate(sql);
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+    }
+
     public void deletePayment(Integer pid) {
         Connection c = null;
         Statement stmt = null;

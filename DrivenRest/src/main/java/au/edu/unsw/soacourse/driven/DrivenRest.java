@@ -60,7 +60,6 @@ public class DrivenRest {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
 
-        System.out.println("In function");
         // Check required fields
         if (nid == null) {
             if (auth.equals(OFFICER_KEY)) { // Return all notices to an officer
@@ -117,6 +116,54 @@ public class DrivenRest {
             }
         }
         return builder.build();
+    }
+
+    @PUT
+    @Path("/notices")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updateRenewalNotice(@QueryParam("nid") Integer nid,
+                                        @QueryParam("status") String status,
+                                        @Context HttpHeaders headers) {
+        ResponseBuilder builder = null;
+
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+
+        if (!auth.equals(OFFICER_KEY) && !auth.equals(DRIVER_KEY)) {
+            builder = Response.status(Response.Status.UNAUTHORIZED);
+        } else {
+
+            DB_Handler db = new DB_Handler();
+            List<RenewalNotice> renewalNoticesList = db.getRenewalNoticesList();
+            Boolean found = Boolean.FALSE;
+            for (int i = 0; i < renewalNoticesList.size(); i++) {
+                if (renewalNoticesList.get(i).getNid().equals(nid)) {
+                    RenewalNotice currNotice = renewalNoticesList.get(i);
+                    found = Boolean.TRUE;
+                    if (auth.equals(DRIVER_KEY) && currNotice.getStatus().equals("under-review")) {
+                        // Not allowed from DRIVER once the status of a renewal notice has moved to 'Under-Review'
+                        builder = Response.status(Response.Status.UNAUTHORIZED).entity("Drivers cannot update " +
+                                "under-review notices");
+                    }
+                    // If found send to RMS to update.
+                    RMS_Impl rms = new RMS_Impl();
+                    RenewalNotice updatedRN = rms.updateRenewalNotice(currNotice, auth, status);
+                    builder = Response.ok().entity(updatedRN);
+                }
+            }
+            if (!found) {
+                builder = Response.status(Response.Status.NOT_FOUND).entity("Could not find a notice with the " +
+                        "supplied Notice ID(nid)");
+            }
+        }
+
+
+        if (builder == null) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+            return builder.build();
+        } else {
+            return builder.build();
+        }
     }
 
     @GET

@@ -1,5 +1,8 @@
 package au.edu.unsw.soacourse.driven;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.sqlite.core.DB;
+
 import java.util.*;
 import java.util.Calendar;
 
@@ -8,6 +11,13 @@ import java.util.Calendar;
  * Created by Dhruv on 4/10/2016. DrivenRest
  */
 public class RMS_Impl {
+
+    public RenewalNotice updateRenewalNotice(RenewalNotice renewalNotice, String auth, String status) {
+        renewalNotice.setStatus(status);
+        DB_Handler db = new DB_Handler();
+        db.updateNotice(renewalNotice.nid, renewalNotice.status);
+        return renewalNotice;
+    }
 
     /**
      * Generates a list renewal Notices and adds them to the DB (avoids duplicate entries in the DB)
