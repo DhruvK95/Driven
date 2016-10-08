@@ -15,11 +15,11 @@
           address="/autoCheck" /> -->
         <jaxws:endpoint 
           id="helloWorld" 
-          implementor="au.edu.unsw.soacourse.assign2.addressservice.AddressServiceImpl" 
-          address="/address" />
+          implementor="au.edu.unsw.soacourse.assign2.similarmatchservice.SimilarMatchServiceImpl" 
+          address="/SimilarMatchService" />
         <jaxws:endpoint 
           id="helloWorld1" 
-          implementor="au.edu.unsw.soacourse.assign2.driverslicense.DriversLicenseServiceImpl" 
-          address="/driver" />
+          implementor="au.edu.unsw.soacourse.assign2.exactmatch.ExactMatchServiceImpl" 
+          address="/ExactMatchService" />
           
 </beans>

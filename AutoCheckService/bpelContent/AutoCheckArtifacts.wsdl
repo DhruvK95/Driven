@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://assign2.soacourse.unsw.edu.au/autocheck" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://addressservice.assign2.soacourse.unsw.edu.au" xmlns:wsdl1="http://driverslicense.assign2.soacourse.unsw.edu.au" name="AutoCheck" targetNamespace="http://assign2.soacourse.unsw.edu.au/autocheck">
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://assign2.soacourse.unsw.edu.au/autocheck" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://similarmatchservice.assign2.soacourse.unsw.edu.au" xmlns:wsdl1="http://exactmatch.assign2.soacourse.unsw.edu.au" name="AutoCheck" targetNamespace="http://assign2.soacourse.unsw.edu.au/autocheck">
 
-	<import location="AddressService.wsdl" namespace="http://addressservice.assign2.soacourse.unsw.edu.au"/>
-    <import location="DriversLicenseService.wsdl" namespace="http://driverslicense.assign2.soacourse.unsw.edu.au"/>
+	<import location="SimilarMatchService.wsdl" namespace="http://similarmatchservice.assign2.soacourse.unsw.edu.au"/>
+    <import location="ExactMatchService.wsdl" namespace="http://exactmatch.assign2.soacourse.unsw.edu.au"/>
     
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      TYPE DEFINITION - List of types participating in this BPEL process 
@@ -65,11 +65,11 @@
     <plnk:partnerLinkType name="AutoCheck">
         <plnk:role name="AutoCheckProvider" portType="tns:AutoCheck"/>
     </plnk:partnerLinkType>
-    <plnk:partnerLinkType name="AddressServiceLinkType">
-    	<plnk:role name="AddressServiceProvider" portType="wsdl:AddressService"/>
+    <plnk:partnerLinkType name="SimilarMatchLinkType">
+    	<plnk:role name="SimilarMatchServiceProvider" portType="wsdl:SimilarMatchService"/>
   	</plnk:partnerLinkType>
-    <plnk:partnerLinkType name="DriversLicenseServiceLinkType">
-    	<plnk:role name="DriversLicenseServiceProvider" portType="wsdl1:DriversLicenseService"/>
+    <plnk:partnerLinkType name="ExactMatchServiceLinkType">
+    	<plnk:role name="ExactMatchServiceProvider" portType="wsdl1:ExactMatchService"/>
   	</plnk:partnerLinkType>
     
 

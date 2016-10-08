@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:addressservice.assign2.soacourse.unsw.edu.au="http://addressservice.assign2.soacourse.unsw.edu.au" xmlns:autocheck="http://assign2.soacourse.unsw.edu.au/autocheck" xmlns:driverslicense.assign2.soacourse.unsw.edu.au="http://driverslicense.assign2.soacourse.unsw.edu.au">
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:autocheck="http://assign2.soacourse.unsw.edu.au/autocheck" xmlns:exactmatch.assign2.soacourse.unsw.edu.au="http://exactmatch.assign2.soacourse.unsw.edu.au" xmlns:similarmatchservice.assign2.soacourse.unsw.edu.au="http://similarmatchservice.assign2.soacourse.unsw.edu.au">
   <process name="autocheck:AutoCheck">
     <active>true</active>
     <retired>false</retired>
@@ -7,11 +7,11 @@
     <provide partnerLink="client">
       <service name="autocheck:AutoCheckService" port="AutoCheckPort"/>
     </provide>
-    <invoke partnerLink="AddressServiceLink">
-      <service name="addressservice.assign2.soacourse.unsw.edu.au:AddressService" port="AddressService"/>
+    <invoke partnerLink="SimilarMatchLink">
+      <service name="similarmatchservice.assign2.soacourse.unsw.edu.au:SimilarMatchService" port="SimilarMatchService"/>
     </invoke>
-    <invoke partnerLink="DriversLicenseServiceLink">
-      <service name="driverslicense.assign2.soacourse.unsw.edu.au:DriversLicenseService" port="DriversLicenseService"/>
+    <invoke partnerLink="ExactMatchServiceLink">
+      <service name="exactmatch.assign2.soacourse.unsw.edu.au:ExactMatchService" port="ExactMatchService"/>
     </invoke>
   </process>
 </deploy>
