@@ -16,11 +16,19 @@ public class ExactMatchServiceImpl implements ExactMatchService{
 
 	@Override
 	public ValidateExactMatchResponse validateExactMatch(
-			ValidateExactMatchRequest parameters) {
+			ValidateExactMatchRequest parameters) throws NullEntryFaultMsg{
 		
 		ValidateExactMatchResponse res  = factory.createValidateExactMatchResponse();		
 		
 		System.out.println("DriversLicenseServiceImpl ==" +parameters.address);
+		if(parameters.address.equals("")){
+			System.out.print("HERE");
+			ServiceFaultType simAddFaultMessage = new ServiceFaultType();
+            simAddFaultMessage.setErrtext("null");
+            simAddFaultMessage.setErrcode("no address");
+			throw new NullEntryFaultMsg("null",simAddFaultMessage);
+			
+		}
 		if(parameters.address.equals("home")){
 			res.message="\n "
 					+ "Exact Address Found \n";

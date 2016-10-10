@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://assign2.soacourse.unsw.edu.au/autocheck" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://similarmatchservice.assign2.soacourse.unsw.edu.au" xmlns:wsdl1="http://exactmatch.assign2.soacourse.unsw.edu.au" name="AutoCheck" targetNamespace="http://assign2.soacourse.unsw.edu.au/autocheck">
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+		xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" 
+		xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+		xmlns:tns="http://assign2.soacourse.unsw.edu.au/autocheck" 
+		xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" 
+		xmlns:wsdl="http://similarmatchservice.assign2.soacourse.unsw.edu.au" 
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns:wsdl1="http://exactmatch.assign2.soacourse.unsw.edu.au" name="AutoCheck" targetNamespace="http://assign2.soacourse.unsw.edu.au/autocheck">
 
 	<import location="SimilarMatchService.wsdl" namespace="http://similarmatchservice.assign2.soacourse.unsw.edu.au"/>
     <import location="ExactMatchService.wsdl" namespace="http://exactmatch.assign2.soacourse.unsw.edu.au"/>
@@ -31,6 +38,15 @@
                     </sequence>
                 </complexType>
             </element>
+            
+            <!-- <xsd:complexType name="serviceFaultType">
+		    	<xsd:sequence>
+			   		<xsd:element name="errcode" type="xsd:string"></xsd:element>
+			   		<xsd:element name="errtext" type="xsd:string"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+		 	<xsd:element name="nullEntryFault" type="tns:serviceFaultType"></xsd:element> -->
         </schema>
     </types>
 
@@ -45,7 +61,9 @@
     <message name="AutoCheckResponseMessage">
         <part element="tns:AutoCheckResponse" name="payload"/>
     </message>
-
+<!-- 	<wsdl:message name="nullEntryFaultMsg">
+    	<wsdl:part name="parameters" element="tns:nullEntryFault" />
+  	</wsdl:message> -->
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      PORT TYPE DEFINITION - A port type groups a set of operations into
      a logical service unit.
@@ -87,6 +105,9 @@
     		<output>
     			<soap:body use="literal"/>
     		</output>
+    		<!-- <fault name="nullEntryFault">
+        		<soap:fault name="nullEntryFault" use="literal"/>
+	  		</fault> -->
     	</operation>
     </binding>
 

@@ -1,7 +1,10 @@
 
 package au.edu.unsw.soacourse.assign2.exactmatch;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -21,6 +24,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _NullEntryFault_QNAME = new QName("http://exactmatch.assign2.soacourse.unsw.edu.au", "nullEntryFault");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: au.edu.unsw.soacourse.assign2.exactmatch
@@ -43,6 +47,23 @@ public class ObjectFactory {
      */
     public ValidateExactMatchResponse createValidateExactMatchResponse() {
         return new ValidateExactMatchResponse();
+    }
+
+    /**
+     * Create an instance of {@link ServiceFaultType }
+     * 
+     */
+    public ServiceFaultType createServiceFaultType() {
+        return new ServiceFaultType();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ServiceFaultType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://exactmatch.assign2.soacourse.unsw.edu.au", name = "nullEntryFault")
+    public JAXBElement<ServiceFaultType> createNullEntryFault(ServiceFaultType value) {
+        return new JAXBElement<ServiceFaultType>(_NullEntryFault_QNAME, ServiceFaultType.class, null, value);
     }
 
 }

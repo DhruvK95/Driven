@@ -20,6 +20,15 @@
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
+			<xsd:complexType name="serviceFaultType">
+		    	<xsd:sequence>
+			   		<xsd:element name="errcode" type="xsd:string"></xsd:element>
+			   		<xsd:element name="errtext" type="xsd:string"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+		 	<xsd:element name="nullEntryFault" type="tns:serviceFaultType"></xsd:element>
+			
 		</xsd:schema>
 	</wsdl:types>
 	<wsdl:message name="validateExactMatchRequestMsg">
@@ -28,10 +37,15 @@
 	<wsdl:message name="validateExactMatchResponseMsg">
 		<wsdl:part name="parameters" element="tns:validateExactMatchResponse" />
 	</wsdl:message>
+	<wsdl:message name="nullEntryFaultMsg">
+    	<wsdl:part name="parameters" element="tns:nullEntryFault" />
+  	</wsdl:message>
 	<wsdl:portType name="ExactMatchService">
 		<wsdl:operation name="validateExactMatch">
 			<wsdl:input message="tns:validateExactMatchRequestMsg" />
 			<wsdl:output message="tns:validateExactMatchResponseMsg" />
+			<wsdl:fault name="nullEntryFault" message="tns:nullEntryFaultMsg"></wsdl:fault>
+			
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="ExactMatchService" type="tns:ExactMatchService">
@@ -46,7 +60,10 @@
 			<wsdl:output>
 				<soap:body use="literal" />
 			</wsdl:output>
-		</wsdl:operation>
+			<wsdl:fault name="nullEntryFault">
+        		<soap:fault name="nullEntryFault" use="literal"/>
+	  		</wsdl:fault>
+	  	</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:service name="ExactMatchService">
 		<wsdl:port binding="tns:ExactMatchService" name="ExactMatchService">
