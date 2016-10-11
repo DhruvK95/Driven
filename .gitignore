@@ -20,3 +20,5 @@ hs_err_pid*
 
 # Can also ignore all directories and files in a directory.
 GNAFService/* 
+
+DrivenRest/.project
