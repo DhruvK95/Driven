@@ -69,7 +69,7 @@ public class DrivenRest {
                 rnl = db.getRenewalNoticesList();
                 ResponseBuilder builder = null;
 
-                if (!status.equals(null)) { // If a particular status is queried
+                if (status != null) { // If a particular status is queried
                     for (RenewalNotice aRnl : rnl) {
                         if (aRnl.getStatus().equals(status)) {
                             builder = Response.ok().entity(aRnl);
