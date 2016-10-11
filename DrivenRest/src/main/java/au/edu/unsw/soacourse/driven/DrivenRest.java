@@ -142,15 +142,16 @@ public class DrivenRest {
                 if (renewalNoticesList.get(i).getNid().equals(form_nid)) {
                     RenewalNotice currNotice = renewalNoticesList.get(i);
                     found = Boolean.TRUE;
-                    if (auth.equals(DRIVER_KEY) && currNotice.getStatus().equals("under-review")) {
+                    if (auth.equals(DRIVER_KEY) && currNotice.getStatus().equals("under_review")) {
                         // Not allowed from DRIVER once the status of a renewal notice has moved to 'Under-Review'
                         builder = Response.status(Response.Status.UNAUTHORIZED).entity("Drivers cannot update " +
                                 "under-review notices");
+                    } else {
+                        // If found send to RMS to update.
+                        RMS_Impl rms = new RMS_Impl();
+                        RenewalNotice updatedRN = rms.updateRenewalNotice(currNotice, auth, form_status);
+                        builder = Response.ok().entity(updatedRN);
                     }
-                    // If found send to RMS to update.
-                    RMS_Impl rms = new RMS_Impl();
-                    RenewalNotice updatedRN = rms.updateRenewalNotice(currNotice, auth, form_status);
-                    builder = Response.ok().entity(updatedRN);
                 }
             }
             if (!found) {
