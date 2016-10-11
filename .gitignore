@@ -22,3 +22,7 @@ hs_err_pid*
 GNAFService/* 
 
 DrivenRest/.project
+
+DrivenRest/target/maven-archiver/pom.properties
+
+DrivenRest/.classpath
