@@ -28,13 +28,13 @@ COMP9322 - Assignment 2 RMS Car Registration Service
   * Requires OFFICER
 
 * `/notices/` __PUT__
-  * param eg. `?nid=2`
+  * Form param eg. `nid=2`
   * Update the status field of a renewal notice
   * OFFICER and DRIVER allowed
     * Not allowed from DRIVER once the status of a renewal notice has moved to 'Under-Review'
 
 * `/notices/` __DELETE__
-  * param eg. `?nid=2`
+  * Form param eg. `nid=2`
   * If the status is rejected, Delete can be initiated by the driver, confirmed by officer
 
 ### Payment
