@@ -14,6 +14,9 @@ import java.util.Date;
 public class DrivenRest {
     private final static String OFFICER_KEY = "RMSofficer";
     private final static String DRIVER_KEY = "driver";
+    RMS_Impl rms = new RMS_Impl();
+
+
 
     @DELETE
     @Path("/notices")
@@ -23,7 +26,6 @@ public class DrivenRest {
         String auth = headers.getRequestHeaders().getFirst("authorization");
         if (auth == null || form_nid == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
 
-        RMS_Impl rms = new RMS_Impl();
         if (rms.noticeExists(form_nid)) {
             RenewalNotice renewalNotice = rms.getNotice(form_nid);
             if (auth.equals(DRIVER_KEY)) {
@@ -55,11 +57,9 @@ public class DrivenRest {
     public Response generateNotices(@Context HttpHeaders headers) {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
-
         if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
         if (!auth.equals(OFFICER_KEY)) return Response.status(Response.Status.UNAUTHORIZED).build(); // Auth
 
-        RMS_Impl rms = new RMS_Impl();
         List<RenewalNotice> generatedNotices = rms.generateNotices();
         ResponseBuilder builder = Response.serverError();
 
@@ -182,7 +182,6 @@ public class DrivenRest {
                                 "under-review notices");
                     } else {
                         // If found send to RMS to update.
-                        RMS_Impl rms = new RMS_Impl();
                         RenewalNotice updatedRN = rms.updateRenewalNotice(currNotice, auth, form_status);
                         builder = Response.ok().entity(updatedRN);
                     }
