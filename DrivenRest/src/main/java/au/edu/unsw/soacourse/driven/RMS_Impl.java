@@ -116,6 +116,19 @@ public class RMS_Impl {
         return renewalNotice;
     }
 
+    public Payment getPayment(Integer pid) {
+        Payment payment = null;
+        DB_Handler db_handler = new DB_Handler();
+        List<Payment> notices = db_handler.getPaymentsList();
+        for (Payment p : notices) {
+            if (p.getPid().equals(pid)) {
+                payment = p;
+                break;
+            }
+        }
+        return payment;
+    }
+
     public Boolean noticeExists(Integer nid) {
         Boolean exists = Boolean.FALSE;
 
@@ -129,5 +142,20 @@ public class RMS_Impl {
         }
 
         return exists;
+    }
+
+    public Boolean paymentExists(Integer pid) {
+        Boolean exits = Boolean.FALSE;
+
+        DB_Handler db_handler = new DB_Handler();
+        List<Payment> payments = db_handler.getPaymentsList();
+        for (Payment p : payments) {
+            if (p.getPid().equals(pid)) {
+                exits = Boolean.TRUE;
+                break;
+            }
+        }
+
+        return exits;
     }
 }

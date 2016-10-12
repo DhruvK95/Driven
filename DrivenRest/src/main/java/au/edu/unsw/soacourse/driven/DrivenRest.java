@@ -1,5 +1,7 @@
 package au.edu.unsw.soacourse.driven;
 
+import org.sqlite.core.DB;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.ws.rs.HeaderParam;
@@ -16,7 +18,38 @@ public class DrivenRest {
     private final static String DRIVER_KEY = "driver";
     RMS_Impl rms = new RMS_Impl();
 
+    @GET
+    @Path("/payments/")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getPayment(@Context HttpHeaders headers,
+                               @QueryParam("pid") Integer query_pid) {
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+        if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
 
+        if (query_pid == null) {
+            if (auth.equals(OFFICER_KEY)) {
+                // An OFFICER can pass no query param to retrieve all payments
+                DB_Handler db_handler = new DB_Handler();
+                return Response.ok().entity(db_handler.getPaymentsList()).build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        }
+
+        if (auth.equals(OFFICER_KEY) || auth.equals(DRIVER_KEY)) {
+            // Check if pid exitsts
+            if (rms.paymentExists(query_pid)) {
+                // Get the payment and return
+                Payment payment = rms.getPayment(query_pid);
+                return Response.ok().entity(payment).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 
     @DELETE
     @Path("/notices")
