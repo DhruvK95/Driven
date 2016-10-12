@@ -291,6 +291,64 @@ public class DrivenRest {
     }
     
     
+    @PUT
+    @Path("/registrations")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updateRegistrations(@FormParam("rid") Integer form_rid,
+    									@FormParam("email") String form_email,
+    									@FormParam("address") String form_address,
+//    									@FormParam("RegistrationValidTill") String form_RegistrationValidTill,
+                                        @Context HttpHeaders headers) {
+        ResponseBuilder builder = null;
+
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+
+        System.out.println("form_rid: " + form_rid.toString());
+
+        if (!auth.equals(OFFICER_KEY) && !auth.equals(DRIVER_KEY)) {
+            builder = Response.status(Response.Status.UNAUTHORIZED);
+        } else {
+
+            XML_Handler xml = new XML_Handler();
+            List<Registration> registrationList = xml.makeRegistrationList();
+            Boolean found = Boolean.FALSE;
+            for (int i = 0; i < registrationList.size(); i++) {
+                if (registrationList.get(i).getrID().equals(form_rid)) {
+                    Registration currNotice = registrationList.get(i);
+                    found = Boolean.TRUE;
+                    if (currNotice.getrID().equals(form_rid)){
+                    	xml.updateEmail(form_rid, form_email);
+                    	xml.updateAddress(form_rid, form_address);
+                        registrationList = xml.makeRegistrationList();
+	            		for (int i1 = 0; i1 < registrationList.size(); i1++) {
+	            			if (registrationList.get(i1).getrID().equals(form_rid)) {
+	            				 currNotice = registrationList.get(i1);
+
+	            			}
+	            		}
+
+                        builder = Response.ok().entity(currNotice);
+                    }
+                }
+            }
+            if (!found) {
+                builder = Response.status(Response.Status.NOT_FOUND).entity("Could not find a notice with the " +
+                        "supplied Notice ID(nid)");
+            }
+        }
+
+
+        if (builder == null) {
+            builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+            return builder.build();
+        } else {
+            return builder.build();
+        }
+    }
+    
+    
     @GET
     @Path("/echo/{input}")
     @Produces("text/plain")
