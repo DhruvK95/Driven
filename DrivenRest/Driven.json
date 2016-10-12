@@ -1,11 +1,11 @@
 {
   "_type": "export",
   "__export_format": 2,
-  "__export_date": "2016-10-12T07:00:23.807Z",
+  "__export_date": "2016-10-12T07:58:07.995Z",
   "__export_source": "insomnia.desktop.app:v3.5.12",
   "resources": [
     {
-      "modified": 1476254927110,
+      "modified": 1476258791581,
       "created": 1476163697570,
       "parentId": null,
       "name": "Driven",
@@ -22,7 +22,7 @@
       "_type": "environment"
     },
     {
-      "modified": 1476255430438,
+      "modified": 1476259015875,
       "created": 1476164868301,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "name": "Default Jar",
@@ -192,6 +192,44 @@
       ],
       "authentication": {},
       "_id": "req_iu6k1vs6v9EwTetBjUNqCe4R",
+      "_type": "request"
+    },
+    {
+      "modified": 1476258684019,
+      "created": 1476258652048,
+      "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
+      "url": "http://localhost:8080/DrivenRest/driven/payments/",
+      "name": "GET Payments OFFICER",
+      "method": "GET",
+      "body": "",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "authorization",
+          "value": "RMSofficer"
+        }
+      ],
+      "authentication": {},
+      "_id": "req_iu6maa33wveRBujGuc6D9ZF9",
+      "_type": "request"
+    },
+    {
+      "modified": 1476258834740,
+      "created": 1476258704134,
+      "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
+      "url": "http://localhost:8080/DrivenRest/driven/payments/?pid=3",
+      "name": "GET Payment Driver",
+      "method": "GET",
+      "body": "",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "authorization",
+          "value": "driver"
+        }
+      ],
+      "authentication": {},
+      "_id": "req_iu6mbe9yUaHqdjC4N6kytMxu",
       "_type": "request"
     }
   ]
