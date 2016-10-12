@@ -1,11 +1,11 @@
 {
   "_type": "export",
   "__export_format": 2,
-  "__export_date": "2016-10-11T10:54:20.266Z",
+  "__export_date": "2016-10-12T07:00:23.807Z",
   "__export_source": "insomnia.desktop.app:v3.5.12",
   "resources": [
     {
-      "modified": 1476183197315,
+      "modified": 1476254927110,
       "created": 1476163697570,
       "parentId": null,
       "name": "Driven",
@@ -22,7 +22,7 @@
       "_type": "environment"
     },
     {
-      "modified": 1476183246770,
+      "modified": 1476255430438,
       "created": 1476164868301,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "name": "Default Jar",
@@ -146,6 +146,52 @@
       ],
       "authentication": {},
       "_id": "req_iu5dd0t6XFv65Ra2QV3CC3qj",
+      "_type": "request"
+    },
+    {
+      "modified": 1476186552026,
+      "created": 1476185569371,
+      "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
+      "url": "http://localhost:8080/DrivenRest/driven/notices/",
+      "name": "Update Notice DRIVER",
+      "method": "PUT",
+      "body": "nid=3&status=under_review",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "driver"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "authentication": {},
+      "_id": "req_iu5erv4q4rSSTsB4r2Mnhqyt",
+      "_type": "request"
+    },
+    {
+      "modified": 1476254949572,
+      "created": 1476254901034,
+      "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
+      "url": "http://localhost:8080/DrivenRest/driven/notices/",
+      "name": "Delete Notice",
+      "method": "DELETE",
+      "body": "nid=1",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "driver"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "authentication": {},
+      "_id": "req_iu6k1vs6v9EwTetBjUNqCe4R",
       "_type": "request"
     }
   ]

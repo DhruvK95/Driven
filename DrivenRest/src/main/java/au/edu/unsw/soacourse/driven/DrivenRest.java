@@ -15,6 +15,40 @@ public class DrivenRest {
     private final static String OFFICER_KEY = "RMSofficer";
     private final static String DRIVER_KEY = "driver";
 
+    @DELETE
+    @Path("/notices")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response deleteNotice(@Context HttpHeaders headers,
+                                 @FormParam("nid") Integer form_nid) {
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+        if (auth == null || form_nid == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
+
+        RMS_Impl rms = new RMS_Impl();
+        if (rms.noticeExists(form_nid)) {
+            RenewalNotice renewalNotice = rms.getNotice(form_nid);
+            if (auth.equals(DRIVER_KEY)) {
+                // Driver can set to archived if it is already rejected, or cancelled
+                if (renewalNotice.getStatus().equals("rejected") || renewalNotice.getStatus().equals("cancelled")) {
+                    rms.updateNotice(renewalNotice.getNid(), "archived");
+                    renewalNotice.setStatus("archived");
+                } else {
+                    // Driver can set to cancelled at any time?
+                    rms.updateNotice(renewalNotice.getNid(), "cancelled");
+                    renewalNotice.setStatus("cancelled");
+                }
+            } else {
+                // Archiving (i.e., deleting) renewal requests is only done by the drivers when the outcome of the
+                // processing is 'Rejected', or the request itself is cancelled by the driver
+                return Response.status(Response.Status.UNAUTHORIZED).build();
+            }
+            return Response.ok().entity(renewalNotice).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("No notice with given NID was found").build();
+        }
+    }
+
+
+
     @POST
     @Path("/notices/newNotices")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
