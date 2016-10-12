@@ -18,6 +18,95 @@ public class DrivenRest {
     private final static String DRIVER_KEY = "driver";
     RMS_Impl rms = new RMS_Impl();
 
+    @PUT
+    @Path("/payments")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updatePayment(@Context HttpHeaders headers,
+                                  @FormParam("pid") Integer pid,
+                                  @FormParam("cc_number") Integer cc_number,
+                                  @FormParam("cc_name") String cc_name,
+                                  @FormParam("cc_ccv") Integer cc_ccv) {
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+        if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
+
+        if (auth.equals(DRIVER_KEY)) {
+            if (rms.paymentExists(pid)) {
+                Payment payment = rms.getPayment(pid);
+                payment.setCredit_card_number(cc_number);
+                payment.setCredit_card_ccv(cc_ccv);
+                payment.setCredit_card_name(cc_name);
+
+                DB_Handler db_handler = new DB_Handler();
+                Date date = new Date();
+                payment.setPaid_date(date);
+                db_handler.updatePayment(payment.getPid(), payment.getCredit_card_number(), payment.getCredit_card_name
+                        (), payment.getCredit_card_ccv(), payment.getPaid_date());
+                return Response.ok().entity(payment).build();
+
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @DELETE
+    @Path("/payments")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response deletePayment(@Context HttpHeaders headers,
+                                  @FormParam("pid")Integer pid) {
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+        if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
+
+        if (auth.equals(OFFICER_KEY)) {
+            if (rms.paymentExists(pid)) {
+                Payment payment = rms.getPayment(pid);
+                DB_Handler db_handler = new DB_Handler();
+                db_handler.deletePayment(pid);
+                return Response.ok().entity(payment).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+    }
+
+    @POST
+    @Path("/payments")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response createPayment(@Context HttpHeaders headers,
+                                  @FormParam("fee") Integer form_fee,
+                                  @FormParam("nid") Integer form_nid) {
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+        if (auth == null || form_fee == null || form_nid == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
+
+        // Require OFFICER
+        if (auth.equals(OFFICER_KEY)) {
+            // Create a payment with notice
+            if (rms.noticeExists(form_nid)) {
+                DB_Handler db_handler = new DB_Handler();
+                Date date = new Date();
+                date.setTime(0);
+                Payment payment = new Payment(db_handler.getPaymentsRows(), form_nid, form_fee, 0, "", 0, date);
+                db_handler.addPayment(payment);
+                PaymentResponse paymentResponse = new PaymentResponse(payment,
+                        "http://localhost:8080/DrivenRest/driven/payments/?pid=" + payment.getPid().toString());
+                return Response.ok().entity(paymentResponse).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        // response of this HTTP POST must contain URI of the new payment and its location
+    }
+
     @GET
     @Path("/payments/")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

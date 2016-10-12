@@ -315,6 +315,30 @@ try {
 
     }
 
+    public void updatePayment(Integer pid, Integer credit_card_number, String credit_card_name, Integer
+            credit_card_ccv, Date paid_date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+        String strDate = sdf.format(paid_date);
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            System.out.println("DBh: Opened database successfully");
+            stmt = c.createStatement();
+            String sql = "UPDATE Payments SET credit_card_number ='" + credit_card_number.toString() + "' " +
+                    ", credit_card_ccv='" + credit_card_ccv.toString() + "' " +
+                    ", credit_card_name='" + credit_card_name + "' " +
+                    ", paid_date='" + strDate + "' " +
+                    "where pid=" + pid.toString();
+            stmt.executeUpdate(sql);
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
     public void deletePayment(Integer pid) {
         Connection c = null;
         Statement stmt = null;
