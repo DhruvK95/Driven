@@ -235,6 +235,62 @@ public class DrivenRest {
         }
     }
 
+
+
+    @GET
+    @Path("/registrations")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getRegistrations (@QueryParam("rid") Integer rid,
+                                      @Context HttpHeaders headers) {
+        System.out.println(headers.toString());
+        String auth = headers.getRequestHeaders().getFirst("authorization");
+
+        // Check required fields
+        if (rid == null) {
+            if (auth.equals(OFFICER_KEY)) { 
+                XML_Handler xml = new XML_Handler();
+                List<Registration> rrl = new ArrayList<>();
+                //grab registrations from xml
+                rrl = xml.makeRegistrationList();
+                ResponseBuilder builder = null;
+                //for all registrations
+                for (Registration aRrl : rrl) {
+                	builder = Response.ok().entity(aRrl);
+                }
+                //make builder object as list object
+                builder = Response.ok().entity(rrl);
+                
+                if (builder != null) {
+                	return builder.build();
+                } else {
+                	ResponseBuilder builder2 = Response.status(Response.Status.NOT_FOUND).entity("No registrations");
+                	return builder2.build();
+                }
+            } else if (auth.equals(null) || auth.equals(DRIVER_KEY)) {
+                ResponseBuilder builder = Response.status(Response.Status.UNAUTHORIZED).entity(" Supply an Rid ");
+                System.out.println("getRegistrations: BAD request");
+                return builder.build();
+            }
+        }
+
+        XML_Handler xml = new XML_Handler();
+        List<Registration> rrl = new ArrayList<>();
+        Registration respRegistration = null;
+        rrl = xml.makeRegistrationList();
+
+        // Assume content is not found, change response IF a notice with 'nid' is found
+        ResponseBuilder builder = Response.status(Response.Status.NOT_FOUND);
+
+        for (Registration aRrl : rrl) {
+            if (aRrl.getrID().equals(rid)) {
+            	respRegistration = aRrl;
+                builder = Response.ok().entity(respRegistration);
+            }
+        }
+        return builder.build();
+    }
+    
+    
     @GET
     @Path("/echo/{input}")
     @Produces("text/plain")
