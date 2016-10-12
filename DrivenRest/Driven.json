@@ -1,11 +1,11 @@
 {
   "_type": "export",
   "__export_format": 2,
-  "__export_date": "2016-10-12T13:32:49.892Z",
+  "__export_date": "2016-10-12T13:34:58.477Z",
   "__export_source": "insomnia.desktop.app:v3.5.12",
   "resources": [
     {
-      "modified": 1476279162107,
+      "modified": 1476279236610,
       "created": 1476163697570,
       "parentId": null,
       "name": "Driven",
@@ -22,7 +22,7 @@
       "_type": "environment"
     },
     {
-      "modified": 1476279160662,
+      "modified": 1476279276722,
       "created": 1476164868301,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "name": "Default Jar",
@@ -302,27 +302,14 @@
       "_type": "request"
     },
     {
-      "modified": 1476279140884,
+      "modified": 1476279274131,
       "created": 1476276564036,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/registrations",
       "name": "PUT chang registrtion",
       "method": "PUT",
-      "body": "",
-      "parameters": [
-        {
-          "name": "rid",
-          "value": "2"
-        },
-        {
-          "name": "email",
-          "value": "wfefweffess"
-        },
-        {
-          "name": "address",
-          "value": "ewfewffwnowheresss"
-        }
-      ],
+      "body": "rid=3&email=asfasdfkjab&address=xDDDDD",
+      "parameters": [],
       "headers": [
         {
           "name": "authorization",
