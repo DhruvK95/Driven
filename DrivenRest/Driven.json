@@ -1,11 +1,11 @@
 {
   "_type": "export",
   "__export_format": 2,
-  "__export_date": "2016-10-12T07:58:07.995Z",
+  "__export_date": "2016-10-12T12:11:29.045Z",
   "__export_source": "insomnia.desktop.app:v3.5.12",
   "resources": [
     {
-      "modified": 1476258791581,
+      "modified": 1476274269692,
       "created": 1476163697570,
       "parentId": null,
       "name": "Driven",
@@ -13,7 +13,7 @@
       "_type": "workspace"
     },
     {
-      "modified": 1476164868279,
+      "modified": 1476269885622,
       "created": 1476164868279,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "name": "Base Environment",
@@ -22,7 +22,7 @@
       "_type": "environment"
     },
     {
-      "modified": 1476259015875,
+      "modified": 1476274275053,
       "created": 1476164868301,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "name": "Default Jar",
@@ -31,7 +31,7 @@
       "_type": "cookie_jar"
     },
     {
-      "modified": 1476165066434,
+      "modified": 1476270235073,
       "created": 1476164975495,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/notices/newNotices",
@@ -50,7 +50,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476165241811,
+      "modified": 1476269885626,
       "created": 1476165208666,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/notices/?status=created",
@@ -69,7 +69,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476180681664,
+      "modified": 1476269885626,
       "created": 1476180610735,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/notices/",
@@ -88,7 +88,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476180696569,
+      "modified": 1476269885627,
       "created": 1476180658320,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/notices/",
@@ -107,7 +107,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476180739707,
+      "modified": 1476269885627,
       "created": 1476180724323,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/notices/?nid=2",
@@ -126,7 +126,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476183244875,
+      "modified": 1476269885628,
       "created": 1476183197274,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/notices/",
@@ -149,7 +149,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476186552026,
+      "modified": 1476269885628,
       "created": 1476185569371,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/notices/",
@@ -172,7 +172,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476254949572,
+      "modified": 1476269885629,
       "created": 1476254901034,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/notices/",
@@ -195,7 +195,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476258684019,
+      "modified": 1476270183430,
       "created": 1476258652048,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/payments/",
@@ -214,7 +214,7 @@
       "_type": "request"
     },
     {
-      "modified": 1476258834740,
+      "modified": 1476269904458,
       "created": 1476258704134,
       "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
       "url": "http://localhost:8080/DrivenRest/driven/payments/?pid=3",
@@ -230,6 +230,30 @@
       ],
       "authentication": {},
       "_id": "req_iu6mbe9yUaHqdjC4N6kytMxu",
+      "_type": "request"
+    },
+    {
+      "modified": 1476274271012,
+      "created": 1476273093621,
+      "parentId": "wrk_iu51r2qp5eS2hQZWtntUNc4D",
+      "url": "http://localhost:8080/DrivenRest/driven/registrations",
+      "name": "GET all Registrations",
+      "method": "GET",
+      "body": "",
+      "parameters": [
+        {
+          "name": "rid",
+          "value": "2"
+        }
+      ],
+      "headers": [
+        {
+          "name": "authorization",
+          "value": "driver"
+        }
+      ],
+      "authentication": {},
+      "_id": "req_iu6uvt9xTtsbVD7UFdUHmUzE",
       "_type": "request"
     }
   ]
