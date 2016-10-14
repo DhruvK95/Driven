@@ -57,7 +57,7 @@ public class DrivenRest {
     @Path("/payments")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response deletePayment(@Context HttpHeaders headers,
-                                  @FormParam("pid")Integer pid) {
+                                  @FormParam("pid") Integer pid) {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
         if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
@@ -85,7 +85,8 @@ public class DrivenRest {
                                   @FormParam("nid") Integer form_nid) {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
-        if (auth == null || form_fee == null || form_nid == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
+        if (auth == null || form_fee == null || form_nid == null)
+            return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
 
         // Require OFFICER
         if (auth.equals(OFFICER_KEY)) {
@@ -147,7 +148,8 @@ public class DrivenRest {
     public Response deleteNotice(@Context HttpHeaders headers,
                                  @FormParam("nid") Integer form_nid) {
         String auth = headers.getRequestHeaders().getFirst("authorization");
-        if (auth == null || form_nid == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
+        if (auth == null || form_nid == null)
+            return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
 
         if (rms.noticeExists(form_nid)) {
             RenewalNotice renewalNotice = rms.getNotice(form_nid);
@@ -171,7 +173,6 @@ public class DrivenRest {
             return Response.status(Response.Status.NOT_FOUND).entity("No notice with given NID was found").build();
         }
     }
-
 
 
     @POST
@@ -208,9 +209,9 @@ public class DrivenRest {
     @GET
     @Path("/notices")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getRenewalNotice (@QueryParam("nid") Integer nid,
-                                      @QueryParam("status") String status,
-                                      @Context HttpHeaders headers)
+    public Response getRenewalNotice(@QueryParam("nid") Integer nid,
+                                     @QueryParam("status") String status,
+                                     @Context HttpHeaders headers)
             throws ParserConfigurationException {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
@@ -326,18 +327,18 @@ public class DrivenRest {
     }
 
 
-
     @GET
     @Path("/registrations")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getRegistrations (@QueryParam("rid") Integer rid,
-                                      @Context HttpHeaders headers) {
+    public Response getRegistrations(@QueryParam("rid") Integer rid,
+                                     @Context HttpHeaders headers) {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
 
         // Check required fields
         if (rid == null) {
-            if (auth.equals(OFFICER_KEY)) { 
+            if (auth.equals(OFFICER_KEY)) {
                 XML_Handler xml = new XML_Handler();
                 List<Registration> rrl = new ArrayList<>();
                 //grab registrations from xml
@@ -345,16 +346,16 @@ public class DrivenRest {
                 ResponseBuilder builder = null;
                 //for all registrations
                 for (Registration aRrl : rrl) {
-                	builder = Response.ok().entity(aRrl);
+                    builder = Response.ok().entity(aRrl);
                 }
                 //make builder object as list object
                 builder = Response.ok().entity(rrl);
-                
+
                 if (builder != null) {
-                	return builder.build();
+                    return builder.build();
                 } else {
-                	ResponseBuilder builder2 = Response.status(Response.Status.NOT_FOUND).entity("No registrations");
-                	return builder2.build();
+                    ResponseBuilder builder2 = Response.status(Response.Status.NOT_FOUND).entity("No registrations");
+                    return builder2.build();
                 }
             } else if (auth.equals(null) || auth.equals(DRIVER_KEY)) {
                 ResponseBuilder builder = Response.status(Response.Status.UNAUTHORIZED).entity(" Supply an Rid ");
@@ -373,22 +374,20 @@ public class DrivenRest {
 
         for (Registration aRrl : rrl) {
             if (aRrl.getrID().equals(rid)) {
-            	respRegistration = aRrl;
+                respRegistration = aRrl;
                 builder = Response.ok().entity(respRegistration);
             }
         }
         return builder.build();
     }
-    
-    
-    @SuppressWarnings("unused")
-	@PUT
+
+
+    @PUT
     @Path("/registrations")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response updateRegistrations(@FormParam("rid") Integer form_rid,
-    									@FormParam("email") String form_email,
-    									@FormParam("address") String form_address,
+                                        @FormParam("email") String form_email,
+                                        @FormParam("address") String form_address,
 //    									@FormParam("RegistrationValidTill") String form_RegistrationValidTill,
                                         @Context HttpHeaders headers) {
         ResponseBuilder builder = null;
@@ -396,12 +395,12 @@ public class DrivenRest {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
 
-     //   System.out.println("form_rid: " + form_rid.toString());
-        if(form_rid.toString()==null || form_email==null || form_address==null){
-            System.out.println("form_rid: " + form_rid.toString());
+        // System.out.println("form_rid: " + form_rid.toString());
+        if (form_rid == null || form_email == null || form_address == null) {
+            // System.out.println("form_rid: " + form_rid.toString());
 
-	    	 builder = Response.status(Response.Status.BAD_REQUEST).entity("entry fields needed");
-	    	return builder.build();
+            builder = Response.status(Response.Status.BAD_REQUEST).entity("entry fields needed");
+            return builder.build();
         }
         if (!auth.equals(OFFICER_KEY) && !auth.equals(DRIVER_KEY)) {
             builder = Response.status(Response.Status.UNAUTHORIZED);
@@ -414,16 +413,16 @@ public class DrivenRest {
                 if (registrationList.get(i).getrID().equals(form_rid)) {
                     Registration currNotice = registrationList.get(i);
                     found = Boolean.TRUE;
-                    if (currNotice.getrID().equals(form_rid)){
-                    	xml.updateEmail(form_rid, form_email);
-                    	xml.updateAddress(form_rid, form_address);
+                    if (currNotice.getrID().equals(form_rid)) {
+                        xml.updateEmail(form_rid, form_email);
+                        xml.updateAddress(form_rid, form_address);
                         registrationList = xml.makeRegistrationList();
-	            		for (int i1 = 0; i1 < registrationList.size(); i1++) {
-	            			if (registrationList.get(i1).getrID().equals(form_rid)) {
-	            				 currNotice = registrationList.get(i1);
+                        for (int i1 = 0; i1 < registrationList.size(); i1++) {
+                            if (registrationList.get(i1).getrID().equals(form_rid)) {
+                                currNotice = registrationList.get(i1);
 
-	            			}
-	            		}
+                            }
+                        }
 
                         builder = Response.ok().entity(currNotice);
                     }
@@ -442,11 +441,11 @@ public class DrivenRest {
         } else {
             return builder.build();
         }
-        
-        
+
+
     }
-    
-    
+
+
     @GET
     @Path("/echo/{input}")
     @Produces("text/plain")
