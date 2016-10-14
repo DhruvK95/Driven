@@ -7,6 +7,7 @@ import javax.ws.rs.core.*;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.parsers.ParserConfigurationException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -380,7 +381,8 @@ public class DrivenRest {
     }
     
     
-    @PUT
+    @SuppressWarnings("unused")
+	@PUT
     @Path("/registrations")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -394,8 +396,13 @@ public class DrivenRest {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
 
-        System.out.println("form_rid: " + form_rid.toString());
+     //   System.out.println("form_rid: " + form_rid.toString());
+        if(form_rid.toString()==null || form_email==null || form_address==null){
+            System.out.println("form_rid: " + form_rid.toString());
 
+	    	 builder = Response.status(Response.Status.BAD_REQUEST).entity("entry fields needed");
+	    	return builder.build();
+        }
         if (!auth.equals(OFFICER_KEY) && !auth.equals(DRIVER_KEY)) {
             builder = Response.status(Response.Status.UNAUTHORIZED);
         } else {
@@ -435,6 +442,8 @@ public class DrivenRest {
         } else {
             return builder.build();
         }
+        
+        
     }
     
     

@@ -15,6 +15,8 @@ public class restJavaOperation {
 
 	static final String REST_URI = "http://localhost:8080/DrivenRest/driven/";
 	
+	
+	//get registrations, id is inptutted as null if officer
 	public static void getRegistrations(String id){
 		WebClient drivenClient = WebClient.create(REST_URI);
 		drivenClient.path("/registrations").accept(MediaType.APPLICATION_JSON);
@@ -51,6 +53,10 @@ public class restJavaOperation {
 
 	    }
  
+	}
+	
+	public static void getPayment(){
+		
 	}
 	
 	public static void main(String[] args) {
