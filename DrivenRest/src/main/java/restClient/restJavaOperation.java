@@ -80,7 +80,6 @@ public class restJavaOperation {
         drivenClient.header("Content-Type", "application/json");
         Response s = drivenClient.get();
         String result = s.readEntity(String.class);
-        System.out.println(result);
     	
         if(flag==1){
         	JSONObject jObj = new JSONObject(result);
@@ -107,39 +106,91 @@ public class restJavaOperation {
 	            System.out.println("amount==>" +jObj.getInt("amount"));
 	            
 	        }
-        }
- 
-    	
+        }    	
     	
     }
     
-//    public static void putRegistrations(String form_rid, String form_email, String form_address){
-//        WebClient drivenClient = WebClient.create(REST_URI);
-//        
-//        drivenClient.path("/registrations").accept(MediaType.APPLICATION_JSON);
-//        
-//        drivenClient.header("authorization", "RMSofficer");
-//        drivenClient.header("Content-Type", "application/json");
-//        
-////      Form form = new Form();
-////      form.param("email", form_email);
-////      form.param("address", form_address);
-////      form.param("rid", form_rid);
-////      
-//        //drivenClient.form(form);
-//        
-//        Response s = drivenClient.put(drivenClient);
-//        
-//        String result = s.readEntity(String.class);
-////      result = result.substring(1, result.length()-1);
-////
-//        System.out.println(result.substring(1, result.length()-1));
-//        
-//       // JSONArray jA = new JSONArray(result.substring(1, result.length()-1));
-//
-//
-//       
-//    }
+    
+    public static void getNotices(String id){
+    	
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
+	    	int flag = 0 ;
+	        if(id==null){
+	            drivenClient.header("authorization", "RMSofficer");
+	        }else{
+	            drivenClient.header("authorization", "driver");
+	            drivenClient.query("nid", id);
+	            flag=1;
+	        }
+	        drivenClient.header("Content-Type", "application/json");
+	        Response s = drivenClient.get();
+	        String result = s.readEntity(String.class);
+	        //System.out.print(s.getStatus());
+	        if(flag==1){
+	        	JSONObject jObj = new JSONObject(result);
+	
+	            System.out.println("nid==>" +  jObj.getInt("nid"));
+	            System.out.println("status==>" +jObj.getString("status"));            
+	            System.out.println("rid==>" +jObj.getInt("rid"));
+	            
+	        }else{
+		        JSONArray jArrObj = new JSONArray(result);        
+		        for(int i=0;i<jArrObj.length(); i++){
+		            JSONObject jObj = jArrObj.getJSONObject(i);
+	
+		            System.out.println("nid==>" +  jObj.getInt("nid"));
+		            System.out.println("status==>" +jObj.getString("status"));            
+		            System.out.println("rid==>" +jObj.getInt("rid"));
+		           
+		            
+		        }
+	        }    	
+    	
+      	
+    }
+    
+    public static void postPayments(String nid, String fee){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	
+    	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "RMSofficer");
+        drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
+    	
+        Form form = new Form();
+		form.param("fee", fee);
+		form.param("nid", nid);
+		
+        Response s = drivenClient.post(form);
+    	JSONObject jObj = new JSONObject(s.readEntity(String.class));
+        
+        System.out.println(jObj.getString("link"));
+    
+    }
+    
+    public static void deletePayments(String pid){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	
+    	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "RMSofficer");
+        drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
+		drivenClient.query("pid", pid);
+
+        Response s = drivenClient.delete();
+        
+        System.out.println(s.getStatus());
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -150,6 +201,11 @@ public class restJavaOperation {
         //getRegistrations(null);
         //get payments input must be rid in String ie. "1"
         //getPayments(null);
+        //get notices input must be rid in String ie. "1"
+        //getNotices("2");
+
+        //postPayments("2","2000");
+        deletePayments("4");
     }
     
 }
