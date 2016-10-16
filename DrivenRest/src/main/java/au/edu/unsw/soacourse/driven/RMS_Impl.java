@@ -55,12 +55,26 @@ public class RMS_Impl {
 
         // Get today's date
         Date currDate = new Date();
+        // Removing hours/mins...
+            // Get Calendar object set to the date and time of the given Date object
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(currDate);
+
+            // Set time fields to zero
+        cal1.set(Calendar.HOUR_OF_DAY, 0);
+        cal1.set(Calendar.MINUTE, 0);
+        cal1.set(Calendar.SECOND, 0);
+        cal1.set(Calendar.MILLISECOND, 0);
+
+            // Put it back in the Date object
+        currDate = cal1.getTime();
+
         System.out.println(currDate.toString());
 
 
         // For each driver.validTill ..., if <condition>
         for (Registration reg : rList) {
-            // (Date in <RegistrationValidTill>) - 30 days < TODAY's DATE < (Date in <RegistrationValidTill>)
+            // (Date in <RegistrationValidTill>) - 30 days =< TODAY's DATE =< (Date in <RegistrationValidTill>)
             Calendar cal = Calendar.getInstance();
             cal.setTime(reg.getValidTill());
             cal.add(Calendar.DATE, -30);
@@ -80,6 +94,21 @@ public class RMS_Impl {
                     generatedNotices.add(rn);
                 } else {
                     System.out.println("Notice already exists in DB");
+                }
+            } else {
+                if ((validTill_30.equals(currDate) || validTill_30.before(currDate))) {
+                    System.out.println("!First part PASSED");
+                } else {
+                    System.out.println("!First part failed");
+                    System.out.println(currDate.toString());
+                    System.out.println(validTill_30.toString());
+                }
+                if ((currDate.before(reg.getValidTill()) || currDate.equals(reg.getValidTill()))) {
+                    System.out.println("!Second part PASSED");
+                } else {
+                    System.out.println("!Second part failed");
+                    System.out.println(currDate.toString());
+                    System.out.println(reg.getValidTill().toString());
                 }
             }
         }
