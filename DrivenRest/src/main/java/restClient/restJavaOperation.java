@@ -66,12 +66,49 @@ public class restJavaOperation {
  
     }
     
-    public static void getPayments(){
+    public static void getPayments(String id){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
+    	int flag = 0 ;
+        if(id==null){
+            drivenClient.header("authorization", "RMSofficer");
+        }else{
+            drivenClient.header("authorization", "driver");
+            drivenClient.query("pid", id);
+            flag=1;
+        }
+        drivenClient.header("Content-Type", "application/json");
+        Response s = drivenClient.get();
+        String result = s.readEntity(String.class);
+        System.out.println(result);
     	
-    	
-    	
-    	
-    	
+        if(flag==1){
+        	JSONObject jObj = new JSONObject(result);
+
+            System.out.println("pid==>" +  jObj.getInt("pid"));
+            System.out.println("credit_card_number==>" +jObj.getInt("credit_card_number"));
+            System.out.println("credit_card_name==>" +jObj.getString("credit_card_name"));
+            System.out.println("credit_card_ccv==>" +jObj.getInt("credit_card_ccv"));
+            System.out.println("paid_date==>" +jObj.getLong("paid_date"));
+            System.out.println("nid==>" +jObj.getInt("nid"));
+            System.out.println("amount==>" +jObj.getInt("amount"));
+
+        }else{
+	        JSONArray jArrObj = new JSONArray(result);        
+	        for(int i=0;i<jArrObj.length(); i++){
+	            JSONObject jObj = jArrObj.getJSONObject(i);
+
+	            System.out.println("pid==>" +  jObj.getInt("pid"));
+	            System.out.println("credit_card_number==>" +jObj.getInt("credit_card_number"));
+	            System.out.println("credit_card_name==>" +jObj.getString("credit_card_name"));
+	            System.out.println("credit_card_ccv==>" +jObj.getInt("credit_card_ccv"));
+	            System.out.println("paid_date==>" +jObj.getLong("paid_date"));
+	            System.out.println("nid==>" +jObj.getInt("nid"));
+	            System.out.println("amount==>" +jObj.getInt("amount"));
+	            
+	        }
+        }
+ 
     	
     	
     }
@@ -111,6 +148,8 @@ public class restJavaOperation {
         
         //get registrations input must be rid in String ie. "1"
         //getRegistrations(null);
+        //get payments input must be rid in String ie. "1"
+        //getPayments(null);
     }
     
 }
