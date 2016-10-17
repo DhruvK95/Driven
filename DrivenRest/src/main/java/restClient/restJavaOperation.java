@@ -168,6 +168,30 @@ public class restJavaOperation {
     
     }
     
+    public static void postNotices(){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	
+    	drivenClient.path("/notices/newNotices").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("Authorization", "RMSofficer");
+        drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
+        Form form = new Form();
+
+        Response s = drivenClient.post(form);
+    	//JSONObject jObj = new JSONObject();
+        JSONArray jArrObj = new JSONArray(s.readEntity(String.class));        
+        for(int i=0;i<jArrObj.length(); i++){
+        JSONObject jObj = jArrObj.getJSONObject(i);
+
+            //JSONObject jObj = new JSONObject(s.readEntity(String.class));
+            System.out.println("nid==>" +  jObj.getString("link"));
+           
+            
+        }
+       // System.out.println(jObj.getString("link"));
+
+    
+    }
+    
     public static void deletePayments(String pid){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
@@ -182,17 +206,116 @@ public class restJavaOperation {
     
     }
     
+    public static void deleteNotice(String pid){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	
+    	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "driver");
+        drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
+		drivenClient.query("nid", pid);
+
+        Response s = drivenClient.delete();
+        
+        JSONObject jArrObj = new JSONObject(s.readEntity(String.class));        
+        
+        
+        System.out.println(jArrObj.getString("status"));
+        System.out.println(s.getStatus());
     
+    }
     
+    public static void putPayments(String pid, String cc_number, String cc_name, String cc_ccv){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	
+    	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "driver");
+        drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
+
+
+        Form form = new Form();
+		form.param("pid", pid);
+		form.param("cc_number", cc_number);
+		form.param("cc_name", cc_name);
+		form.param("cc_ccv", cc_ccv);
+		
+		
+        Response s = drivenClient.put(form);
+        
+               
+        JSONObject jArrObj = new JSONObject(s.readEntity(String.class));        
+        
+        
+        System.out.println(s.getStatus());
     
+    }
     
+    public static void putRegistration(String rid, String email, String address){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	
+    	drivenClient.path("/registrations").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "RMSofficer");
+        drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
+
+
+        Form form = new Form();
+		form.param("rid", rid);
+		form.param("email", email);
+		form.param("address", address);
+		
+		
+        Response s = drivenClient.put(form);
+        
+               
+        JSONObject jArrObj = new JSONObject(s.readEntity(String.class));        
+        
+        
+        System.out.println(s.getStatus());
     
+    }
     
+    public static void putNoticesDriver(String nid, String status){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	
+    	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "driver");
+        drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
+
+
+        Form form = new Form();
+		form.param("nid", nid);
+		form.param("status", status);
+		
+        Response s = drivenClient.put(form);
+        
+               
+        JSONObject jArrObj = new JSONObject(s.readEntity(String.class));        
+        
+        
+        System.out.println(s.getStatus());
+    }
+
+    public static void putNoticesOfficer(String nid, String status){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	
+    	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "RMSofficer");
+        drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
+
+
+        Form form = new Form();
+		form.param("nid", nid);
+		form.param("status", status);
+		
+        Response s = drivenClient.put(form);
+        
+               
+        JSONObject jArrObj = new JSONObject(s.readEntity(String.class));        
+        
+        
+        System.out.println(s.getStatus());
+    }
     
-    
-    
-    
-    
+        
     
     public static void main(String[] args) {
         String empty = null;
@@ -205,7 +328,14 @@ public class restJavaOperation {
         //getNotices("2");
 
         //postPayments("2","2000");
-        deletePayments("4");
+        //deletePayments("4");
+        //postNotices();
+        //deleteNotice("2");
+        //String pid, String cc_number, String cc_name, String cc_ccv
+        //putPayments("2","333","LEON","111");
+        //id, email, address
+        //putRegistration("1","123","test");
+        putNoticesDriver("1","under_review");
     }
     
 }

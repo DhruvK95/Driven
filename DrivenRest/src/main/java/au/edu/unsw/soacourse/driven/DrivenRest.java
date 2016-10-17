@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Date;
 
@@ -179,6 +180,9 @@ public class DrivenRest {
     @Path("/notices/newNotices")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response generateNotices(@Context HttpHeaders headers) {
+    	DB_Handler db = new DB_Handler();
+        db.dropTables();
+        db.createTables();
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
         if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
@@ -395,7 +399,6 @@ public class DrivenRest {
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
 
-        // System.out.println("form_rid: " + form_rid.toString());
         if (form_rid == null || form_email == null || form_address == null) {
             // System.out.println("form_rid: " + form_rid.toString());
 
@@ -413,9 +416,18 @@ public class DrivenRest {
                 if (registrationList.get(i).getrID().equals(form_rid)) {
                     Registration currNotice = registrationList.get(i);
                     found = Boolean.TRUE;
+                  
                     if (currNotice.getrID().equals(form_rid)) {
                         xml.updateEmail(form_rid, form_email);
                         xml.updateAddress(form_rid, form_address);
+                        Calendar cal = Calendar.getInstance();
+                        Date validNew = currNotice.getValidTill();
+                        cal.setTime(validNew);
+                        cal.add(Calendar.YEAR, 1);
+                        
+                        Date validTill_30 = cal.getTime();
+                        System.out.println(validTill_30 + "  " + validNew);
+                        xml.updateRegistrationValidTill(form_rid, validTill_30);
                         registrationList = xml.makeRegistrationList();
                         for (int i1 = 0; i1 < registrationList.size(); i1++) {
                             if (registrationList.get(i1).getrID().equals(form_rid)) {
@@ -423,6 +435,8 @@ public class DrivenRest {
 
                             }
                         }
+                        
+                        
 
                         builder = Response.ok().entity(currNotice);
                     }
