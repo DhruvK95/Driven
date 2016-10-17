@@ -209,7 +209,6 @@ public class DrivenRest {
                 rms.addEmalCodeToDB(renewalNoticeResponse.getRenewalNotice().getNid(), emailCode);
                     // Call RMS to get the email asssociated with a rid
                 String emailTo = rms.getEmailFromRid(renewalNoticeResponse.getRenewalNotice().getRid());
-                System.out.println("Email was: " + emailTo);
 
                 // Create the HTML Message to send...
                 String htmlMessage = "E-mail by Driven RMS <br>" +

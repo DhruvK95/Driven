@@ -201,8 +201,6 @@ public class RMS_Impl {
     }
 
     public String getEmailFromRid(Integer rid) {
-        System.out.println("getEmailFromRid " + rid.toString());
-
         XML_Handler xh = new XML_Handler();
         String returnString = "null";
         List<Registration> rList = xh.makeRegistrationList();
@@ -210,7 +208,6 @@ public class RMS_Impl {
             if (rid.equals(r.getrID())) {
                 return r.getDriver().getEmail();
             }
-            System.out.println(r.getrID().toString() + " was not equal");
         }
         return returnString;
     }
