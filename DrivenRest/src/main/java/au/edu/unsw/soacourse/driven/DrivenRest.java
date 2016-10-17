@@ -188,6 +188,11 @@ public class DrivenRest {
         if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
         if (!auth.equals(OFFICER_KEY)) return Response.status(Response.Status.UNAUTHORIZED).build(); // Auth
 
+        DB_Handler db_handler = new DB_Handler();
+        System.out.println("Testing");
+        db_handler.createTables();
+        rms.addEmalCodeToDB(1);
+
         List<RenewalNotice> generatedNotices = rms.generateNotices();
         ResponseBuilder builder = Response.serverError();
 

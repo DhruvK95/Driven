@@ -64,9 +64,20 @@ try {
                     "  Payments_Renewal_Notices_nid_fk FOREIGN KEY (nid) REFERENCES Renewal_Notices (nid)" +
                     ");\n";
             stmt.executeUpdate(sql);
+            stmt.close();
+
+            System.out.println("Payments created");
+
+            stmt = c.createStatement();
+            sql = "CREATE TABLE Email_Codes (nid INT PRIMARY KEY, uniq_code CHAR(500));\n";
+            stmt.executeUpdate(sql);
             c.close();
+
+            System.out.println("Codes table created");
+
+
         } catch (Exception e) {
-            System.out.println("Create Tables ERROR");
+            System.out.println("Create Tables ERROR...2");
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
@@ -83,7 +94,7 @@ try {
             System.out.println("DBh: Opened database successfully");
             stmt = c.createStatement();
             String sql = "DROP TABLE Renewal_Notices; \n" +
-                    "DROP TABLE Payments;";
+                    "DROP TABLE Payments; \n DROP TABLE Email_Codes;";
             stmt.executeUpdate(sql);
             stmt.close();
             c.close();
@@ -158,6 +169,23 @@ try {
             System.exit(0);
         }
         System.out.println("Payment added successfully");
+    }
+
+    public void addEmailCode(Integer id, String code) {
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            stmt = c.createStatement();
+            String sql = "INSERT INTO Email_Codes (nid, uniq_code) VALUES (" +
+                    id.toString() + "," + "'" + code + "'" + ");";
+            stmt.executeUpdate(sql);
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
     }
 
     public void addRenewalNotice(Integer rid, String status) {
@@ -259,6 +287,34 @@ try {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
+    }
+
+    public List<EmailCode> getEmailCodes() {
+        List<EmailCode> emailCodes = new ArrayList<>();
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:Driven.db");
+            System.out.println("DBh/getEmailCodes: Opened database successfully");
+            stmt = c.createStatement();
+            // String sql = "";
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Email_Codes;");
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String code = rs.getString("uniq_code");
+                EmailCode ec = new EmailCode(id, code);
+                emailCodes.add(ec);
+            }
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.out.println("getEmailCodes ERROR");
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Returning EmailCodes List");
+        return emailCodes;
     }
 
     public List<Payment> getPaymentsList() {

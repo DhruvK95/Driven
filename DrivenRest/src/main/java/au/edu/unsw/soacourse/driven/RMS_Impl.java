@@ -5,6 +5,7 @@ import org.sqlite.core.DB;
 
 import java.util.*;
 import java.util.Calendar;
+import java.util.UUID;
 
 
 /**
@@ -186,5 +187,16 @@ public class RMS_Impl {
         }
 
         return exits;
+    }
+
+    public String generateRandomString() {
+        String uuid = UUID.randomUUID().toString();
+        System.out.println(uuid);
+        return uuid;
+    }
+
+    public void addEmalCodeToDB(Integer id, String code) {
+        DB_Handler db_handler = new DB_Handler();
+        db_handler.addEmailCode(id, code);
     }
 }
