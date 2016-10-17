@@ -11,6 +11,8 @@ import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 
+import bpelSpawner.soapClient;
+
 
 
 public class restJavaOperation {
@@ -335,7 +337,14 @@ public class restJavaOperation {
         //putPayments("2","333","LEON","111");
         //id, email, address
         //putRegistration("1","123","test");
-        putNoticesDriver("1","under_review");
+        //putNoticesDriver("1","under_review");
+        
+        soapClient sP = new soapClient();
+        
+        sP.doSoap("1,DOWLING SqTREET,BEGA,NSW,2550");
+        if(sP.Exact){
+        	System.out.print("RUN ACCEPT ON ADDRESS");
+        }
     }
     
 }
