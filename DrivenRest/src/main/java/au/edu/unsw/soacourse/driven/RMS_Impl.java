@@ -199,4 +199,19 @@ public class RMS_Impl {
         DB_Handler db_handler = new DB_Handler();
         db_handler.addEmailCode(id, code);
     }
+
+    public String getEmailFromRid(Integer rid) {
+        System.out.println("getEmailFromRid " + rid.toString());
+
+        XML_Handler xh = new XML_Handler();
+        String returnString = "null";
+        List<Registration> rList = xh.makeRegistrationList();
+        for (Registration r : rList) {
+            if (rid.equals(r.getrID())) {
+                return r.getDriver().getEmail();
+            }
+            System.out.println(r.getrID().toString() + " was not equal");
+        }
+        return returnString;
+    }
 }

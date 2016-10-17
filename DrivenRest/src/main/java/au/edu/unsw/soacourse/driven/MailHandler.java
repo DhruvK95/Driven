@@ -17,16 +17,16 @@ public class MailHandler {
     static Session getMailSession;
     static MimeMessage generateMailMessage;
 
-    public static void main(String args[]) throws AddressException, MessagingException {
-        String body = "E-mail by Driven RMS <br>" +
-                "<p><a href=\"http://localhost:8080/DrivenRest/driven/notices/?nid=1\">Click here to view Renewal " +
-                "Notice</a></p> " +
-                "<br> Regards, <br>Driven Admin";
-        generateAndSendEmail("dhruvk995@gmail.com", "Driven renewal Notice", body);
-        System.out.println("\n\n ===> Your Java Program has just sent an Email successfully. Check your email..");
-    }
+    // public static void main(String args[]) throws AddressException, MessagingException {
+    //     String body = "E-mail by Driven RMS <br>" +
+    //             "<p><a href=\"http://localhost:8080/DrivenRest/driven/notices/?nid=1\">Click here to view Renewal " +
+    //             "Notice</a></p> " +
+    //             "<br> Regards, <br>Driven Admin";
+    //     generateAndSendEmail("dhruvk995@gmail.com", "Driven renewal Notice", body);
+    //     System.out.println("\n\n ===> Your Java Program has just sent an Email successfully. Check your email..");
+    // }
 
-    public static void generateAndSendEmail(String recipientEmail, String emailSubject, String emailBody) throws
+    public void generateAndSendEmail(String recipientEmail,String ccEmail, String emailSubject, String emailBody) throws
             AddressException,
             MessagingException {
 
@@ -43,7 +43,7 @@ public class MailHandler {
         getMailSession = Session.getDefaultInstance(mailServerProperties, null);
         generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
-        // generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("test2@crunchify.com"));
+        generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(ccEmail));
         generateMailMessage.setSubject(emailSubject);
         generateMailMessage.setContent(emailBody, "text/html");
         System.out.println("Mail Session has been created successfully..");

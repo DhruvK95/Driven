@@ -2,6 +2,7 @@ package au.edu.unsw.soacourse.driven;
 
 import org.sqlite.core.DB;
 
+import javax.mail.MessagingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.ws.rs.HeaderParam;
@@ -181,20 +182,18 @@ public class DrivenRest {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response generateNotices(@Context HttpHeaders headers) {
     	DB_Handler db = new DB_Handler();
-        db.dropTables();
-        db.createTables();
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
         if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
         if (!auth.equals(OFFICER_KEY)) return Response.status(Response.Status.UNAUTHORIZED).build(); // Auth
 
-        DB_Handler db_handler = new DB_Handler();
-        System.out.println("Testing");
-        db_handler.createTables();
-        rms.addEmalCodeToDB(1);
+        System.out.println("Testing email2223");
+        db.dropTables();
+        db.createTables();
 
         List<RenewalNotice> generatedNotices = rms.generateNotices();
         ResponseBuilder builder = Response.serverError();
+        MailHandler mailHandler = new MailHandler();
 
         List<RenewalNoticeResponse> renewalNoticeResponses = new ArrayList<>();
         if (generatedNotices.size() > 0) {
@@ -203,6 +202,27 @@ public class DrivenRest {
                 RenewalNoticeResponse renewalNoticeResponse = new RenewalNoticeResponse(aRN,
                         "http://localhost:8080/DrivenRest/driven/notices?nid=" + aRN.getNid().toString());
                 renewalNoticeResponses.add(renewalNoticeResponse);
+
+                // For each notice that is added, Add the nid and code to the DB
+                String emailCode = rms.generateRandomString();
+                    // Add email code to the DB
+                rms.addEmalCodeToDB(renewalNoticeResponse.getRenewalNotice().getNid(), emailCode);
+                    // Call RMS to get the email asssociated with a rid
+                String emailTo = rms.getEmailFromRid(renewalNoticeResponse.getRenewalNotice().getRid());
+                System.out.println("Email was: " + emailTo);
+
+                // Create the HTML Message to send...
+                String htmlMessage = "E-mail by Driven RMS <br>" +
+                                "<p><a href=\"http://localhost:8080/DrivenRest/driven/" + emailCode + "\">Click here " +
+                                "to view  Renewal Notice " + emailCode + "</a></p>" +
+                                "<br> Regards, <br>Driven Admin";
+                try {
+                    // Send the email with the URL
+                    mailHandler.generateAndSendEmail(emailTo, "dhruvk995@gmail.com", "Driven Notice", htmlMessage);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+
                 System.out.println(renewalNoticeResponses);
             }
             // Add all to the response
