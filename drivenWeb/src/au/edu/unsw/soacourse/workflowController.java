@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import restClient.json.*;
+//import restClient.json.*;
 import restClient.*;
 
 /**
@@ -54,11 +54,20 @@ public class workflowController extends HttpServlet {
 		if (code != null) { // The driver just arrived from the email
 			System.out.println("Code found in GET request " + code);
 			// Check the code
-			System.out.println(restClient.getCheckEmailCode(code));
 			Integer codeNid = restClient.getCheckEmailCode(code);
 			if (codeNid != null) {
 				// Correct code was found
 				System.out.println("Correct code found");
+
+				// Use 'http://localhost:8080/DrivenRest/driven/notices/?nid=' to get RID
+				RenewalNotice renewalNotice = restClient.getRenewalNoticeDriver(codeNid);
+				// Use RID with 'http://localhost:8080/DrivenRest/driven/registrations/?rid=' to get Driver
+				Registration registration = restClient.getRegistrationDriver(renewalNotice.getRid());
+				// Set params for JSP to access
+				request.setAttribute("fname", registration.getDriver().getFirstName());
+				request.setAttribute("lname", registration.getDriver().getLastName());
+				System.out.println(registration.getDriver().getFirstName());
+				
 				nextPage = "driverHome.jsp";
 			} else {
 				// Correct code not found
