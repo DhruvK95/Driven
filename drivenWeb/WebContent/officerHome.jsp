@@ -14,6 +14,5 @@
 <%@ include file="navBar.html" %>
 <h1 align="center">Hi Officer, Welcome to Driven</h1>
 
-
 </body>
 </html>

@@ -13,6 +13,18 @@
 <body>
 <%@ include file="navBar.html" %>
 <h1 align="center">Hi ${requestScope.fname} ${requestScope.lname}, Welcome to Driven</h1>
-
+<hr>
+<b>Please choose an action to proceed with for your RegistrationNumber:
+    ${requestScope.RegistrationNumber}</b>
+<form class="col s12" action="cancel" method="post">
+    <button class="btn waves-effect waves-light" type="submit" name="action">Cancel
+        <i class="material-icons right">error</i>
+    </button>
+</form>
+<form class="col s12" action="process" method="post">
+    <button class="btn waves-effect waves-light" type="submit" name="action">Process
+        <i class="material-icons right">input</i>
+    </button>
+</form>
 </body>
 </html>
