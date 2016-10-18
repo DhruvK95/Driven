@@ -16,12 +16,12 @@
 <hr>
 <b>Please choose an action to proceed with for your RegistrationNumber:
     ${requestScope.RegistrationNumber}</b>
-<form class="col s12" action="cancel" method="post">
+<form class="col s12" action="home" method="post">
     <button class="btn waves-effect waves-light" type="submit" name="action">Cancel
         <i class="material-icons right">error</i>
     </button>
 </form>
-<form class="col s12" action="process" method="post">
+<form class="col s12" action="home" method="post">
     <button class="btn waves-effect waves-light" type="submit" name="action">Process
         <i class="material-icons right">input</i>
     </button>

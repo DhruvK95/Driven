@@ -30,7 +30,6 @@ public class restJavaOperation {
 
     //checkEmailCode
     public Integer getCheckEmailCode(String query_code){
-//    	code=5a3cc6a0-846e-4d5e-860e-e1caf2ae29d0
     	
         WebClient drivenClient = WebClient.create(REST_URI);
         drivenClient.path("/checkEmailCode/").accept(MediaType.APPLICATION_JSON);

@@ -13,7 +13,7 @@ import restClient.*;
 /**
  * Servlet implementation class workflowController
  */
-@WebServlet("/home")
+@WebServlet(urlPatterns="/home", displayName="workflowController")
 public class workflowController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
