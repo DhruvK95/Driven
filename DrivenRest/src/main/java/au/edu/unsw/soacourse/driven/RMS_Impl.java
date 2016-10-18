@@ -211,4 +211,27 @@ public class RMS_Impl {
         }
         return returnString;
     }
+
+    public Boolean emailCodeExists (String code) {
+        DB_Handler db_handler = new DB_Handler();
+        List<EmailCode> emailcodes = db_handler.getEmailCodes();
+        for (EmailCode ec : emailcodes) {
+            if (ec.getCode().equals(code)) {
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
+    }
+
+    public EmailCode getEmailObjFromCode(String code) {
+        DB_Handler db_handler = new DB_Handler();
+        List<EmailCode> emailcodes = db_handler.getEmailCodes();
+        for (EmailCode ec : emailcodes) {
+            if (ec.getCode().equals(code)) {
+                return ec;
+            }
+        }
+        System.out.println("ERROR with getNidFromCode, called with no existent code");
+        return null;
+    }
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class workflowController
  */
-@WebServlet("/workflowController")
+@WebServlet("/home")
 public class workflowController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,6 +27,10 @@ public class workflowController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("ASDF");
+		String code = request.getParameter("code");
+		System.out.println(code);
+		
 	}
 
 	/**

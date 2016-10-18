@@ -301,15 +301,15 @@ try {
             // String sql = "";
             ResultSet rs = stmt.executeQuery("SELECT * FROM Email_Codes;");
             while (rs.next()) {
-                Integer id = rs.getInt("id");
+                Integer Nid = rs.getInt("nid");
                 String code = rs.getString("uniq_code");
-                EmailCode ec = new EmailCode(id, code);
+                EmailCode ec = new EmailCode(Nid, code);
                 emailCodes.add(ec);
             }
             stmt.close();
             c.close();
         } catch ( Exception e ) {
-            System.out.println("getEmailCodes ERROR");
+            System.out.println("getEmailCodes ERROR1");
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }

@@ -21,6 +21,20 @@ public class DrivenRest {
     private final static String DRIVER_KEY = "driver";
     RMS_Impl rms = new RMS_Impl();
 
+    @GET
+    @Path("/checkEmailCode")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response checkEmailCode(@QueryParam("code") String query_code) {
+        System.out.println("Code supplied was: " + query_code);
+        if (rms.emailCodeExists(query_code)) {
+            System.out.println("Getting OBJ");
+            EmailCode ec = rms.getEmailObjFromCode(query_code);
+            return Response.ok().entity(ec).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
     @PUT
     @Path("/payments")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -187,7 +201,7 @@ public class DrivenRest {
         if (auth == null) return Response.status(Response.Status.BAD_REQUEST).build(); // Required fields
         if (!auth.equals(OFFICER_KEY)) return Response.status(Response.Status.UNAUTHORIZED).build(); // Auth
 
-        System.out.println("Testing email2223");
+        System.out.println("Testing email2112");
         db.dropTables();
         db.createTables();
 
