@@ -1,6 +1,7 @@
 package au.edu.unsw.soacourse;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,6 +44,14 @@ public class workflowController extends HttpServlet {
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		Enumeration params = request.getParameterNames();
+		while(params.hasMoreElements()){
+			String paramName = (String)params.nextElement();
+			System.out.println("Parameter Name - "+paramName+", Value - "+request.getParameter(paramName));
+		}
+
+
 		String nextPage = "";
 		String action = request.getParameter("action");
 		System.out.println("Action was: " + action);
@@ -87,6 +96,8 @@ public class workflowController extends HttpServlet {
 				nextPage = "Unauthorized.jsp"; //TODO: Change to new JSP
 			} else if (action.equals("process")) {
 				System.out.println("process requested by the driver...");
+				// Get the address string that was passed in
+
 				nextPage = "Unauthorized.jsp"; //TODO: Change to new JSP
 			}
 		}

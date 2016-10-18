@@ -29,12 +29,11 @@
 
 
 <form class="col s12" action="workflowController" method="post">
-<div class="row">
     <div class="input-field col s6">
-        <input value="${requestScope.address}" id="first_name2" type="text" class="validate">
-        <label class="active" for="first_name2">Address</label>
+        <input value="${requestScope.address}" id="address" name="address" type="text" class="validate">
+        <label class="active" for="address">Address</label>
     </div>
-</div>
+    <input type="hidden" name="action" value="process" />
     <button class="btn waves-effect waves-light" type="submit" name="action">Process
         <i class="material-icons right">input</i>
     </button>
