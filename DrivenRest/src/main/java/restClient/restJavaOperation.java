@@ -31,16 +31,17 @@ public class restJavaOperation {
         
 
         Response s = drivenClient.get();
-        String result = s.readEntity(String.class);
-
-    	JSONObject jObj = new JSONObject(result);
-
-    	Integer ret = jObj.getInt("id");
     	
     	if(s.getStatus()==404){
     		return null;
     	}
     	
+        String result = s.readEntity(String.class);
+
+    	JSONObject jObj = new JSONObject(result);
+
+    	Integer ret = jObj.getInt("id");
+
     	
     	return ret;
     	
