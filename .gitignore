@@ -19,7 +19,7 @@ RemoteSystemsTempFiles**
 hs_err_pid*
 
 # Can also ignore all directories and files in a directory.
-GNAFService/* 
+GNAFService/*
 
 DrivenRest/.project
 
@@ -32,3 +32,7 @@ rmsService/.project
 DrivenRest/DrivenRest.iml
 /build/
 /bin/
+
+**/json/*
+
+*.MF
