@@ -17,10 +17,13 @@ import bpelSpawner.soapClient;
 
 public class restJavaOperation {
 
-    static final String REST_URI = "http://localhost:8080/DrivenRest/driven/";
-    
+    final String REST_URI = "http://localhost:8080/DrivenRest/driven/";
+
+    public restJavaOperation() {
+    }
+
     //checkEmailCode
-    public static Integer getCheckEmailCode(String query_code){
+    public Integer getCheckEmailCode(String query_code){
 //    	code=5a3cc6a0-846e-4d5e-860e-e1caf2ae29d0
     	
         WebClient drivenClient = WebClient.create(REST_URI);
@@ -47,7 +50,7 @@ public class restJavaOperation {
     	
     }
     //get registrations, id is inptutted as null if officer
-    public static void getRegistrations(String id){
+    public void getRegistrations(String id){
         WebClient drivenClient = WebClient.create(REST_URI);
         drivenClient.path("/registrations").accept(MediaType.APPLICATION_JSON);
         int flag = 0 ;
@@ -94,7 +97,7 @@ public class restJavaOperation {
  
     }
     
-    public static void getPayments(String id){
+    public void getPayments(String id){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
     	int flag = 0 ;
@@ -139,7 +142,7 @@ public class restJavaOperation {
     }
     
     
-    public static void getNotices(String id){
+    public void getNotices(String id){
     	
     	WebClient drivenClient = WebClient.create(REST_URI);
     	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
@@ -178,7 +181,7 @@ public class restJavaOperation {
       	
     }
     
-    public static void postPayments(String nid, String fee){
+    public void postPayments(String nid, String fee){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
@@ -196,7 +199,7 @@ public class restJavaOperation {
     
     }
     
-    public static void postNotices(){
+    public void postNotices(){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/notices/newNotices").accept(MediaType.APPLICATION_JSON);
@@ -220,7 +223,7 @@ public class restJavaOperation {
     
     }
     
-    public static void deletePayments(String pid){
+    public void deletePayments(String pid){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
@@ -234,7 +237,7 @@ public class restJavaOperation {
     
     }
     
-    public static void deleteNotice(String pid){
+    public void deleteNotice(String pid){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
@@ -252,7 +255,7 @@ public class restJavaOperation {
     
     }
     
-    public static void putPayments(String pid, String cc_number, String cc_name, String cc_ccv){
+    public void putPayments(String pid, String cc_number, String cc_name, String cc_ccv){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
@@ -277,7 +280,7 @@ public class restJavaOperation {
     
     }
     
-    public static void putRegistration(String rid, String email, String address){
+    public void putRegistration(String rid, String email, String address){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/registrations").accept(MediaType.APPLICATION_JSON);
@@ -301,7 +304,7 @@ public class restJavaOperation {
     
     }
     
-    public static void putNoticesDriver(String nid, String status){
+    public void putNoticesDriver(String nid, String status){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
@@ -322,7 +325,7 @@ public class restJavaOperation {
         System.out.println(s.getStatus());
     }
 
-    public static void putNoticesOfficer(String nid, String status){
+    public void putNoticesOfficer(String nid, String status){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
@@ -345,32 +348,32 @@ public class restJavaOperation {
     
         
     
-    public static void main(String[] args) {
-        String empty = null;
-        
-        //get registrations input must be rid in String ie. "1"
-        //getRegistrations(null);
-        //get payments input must be rid in String ie. "1"
-        //getPayments(null);
-        //get notices input must be rid in String ie. "1"
-        //getNotices("2");
-
-        //postPayments("2","2000");
-        //deletePayments("4");
-        //postNotices();
-        //deleteNotice("2");
-        //String pid, String cc_number, String cc_name, String cc_ccv
-        //putPayments("2","333","LEON","111");
-        //id, email, address
-        //putRegistration("1","123","test");
-        //putNoticesDriver("1","under_review");
-        
-        soapClient sP = new soapClient();
-        
-        sP.doSoap("1,DOWLING SqTREET,BEGA,NSW,2550");
-        if(sP.Exact){
-        	System.out.print("RUN ACCEPT ON ADDRESS");
-        }
-    }
+//    public void main(String[] args) {
+//        String empty = null;
+//        
+//        //get registrations input must be rid in String ie. "1"
+//        //getRegistrations(null);
+//        //get payments input must be rid in String ie. "1"
+//        //getPayments(null);
+//        //get notices input must be rid in String ie. "1"
+//        //getNotices("2");
+//
+//        //postPayments("2","2000");
+//        //deletePayments("4");
+//        //postNotices();
+//        //deleteNotice("2");
+//        //String pid, String cc_number, String cc_name, String cc_ccv
+//        //putPayments("2","333","LEON","111");
+//        //id, email, address
+//        //putRegistration("1","123","test");
+//        //putNoticesDriver("1","under_review");
+//        
+//        soapClient sP = new soapClient();
+//        
+//        sP.doSoap("1,DOWLING SqTREET,BEGA,NSW,2550");
+//        if(sP.Exact){
+//        	System.out.print("RUN ACCEPT ON ADDRESS");
+//        }
+//    }
     
 }
