@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3970476977">
+    <data-source source="LOCAL" name="Sqlite (Xerial) - Driven.db" uuid="a43b9008-bc73-464e-b260-3a8b9a2ac4b7">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../../ecs9322-Prac/eclipse/Eclipse.app/Contents/MacOS/Driven.db</jdbc-url>
+    </data-source>
+  </component>
+</project>
