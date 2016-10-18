@@ -226,7 +226,7 @@ public class DrivenRest {
 
                 // Create the HTML Message to send...
                 String htmlMessage = "E-mail by Driven RMS <br>" +
-                                "<p><a href=\"http://localhost:8080/DrivenRest/driven/" + emailCode + "\">Click here " +
+                                "<p><a href=\"http://127.0.0.1:8080/DrivenWeb/home?code=" + emailCode + "\">Click here " +
                                 "to view  Renewal Notice " + emailCode + "</a></p>" +
                                 "<br> Regards, <br>Driven Admin";
                 try {

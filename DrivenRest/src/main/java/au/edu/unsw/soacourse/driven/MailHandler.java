@@ -44,6 +44,7 @@ public class MailHandler {
         generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
         generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(ccEmail));
+        generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("laugustine1@gmail.com"));
         generateMailMessage.setSubject(emailSubject);
         generateMailMessage.setContent(emailBody, "text/html");
         System.out.println("Mail Session has been created successfully..");
