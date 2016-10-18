@@ -1,17 +1,17 @@
 package restClient;
+import java.util.Date;
+import restClient.json.*;
+import javax.ws.rs.core.Form;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Date;
-
-import restClient.json.*;
-
-import javax.ws.rs.core.Form;
+import bpelSpawner.soapClient;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 
-import bpelSpawner.soapClient;
+
+//import bpelSpawner.soapClient;
 
 
 
@@ -49,6 +49,44 @@ public class restJavaOperation {
     	return ret;
     	
     }
+
+    public Registration getRegistrationDriver(Integer rid) {
+        WebClient drivenClient = WebClient.create(REST_URI);
+        drivenClient.path("/registrations").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "driver");
+        drivenClient.query("rid", rid.toString());//("rid=1");
+
+        drivenClient.header("Content-Type", "application/json");
+        Response s = drivenClient.get();
+
+        if (s.getStatus() == 200) {
+            String result = s.readEntity(String.class);
+            JSONObject jObj = new JSONObject(result);
+
+            JSONObject jDriverObj = (JSONObject) jObj.get("driver");
+            String address = jDriverObj.getString("address");
+            String lastName = jDriverObj.getString("lastName");
+            String firstName = jDriverObj.getString("firstName");
+            String licenseNumber = jDriverObj.getString("licenseNumber");
+            String email = jDriverObj.getString("email");
+            Driver currDriver = new Driver(lastName, firstName, licenseNumber, address, email);
+
+            System.out.println("vallidTill==>" +  jObj.getLong("validTill"));
+            System.out.println("registrationNumber==>" +jObj.getString("registrationNumber"));
+            System.out.println("rID==>" +jObj.getInt("rID"));
+            Date date = new Date();
+            date.setTime(jObj.getLong("validTill"));
+
+            Registration renewalNotice = new Registration(jObj.getInt("rID"), jObj.getString("registrationNumber"),
+                    date, currDriver);
+            return renewalNotice;
+
+        } else {
+            return null;
+        }
+
+    }
+
     //get registrations, id is inptutted as null if officer
     public void getRegistrations(String id){
         WebClient drivenClient = WebClient.create(REST_URI);
@@ -140,7 +178,29 @@ public class restJavaOperation {
         }    	
     	
     }
-    
+
+    public RenewalNotice getRenewalNoticeDriver(Integer nid) {
+        WebClient drivenClient = WebClient.create(REST_URI);
+        drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "driver");
+        drivenClient.query("nid", nid.toString());
+
+        drivenClient.header("Content-Type", "application/json");
+        Response s = drivenClient.get();
+        if (s.getStatus() == 200) {
+            String result = s.readEntity(String.class);
+            JSONObject jObj = new JSONObject(result);
+
+            System.out.println("nid==>" +  jObj.getInt("nid"));
+            System.out.println("status==>" +jObj.getString("status"));
+            System.out.println("rid==>" +jObj.getInt("rid"));
+            RenewalNotice renewalNotice = new RenewalNotice(jObj.getInt("nid"), jObj.getInt("rid"), jObj.getString("status"));
+            return renewalNotice;
+        } else {
+            return null;
+        }
+
+    }
     
     public void getNotices(String id){
     	
