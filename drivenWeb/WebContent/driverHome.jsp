@@ -12,8 +12,7 @@
 </head>
 <body>
 <%@ include file="navBar.html" %>
-<c:set var="fisrtName" value
-<h1 align="center">${requestScope.fname}, Welcome to Driven</h1>
+<h1 align="center">Hi ${requestScope.fname} ${requestScope.lname}, Welcome to Driven</h1>
 
 </body>
 </html>
