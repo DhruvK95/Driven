@@ -14,7 +14,7 @@ import restClient.*;
 /**
  * Servlet implementation class workflowController
  */
-@WebServlet(urlPatterns="/home", displayName="workflowController")
+@WebServlet(urlPatterns="/home", displayName="home")
 public class workflowController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class workflowController extends HttpServlet {
 
 		String code = request.getParameter("code"); // Check the params for driver email code
 		restJavaOperation restClient = new restJavaOperation(); // Init.
-
+		//restClient.postPayments("1", "200");
 		if (action == null) {
 
 			if (code != null) { // The driver just arrived from the email

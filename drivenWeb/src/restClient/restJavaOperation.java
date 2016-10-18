@@ -93,50 +93,42 @@ public class restJavaOperation {
     }
 
     //get registrations, id is inptutted as null if officer
-    public void getRegistrations(String id){
+    public ArrayList<Registration> getRegistrationsOfficer(){
         WebClient drivenClient = WebClient.create(REST_URI);
         drivenClient.path("/registrations").accept(MediaType.APPLICATION_JSON);
-        int flag = 0 ;
-        if(id==null){
-            drivenClient.header("authorization", "RMSofficer");
-        }else{
-            drivenClient.header("authorization", "driver");
-            drivenClient.query("rid", id);//("rid=1");
-            flag=1;
-        }
+        drivenClient.header("authorization", "RMSofficer");
         drivenClient.header("Content-Type", "application/json");
         Response s = drivenClient.get();
         String result = s.readEntity(String.class);
         
+        ArrayList<Registration> gAR =  new ArrayList<Registration>();
+        JSONArray jArrObj = new JSONArray(result);        
+        for(int i=0;i<jArrObj.length(); i++){
+        	JSONObject jsonTree = jArrObj.getJSONObject(i);
+	          
+        	JSONObject jDriverObj = (JSONObject) jsonTree.get("driver");
+            String address = jDriverObj.getString("address");
+            String lastName = jDriverObj.getString("lastName");
+            String firstName = jDriverObj.getString("firstName");
+            String licenseNumber = jDriverObj.getString("licenseNumber");
+            String email = jDriverObj.getString("email");
+            Driver currDriver = new Driver(lastName, firstName, licenseNumber, address, email);
+//            	
+//            System.out.println("vallidTill==>" +  jsonTree.getLong("validTill"));
+//            System.out.println("registrationNumber==>" +jsonTree.getString("registrationNumber"));
+//            System.out.println("rID==>" +jsonTree.getInt("rID"));
+            Date date = new Date();
+            date.setTime(jsonTree.getLong("validTill"));
+
+            Registration renewalNotice = new Registration(jsonTree.getInt("rID"), jsonTree.getString("registrationNumber"),
+                    date, currDriver);
+            gAR.add(renewalNotice);
+            
+	    }
+
         
-        if(flag==1){
-        	JSONObject jObj = new JSONObject(result);
-        	
-            JSONObject jDriverObj = (JSONObject) jObj.get("driver");
-            for(String s1: jDriverObj.getNames(jDriverObj)){          
-                System.out.println("    " + s1 + "====>" + jDriverObj.get(s1));
-            }
-
-            System.out.println("vallidTill==>" +  jObj.getLong("validTill"));
-            System.out.println("registrationNumber==>" +jObj.getString("registrationNumber"));
-            System.out.println("rID==>" +jObj.getInt("rID"));
-
-        }else{
-	        JSONArray jArrObj = new JSONArray(result);        
-	        for(int i=0;i<jArrObj.length(); i++){
-	            JSONObject jsonTree = jArrObj.getJSONObject(i);
-	            
-	            JSONObject jDriverObj = (JSONObject) jsonTree.get("driver");
-	            for(String s1: jDriverObj.getNames(jDriverObj)){          
-	                System.out.println("    " + s1 + "====>" + jDriverObj.get(s1));
-	            }
-	
-	            System.out.println("vallidTill==>" +  jsonTree.getLong("validTill"));
-	            System.out.println("registrationNumber==>" +jsonTree.getString("registrationNumber"));
-	            System.out.println("rID==>" +jsonTree.getInt("rID"));
-	            
-	        }
-        }
+		return gAR;
+        
  
     }
     
@@ -171,47 +163,37 @@ public class restJavaOperation {
     	
     }
     
-    public void getPayments(String id){
+    public ArrayList<Payment> getPaymentsOfficer(){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
-    	int flag = 0 ;
-        if(id==null){
-            drivenClient.header("authorization", "RMSofficer");
-        }else{
-            drivenClient.header("authorization", "driver");
-            drivenClient.query("pid", id);
-            flag=1;
-        }
+        drivenClient.header("authorization", "RMSofficer");
+
         drivenClient.header("Content-Type", "application/json");
         Response s = drivenClient.get();
         String result = s.readEntity(String.class);
-    	
-        if(flag==1){
-        	JSONObject jObj = new JSONObject(result);
-
-            System.out.println("pid==>" +  jObj.getInt("pid"));
-            System.out.println("credit_card_number==>" +jObj.getInt("credit_card_number"));
-            System.out.println("credit_card_name==>" +jObj.getString("credit_card_name"));
-            System.out.println("credit_card_ccv==>" +jObj.getInt("credit_card_ccv"));
-            System.out.println("paid_date==>" +jObj.getLong("paid_date"));
-            System.out.println("nid==>" +jObj.getInt("nid"));
-            System.out.println("amount==>" +jObj.getInt("amount"));
-
-        }else{
-	        JSONArray jArrObj = new JSONArray(result);        
-	        for(int i=0;i<jArrObj.length(); i++){
-	            JSONObject jObj = jArrObj.getJSONObject(i);
-
-	            System.out.println("pid==>" +  jObj.getInt("pid"));
-	            System.out.println("credit_card_number==>" +jObj.getInt("credit_card_number"));
-	            System.out.println("credit_card_name==>" +jObj.getString("credit_card_name"));
-	            System.out.println("credit_card_ccv==>" +jObj.getInt("credit_card_ccv"));
-	            System.out.println("paid_date==>" +jObj.getLong("paid_date"));
-	            System.out.println("nid==>" +jObj.getInt("nid"));
-	            System.out.println("amount==>" +jObj.getInt("amount"));
-	            
+        ArrayList<Payment> aP = new  ArrayList<Payment>();
+	    JSONArray jArrObj = new JSONArray(result);        
+	    for(int i=0;i<jArrObj.length(); i++){
+	    	
+	    	JSONObject jObj = jArrObj.getJSONObject(i);
+	    	System.out.println("pid==>" +  jObj.getInt("pid"));
+	        System.out.println("credit_card_number==>" +jObj.getInt("credit_card_number"));
+	        System.out.println("credit_card_name==>" +jObj.getString("credit_card_name"));
+	        System.out.println("credit_card_ccv==>" +jObj.getInt("credit_card_ccv"));
+	        System.out.println("paid_date==>" +jObj.getLong("paid_date"));
+	        System.out.println("nid==>" +jObj.getInt("nid"));
+	        System.out.println("amount==>" +jObj.getInt("amount"));
+	        Date date = new Date();
+	        date.setTime(jObj.getLong("paid_date"));
+	        
+	    	Payment p = new Payment(jObj.getInt("pid"), jObj.getInt("nid"), 
+	    			jObj.getInt("amount"), jObj.getInt("credit_card_number"),
+	    			jObj.getString("credit_card_name"),jObj.getInt("credit_card_ccv"),date);
+	    	aP.add(p);
+	    	
 	        }
-        }    	
+		return aP;
+          	
     	
     }
 
@@ -238,46 +220,33 @@ public class restJavaOperation {
 
     }
     
-    public void getNotices(String id){
+    public ArrayList<RenewalNotice> getRenewalNoticeOfficer(){
     	
     	WebClient drivenClient = WebClient.create(REST_URI);
     	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
-	    	int flag = 0 ;
-	        if(id==null){
-	            drivenClient.header("authorization", "RMSofficer");
-	        }else{
-	            drivenClient.header("authorization", "driver");
-	            drivenClient.query("nid", id);
-	            flag=1;
-	        }
-	        drivenClient.header("Content-Type", "application/json");
-	        Response s = drivenClient.get();
-	        String result = s.readEntity(String.class);
-	        //System.out.print(s.getStatus());
-	        if(flag==1){
-	        	JSONObject jObj = new JSONObject(result);
+    	drivenClient.header("authorization", "RMSofficer");
+	      
+	    drivenClient.header("Content-Type", "application/json");
+	    Response s = drivenClient.get();
+	    String result = s.readEntity(String.class);
+	    JSONArray jArrObj = new JSONArray(result);
+	    ArrayList<RenewalNotice> rN = new ArrayList<RenewalNotice>();
+		for(int i=0;i<jArrObj.length(); i++){
+            JSONObject jObj = jArrObj.getJSONObject(i);
 	
-	            System.out.println("nid==>" +  jObj.getInt("nid"));
-	            System.out.println("status==>" +jObj.getString("status"));            
-	            System.out.println("rid==>" +jObj.getInt("rid"));
-	            
-	        }else{
-		        JSONArray jArrObj = new JSONArray(result);        
-		        for(int i=0;i<jArrObj.length(); i++){
-		            JSONObject jObj = jArrObj.getJSONObject(i);
-	
-		            System.out.println("nid==>" +  jObj.getInt("nid"));
-		            System.out.println("status==>" +jObj.getString("status"));            
-		            System.out.println("rid==>" +jObj.getInt("rid"));
-		           
-		            
-		        }
-	        }    	
+            System.out.println("nid==>" +  jObj.getInt("nid"));
+            System.out.println("status==>" +jObj.getString("status"));            
+            System.out.println("rid==>" +jObj.getInt("rid"));
+			RenewalNotice r = new RenewalNotice(jObj.getInt("nid"),jObj.getInt("rid"),jObj.getString("status"));
+			rN.add(r);
+           
+            
+        }
+		
+		return rN;
+	}    	
     	
-      	
-    }
-    
-    public void postPayments(String nid, String fee){
+    public PaymentResponse postPayments(String nid, String fee){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
@@ -289,10 +258,33 @@ public class restJavaOperation {
 		form.param("nid", nid);
 		
         Response s = drivenClient.post(form);
-    	JSONObject jObj = new JSONObject(s.readEntity(String.class));
-        
-        System.out.println(jObj.getString("link"));
-    
+        System.out.print(s.getStatus());
+        if(s.getStatus()==200){
+	    	JSONObject jObj = new JSONObject(s.readEntity(String.class));	        
+	    	JSONObject payment = (JSONObject) jObj.get("payment");
+//	    	
+//	        System.out.println(payment.getString("credit_card_name"));
+//	    	System.out.println("pid==>" +  payment.getInt("pid"));
+//	        System.out.println("credit_card_number==>" +payment.getInt("credit_card_number"));
+//	        System.out.println("credit_card_name==>" +payment.getString("credit_card_name"));
+//	        System.out.println("credit_card_ccv==>" +payment.getInt("credit_card_ccv"));
+//	        System.out.println("paid_date==>" +payment.getLong("paid_date"));
+//	        System.out.println("nid==>" +payment.getInt("nid"));
+//	        System.out.println("amount==>" +payment.getInt("amount"));
+//	        System.out.println("amount==>" +jObj.getString("link"));
+	
+	        Date date = new Date();
+	        date.setTime(payment.getLong("paid_date"));
+	        
+	        Payment p = new Payment(payment.getInt("pid"), payment.getInt("nid"), 
+	        		payment.getInt("amount"), payment.getInt("credit_card_number"),
+	        		payment.getString("credit_card_name"),payment.getInt("credit_card_ccv"),date);
+	        PaymentResponse pR = new PaymentResponse(p,jObj.getString("link") );
+	        return pR;
+	        
+        }else{
+        	return null;
+        }
     }
     
     public ArrayList<RenewalNoticeResponse> postNotices(){
@@ -322,7 +314,7 @@ public class restJavaOperation {
     
     }
     
-    public void deletePayments(String pid){
+    public Integer deletePayments(String pid){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
@@ -333,10 +325,11 @@ public class restJavaOperation {
         Response s = drivenClient.delete();
         
         System.out.println(s.getStatus());
+        return s.getStatus();
     
     }
     
-    public void deleteNotice(String pid){
+    public Integer deleteNotice(String pid){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
@@ -351,10 +344,11 @@ public class restJavaOperation {
         
         System.out.println(jArrObj.getString("status"));
         System.out.println(s.getStatus());
+        return s.getStatus();
     
     }
     
-    public void putPayments(String pid, String cc_number, String cc_name, String cc_ccv){
+    public Integer putPayments(String pid, String cc_number, String cc_name, String cc_ccv){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
@@ -376,10 +370,11 @@ public class restJavaOperation {
         
         
         System.out.println(s.getStatus());
-    
+        return s.getStatus();
+
     }
     
-    public void putRegistration(String rid, String email, String address){
+    public Integer putRegistration(String rid, String email, String address){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/registrations").accept(MediaType.APPLICATION_JSON);
@@ -400,10 +395,11 @@ public class restJavaOperation {
         
         
         System.out.println(s.getStatus());
-    
+        return s.getStatus();
+
     }
     
-    public void putNoticesDriver(String nid, String status){
+    public Integer putNoticesDriver(String nid, String status){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
@@ -422,9 +418,11 @@ public class restJavaOperation {
         
         
         System.out.println(s.getStatus());
+        return s.getStatus();
+
     }
 
-    public void putNoticesOfficer(String nid, String status){
+    public Integer putNoticesOfficer(String nid, String status){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/notices").accept(MediaType.APPLICATION_JSON);
@@ -443,6 +441,7 @@ public class restJavaOperation {
         
         
         System.out.println(s.getStatus());
+        return s.getStatus();
     }
     
 }
