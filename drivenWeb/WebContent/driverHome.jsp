@@ -27,6 +27,52 @@
 <br>
 
 
+<table class="striped centered">
+    <thead>
+    <tr>
+        <th data-field="id">Field</th>
+        <th data-field="name">Value</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>RegistrationID</td>
+        <td>${requestScope.registration.getrID()}</td>
+    </tr>
+    <tr>
+        <td>RegistrationNumber</td>
+        <td>${requestScope.registration.getRegistrationNumber()}</td>
+    </tr>
+    <tr>
+        <td>validTill</td>
+        <td>${requestScope.registration.getValidTill().toString()}</td>
+    </tr>
+    <tr>
+        <td>LastName</td>
+        <td>${requestScope.registration.getDriver().getLastName()}</td>
+    </tr>
+    <tr>
+        <td>FirstName</td>
+        <td>${requestScope.registration.getDriver().getFirstName()}</td>
+    </tr>
+    <tr>
+        <td>LicenseNumber</td>
+        <td>${requestScope.registration.getDriver().getLicenseNumber()}</td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td>${requestScope.registration.getDriver().getAddress()}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>${requestScope.registration.getDriver().getEmail()}</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<%--${requestScope.registration.getRegistrationNumber()}--%>
 
 <form class="col s12" action="workflowController" method="post">
     <div class="input-field col s6">

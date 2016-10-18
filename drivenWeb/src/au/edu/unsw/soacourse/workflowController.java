@@ -76,6 +76,7 @@ public class workflowController extends HttpServlet {
 					// Set params for JSP to access
 					request.setAttribute("fname", registration.getDriver().getFirstName());
 					request.setAttribute("lname", registration.getDriver().getLastName());
+					request.setAttribute("registration", registration);
 					request.setAttribute("RegistrationNumber", registration.getRegistrationNumber());
 					request.setAttribute("address", registration.getDriver().getAddress());
 
