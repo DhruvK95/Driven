@@ -68,7 +68,7 @@ public class workflowController extends HttpServlet {
 					request.setAttribute("fname", registration.getDriver().getFirstName());
 					request.setAttribute("lname", registration.getDriver().getLastName());
 					request.setAttribute("RegistrationNumber", registration.getRegistrationNumber());
-					System.out.println(registration.getDriver().getFirstName());
+					request.setAttribute("address", registration.getDriver().getAddress());
 
 					nextPage = "driverHome.jsp";
 				} else {

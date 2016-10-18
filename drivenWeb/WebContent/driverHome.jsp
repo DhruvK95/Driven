@@ -23,7 +23,18 @@
         <i class="material-icons right">error</i>
     </button>
 </form>
-<form class="col s12" action="this" method="post">
+
+<br>
+
+
+
+<form class="col s12" action="workflowController" method="post">
+<div class="row">
+    <div class="input-field col s6">
+        <input value="${requestScope.address}" id="first_name2" type="text" class="validate">
+        <label class="active" for="first_name2">Address</label>
+    </div>
+</div>
     <button class="btn waves-effect waves-light" type="submit" name="action">Process
         <i class="material-icons right">input</i>
     </button>
