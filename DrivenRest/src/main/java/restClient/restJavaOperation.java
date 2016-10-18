@@ -19,7 +19,32 @@ public class restJavaOperation {
 
     static final String REST_URI = "http://localhost:8080/DrivenRest/driven/";
     
-    
+    //checkEmailCode
+    public static String getCheckEmailCode(String query_code){
+//    	code=5a3cc6a0-846e-4d5e-860e-e1caf2ae29d0
+    	
+        WebClient drivenClient = WebClient.create(REST_URI);
+        drivenClient.path("/checkEmailCode/").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("Content-Type", "application/json");
+
+        drivenClient.query("code", query_code);//("rid=1");
+        
+
+        Response s = drivenClient.get();
+        String result = s.readEntity(String.class);
+
+    	JSONObject jObj = new JSONObject(result);
+
+    	String ret = jObj.getString("id");
+    	
+    	if(s.getStatus()==404){
+    		return null;
+    	}
+    	
+    	
+    	return ret;
+    	
+    }
     //get registrations, id is inptutted as null if officer
     public static void getRegistrations(String id){
         WebClient drivenClient = WebClient.create(REST_URI);
