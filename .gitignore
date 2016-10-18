@@ -33,6 +33,5 @@ DrivenRest/DrivenRest.iml
 /build/
 /bin/
 
-**/json/*
 
 *.MF
