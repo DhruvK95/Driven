@@ -22,5 +22,13 @@
     <servlet-name>driverHome</servlet-name>
     <url-pattern>/driverHome</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>officerHome</servlet-name>
+    <jsp-file>/officerHome.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>officerHome</servlet-name>
+    <url-pattern>/officerHome</url-pattern>
+  </servlet-mapping>
 
 </web-app>
