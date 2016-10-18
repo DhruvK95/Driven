@@ -1,10 +1,16 @@
 package restClient;
+import java.util.ArrayList;
 import java.util.Date;
+
 import restClient.json.*;
+
 import javax.ws.rs.core.Form;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
 import bpelSpawner.soapClient;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -290,26 +296,29 @@ public class restJavaOperation {
     
     }
     
-    public void postNotices(){
+    public ArrayList<RenewalNoticeResponse> postNotices(){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	
     	drivenClient.path("/notices/newNotices").accept(MediaType.APPLICATION_JSON);
         drivenClient.header("Authorization", "RMSofficer");
         drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
         Form form = new Form();
+        
+        ArrayList<RenewalNoticeResponse> rN = new ArrayList<RenewalNoticeResponse>();
 
         Response s = drivenClient.post(form);
     	//JSONObject jObj = new JSONObject();
-        JSONArray jArrObj = new JSONArray(s.readEntity(String.class));        
+        JSONArray jArrObj = new JSONArray(s.readEntity(String.class)); 
+        
         for(int i=0;i<jArrObj.length(); i++){
-        JSONObject jObj = jArrObj.getJSONObject(i);
-
-            //JSONObject jObj = new JSONObject(s.readEntity(String.class));
-            System.out.println("nid==>" +  jObj.getString("link"));
-           
-            
+        	JSONObject jObj = jArrObj.getJSONObject(i);
+            JSONObject jObjE = (JSONObject) jObj.get("renewalNotice");
+            RenewalNotice rNi = new RenewalNotice(jObjE.getInt("nid"), jObjE.getInt("rid"), jObjE.getString("status"));
+            RenewalNoticeResponse rNRi = new RenewalNoticeResponse(rNi, jObj.getString("link"));
+   
+            rN.add(rNRi);
         }
-       // System.out.println(jObj.getString("link"));
+        return rN;
 
     
     }
