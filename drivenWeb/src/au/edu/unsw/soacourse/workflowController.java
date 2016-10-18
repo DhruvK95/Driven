@@ -50,6 +50,8 @@ public class workflowController extends HttpServlet {
 		String code = request.getParameter("code"); // Check the params for driver email code
 		restJavaOperation restClient = new restJavaOperation(); // Init.
 
+//		Payment payment = restClient.getPaymentsDriver(1);
+//		System.out.println(payment.getNid() +" "+payment.getAmount() + " " + payment.getPaid_date());
 
 		if (code != null) { // The driver just arrived from the email
 			System.out.println("Code found in GET request " + code);

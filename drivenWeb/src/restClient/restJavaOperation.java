@@ -135,6 +135,37 @@ public class restJavaOperation {
  
     }
     
+    public Payment getPaymentsDriver(Integer id){
+    	WebClient drivenClient = WebClient.create(REST_URI);
+    	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
+        drivenClient.header("authorization", "driver");
+        drivenClient.query("pid", id.toString());
+        
+        drivenClient.header("Content-Type", "application/json");
+        Response s = drivenClient.get();
+        String result = s.readEntity(String.class);
+        
+        JSONObject jObj = new JSONObject(result);
+        
+        Date date = new Date();
+        date.setTime(jObj.getLong("paid_date"));
+        
+        Payment retPayment = new Payment(jObj.getInt("pid"), jObj.getInt("nid"),jObj.getInt("amount"),
+        		jObj.getInt("credit_card_number"),jObj.getString("credit_card_name"),jObj.getInt("credit_card_ccv"),date);
+        
+        
+//        System.out.println("pid==>" +  jObj.getInt("pid"));
+//        System.out.println("credit_card_number==>" +jObj.getInt("credit_card_number"));
+//        System.out.println("credit_card_name==>" +jObj.getString("credit_card_name"));
+//        System.out.println("credit_card_ccv==>" +jObj.getInt("credit_card_ccv"));
+//        System.out.println("paid_date==>" +jObj.getLong("paid_date"));
+//        System.out.println("nid==>" +jObj.getInt("nid"));
+//        System.out.println("amount==>" +jObj.getInt("amount"));
+    	
+		return retPayment;
+    	
+    }
+    
     public void getPayments(String id){
     	WebClient drivenClient = WebClient.create(REST_URI);
     	drivenClient.path("/payments").accept(MediaType.APPLICATION_JSON);
@@ -405,35 +436,5 @@ public class restJavaOperation {
         
         System.out.println(s.getStatus());
     }
-    
-        
-    
-//    public void main(String[] args) {
-//        String empty = null;
-//        
-//        //get registrations input must be rid in String ie. "1"
-//        //getRegistrations(null);
-//        //get payments input must be rid in String ie. "1"
-//        //getPayments(null);
-//        //get notices input must be rid in String ie. "1"
-//        //getNotices("2");
-//
-//        //postPayments("2","2000");
-//        //deletePayments("4");
-//        //postNotices();
-//        //deleteNotice("2");
-//        //String pid, String cc_number, String cc_name, String cc_ccv
-//        //putPayments("2","333","LEON","111");
-//        //id, email, address
-//        //putRegistration("1","123","test");
-//        //putNoticesDriver("1","under_review");
-//        
-//        soapClient sP = new soapClient();
-//        
-//        sP.doSoap("1,DOWLING SqTREET,BEGA,NSW,2550");
-//        if(sP.Exact){
-//        	System.out.print("RUN ACCEPT ON ADDRESS");
-//        }
-//    }
     
 }
