@@ -47,6 +47,8 @@
 			        
 		        	<input type="hidden" name="action" value="check" />
 					 <input type="hidden" name="field" value="${n.getRid()}" /> 
+					 <input type="hidden" name="nid" value="${n.getNid()}" /> 
+					 
 		            <br>
 		            
 		            <button class="btn waves-effect waves-light" type="submit" name="action">check

@@ -254,8 +254,9 @@ public class restJavaOperation {
         drivenClient.header("Content-Type", "application/x-www-form-urlencoded"); 
     	
         Form form = new Form();
-		form.param("fee", fee);
 		form.param("nid", nid);
+
+		form.param("fee", fee);
 		
         Response s = drivenClient.post(form);
         System.out.print(s.getStatus());

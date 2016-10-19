@@ -99,6 +99,8 @@ public class DrivenRest {
     public Response createPayment(@Context HttpHeaders headers,
                                   @FormParam("fee") Integer form_fee,
                                   @FormParam("nid") Integer form_nid) {
+    	System.out.println("!!!!!!!!!!!!! " + form_fee.toString());
+        //System.out.println("!!!!!!!!!!!!! " + form_nid.toString());
         System.out.println(headers.toString());
         String auth = headers.getRequestHeaders().getFirst("authorization");
         if (auth == null || form_fee == null || form_nid == null)

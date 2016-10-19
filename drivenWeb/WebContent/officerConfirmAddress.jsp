@@ -18,8 +18,8 @@
 		             <p class="flow-text">Create Payment</p>
                                         <div class="row">
                                             <div class="input-field col s6">
-                                                <input value="" id="address" name="address" type="text" class="validate">
-                                                    <label class="active" for="address">Amount for Payment</label>
+                                                <input value="" id="amount" name="amount" type="number" class="validate">
+                                                    <label class="active" for="amount">Amount for Payment</label>
                                                 </div>
                                             </div>
                                             
@@ -33,6 +33,8 @@
 					<form class="col s12" action="officerhome" method="post">
 					ExactMatch Not found
 		        	<input type="hidden" name="action" value="createPayment" />
+		        	<input type="hidden" name="nid" value="${nid}" />
+		        	
 		            <br>
 		             <p class="flow-text">Reject Payment</p>
                                         <div class="row">
@@ -41,6 +43,7 @@
                                                     <label class="active" for="address">Reason for Rejections</label>
                                                 </div>
                                             </div>
+                                                                 
                                                                                         
 		            <button class="btn waves-effect waves-light" type="submit" name="action">Confirm
 			            <i class="material-icons right">input</i>

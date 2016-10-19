@@ -2,10 +2,14 @@ package au.edu.unsw.soacourse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.*;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,11 +51,21 @@ public class staffController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	String nid = null;
         String nextPage = "";
         String action = request.getParameter("action");
         System.out.println("Action was: " + action);
 		restJavaOperation restClient = new restJavaOperation(); // Init.
-
+		
+		Cookie[] cookies = request.getCookies();
+		for (int i = 0; i < cookies.length; i++) {
+			String name = cookies[i].getName();
+			String value = cookies[i].getValue();
+			if (cookies[i].getName().equals("nidC")) {
+				nid = cookies[i].getValue();
+			}
+		}
+		
         if (action == null) {
             nextPage = "officerHome.jsp";
         }else if(action.equals("generateNotices")){
@@ -79,7 +93,6 @@ public class staffController extends HttpServlet {
         	Integer rID = Integer.parseInt(request.getParameter("field"));
         	System.out.print(rID);
         	String address = restClient.getRegistrationDriver(rID).getDriver().getAddress();
-        	System.out.print("SSS" + restClient.getRegistrationDriver(rID).getDriver().getAddress());
         	
         	soapClient sP = new soapClient();
         	
@@ -93,14 +106,23 @@ public class staffController extends HttpServlet {
             	request.setAttribute("exact", false);
 
         	}
+        	//System.out.println("Dffwrfregegetgerwgegewgewth"+request.getParameter("nid"));
+        	request.setAttribute("nid", request.getParameter("nid"));
         	
-    		nextPage = "officerConfirmAddress.jsp";
+			Cookie nidC = new Cookie("nidC", request.getParameter("nid"));
+			nidC.setMaxAge(60*60*24);
+			response.addCookie(nidC);
+    		
+            nextPage = "officerConfirmAddress.jsp";
 
             
         }else if(action.equals("createPayment")){
-        	System.out.print("CREATE SOMETHING" );
         	
-        	System.out.print("CREATE WITH : " + request.getParameter("address") );
+        	System.out.print(">>>>>>>>>>>CREATE WITH:" + request.getParameter("amount") + " NID:" + request.getParameter("nid") +" <<<<<<<<<<<<<<<<<<");
+
+        	restClient.postPayments(nid, request.getParameter("amount").toString());
+            
+        	nextPage = "officerHome.jsp";
 
         	
         }
