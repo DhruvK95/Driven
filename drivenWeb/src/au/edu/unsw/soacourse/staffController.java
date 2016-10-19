@@ -53,9 +53,6 @@ public class staffController extends HttpServlet {
 
         if (action == null) {
         	
-                	
-        	
-        	
             nextPage = "officerHome.jsp";
         }else{
     		
@@ -74,7 +71,7 @@ public class staffController extends HttpServlet {
 				rAT.add(rA);
 	
 			}
-            nextPage = "officer.jsp";
+            nextPage = "officerNotices.jsp";
 
         }
 
