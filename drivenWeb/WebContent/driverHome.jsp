@@ -102,6 +102,16 @@
             </button>
         </form>
 
+        ${requestScope.notice.getStatus()}
+        <c:choose>
+            <c:when test="{requestScope.notice.getStatus() == 'accepted'}">Show Payment stuff</c:when>
+            <c:when test="{requestScope.notice.getStatus() == 'under-review'}">(Under review) Hide Update Address and
+                Other actions
+            </c:when>
+            <c:otherwise>Otherwise...</c:otherwise>
+        </c:choose>
+
+
     </div>
     <div class="col s12 m4 l2"><p></p></div>
 </body>
