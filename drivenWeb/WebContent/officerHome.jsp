@@ -17,52 +17,17 @@
 <%@ include file="navBar.html" %>
 <h1 align="center">Hi Officer, Welcome to Driven</h1>
  
-		<table class="table">
-		<thead>
-			<tr>
-				<th>
-					[Details]
-				</th>
-				<th>
-					[Address Check]
-				</th>
-			</tr>
-		</thead>
-		<tbody>
 			
-		
-			<c:forEach items="${notices}" var="n">
-							<td>
-			
-			<tr>	
-		        <td>Link: <c:out value="${n.getRenewalNoticeResponse().getLink()}"/>
-		        <%-- 
-		        Status: <c:out value="${n.RenewalNoticeResponse.renewalNotice.status}"/>  
-		        nid: <c:out value="${n.RenewalNoticeResponse.renewalNotice.nid}"/> 
-		        rid: <c:out value="${n.renewalNotice.rid}"/> --%> 
-		        
-		    
-				</td>
-				<td>
-		
-		        <form class="col s12" action="officerHome" method="post">
-	        	<input type="hidden" name="action" value="check" />
+		        <form class="col s12" action="officerhome" method="post">
+	        	<input type="hidden" name="action" value="generate" />
 	            <br>
 	            
-	            <button class="btn waves-effect waves-light" type="submit" name="action">check
+	            <button class="btn waves-effect waves-light" type="submit" name="action">generate Notices
 	                <i class="material-icons right">input</i>
 	            </button>
 		        </form>
 	        	</td>
 	        
-			</c:forEach>
-				        </tr>	
-					
-
-
-
-		</tbody>
-	</table>
 	
 
 

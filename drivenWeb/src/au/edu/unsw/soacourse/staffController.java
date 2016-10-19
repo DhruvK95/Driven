@@ -16,7 +16,7 @@ import restClient.*;
 /**
  * Servlet implementation class workflowController
  */
-@WebServlet("/officer")
+@WebServlet("/officerhome")
 public class staffController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -50,28 +50,32 @@ public class staffController extends HttpServlet {
         String action = request.getParameter("action");
         System.out.println("Action was: " + action);
 		restJavaOperation restClient = new restJavaOperation(); // Init.
-		
-		ArrayList<RenewalNoticeResponse> rN = restClient.postNotices();		
-		ArrayList<registrationAddressType> rAT = new ArrayList<registrationAddressType>();
-		
-		for(RenewalNoticeResponse r : rN){
-			registrationAddressType rA = new registrationAddressType();
-			System.out.println("DDDDD" + restClient.getRegistrationDriver(r.getRenewalNotice().getRid()).getDriver().getAddress());
-			System.out.println("DDDDDDD" + r.getLink());
 
-			rA.setRegistration(restClient.getRegistrationDriver(r.getRenewalNotice().getRid()));
-			rA.setRenewalNoticeResponse(r);
-			rAT.add(rA);
-
-		}
-		
         if (action == null) {
         	
-        	request.setAttribute("notices", rAT);
                 	
         	
         	
             nextPage = "officerHome.jsp";
+        }else{
+    		
+    		ArrayList<RenewalNoticeResponse> rN = restClient.postNotices();		
+    		ArrayList<registrationAddressType> rAT = new ArrayList<registrationAddressType>();
+    		
+			for(RenewalNoticeResponse r : rN){
+				registrationAddressType rA = new registrationAddressType();
+				System.out.println("DDDDD" + restClient.getRegistrationDriver(r.getRenewalNotice().getRid()).getDriver().getAddress());
+				System.out.println("DDDDDDD" + r.getLink());
+	
+				rA.setRegistration(restClient.getRegistrationDriver(r.getRenewalNotice().getRid()));
+				rA.setRenewalNoticeResponse(r);
+	        	request.setAttribute("notices", rAT);
+
+				rAT.add(rA);
+	
+			}
+            nextPage = "officer.jsp";
+
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/"+nextPage);
