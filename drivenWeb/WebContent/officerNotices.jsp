@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Title</title>
+    <script type="text/javascript" src="http://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 </head>
 <body>
 <%@ include file="navBar.html" %>
@@ -16,6 +17,7 @@
 			driver create payment allowed
     <i class="close material-icons">close</i>
   </div>		<table class="table">
+  
 		<thead>
 			<tr>
 				<th>
@@ -82,7 +84,7 @@
     <i class="close material-icons">close</i>
   </div>
 	
-	<table class="table">
+	<table class="sortable">
 		<thead>
 			<tr>
 				<th>
@@ -97,7 +99,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${notices}" var="n">
+			<c:forEach items="${noticesNotAllowed}" var="n">
 							<td>
 			
 			<tr>	

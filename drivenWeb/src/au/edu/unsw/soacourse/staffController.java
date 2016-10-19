@@ -86,11 +86,11 @@ public class staffController extends HttpServlet {
 			}
 			
         	request.setAttribute("notices", rN1);
-        	ArrayList<RenewalNotice> rN2 = restClient.getRenewalNoticeOfficer();		
+        	ArrayList<RenewalNotice> rN2 = new ArrayList<RenewalNotice>();	
 			for(RenewalNotice r : rN){
 
 				if(!r.getStatus().equals("requested")){
-					rN1.add(r);
+					rN2.add(r);
 				}
 	
 			}
