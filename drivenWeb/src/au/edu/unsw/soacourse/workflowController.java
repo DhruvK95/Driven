@@ -13,6 +13,7 @@ import restClient.*;
 import restClient.Registration;
 
 import java.io.*;
+import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -68,6 +69,7 @@ public class workflowController extends HttpServlet {
 
 		Integer nid = null;
 		Integer rid = null;
+		Integer pid = null;
 		Integer lodged = null;
 		Cookie[] cookies = request.getCookies();
 		for (int i = 0; i < cookies.length; i++) {
@@ -81,6 +83,9 @@ public class workflowController extends HttpServlet {
 			}
 			if (cookies[i].getName().equals("lodged")) {
 				lodged = Integer.parseInt(cookies[i].getValue());
+			}
+			if (cookies[i].getName().equals("pid")) {
+				pid = Integer.parseInt(cookies[i].getValue());
 			}
 		}
 
@@ -102,6 +107,20 @@ public class workflowController extends HttpServlet {
 					request.setAttribute("registration", registration);
 					request.setAttribute("notice", renewalNotice);
 
+					if (renewalNotice.getStatus().equals("accepted")) {
+						List<Payment> paymentList = restClient.getPaymentsOfficer();
+						for (Payment p : paymentList) {
+							if (p.getNid().equals(nid)) {
+								request.setAttribute("payment", p);
+								Integer pid1 = p.getPid();
+								Cookie pay1 = new Cookie("pid", pid1.toString());
+								pay1.setMaxAge(60 * 60 * 24);
+								response.addCookie(pay1);
+							}
+						}
+					}
+
+
 					Cookie rid1 = new Cookie("rid", registration.getrID().toString());
 					Cookie nid1 = new Cookie("nid", renewalNotice.getNid().toString());
 					// Set expiry date after 24 Hrs for both the cookies.
@@ -122,6 +141,21 @@ public class workflowController extends HttpServlet {
 				Registration registration = restClient.getRegistrationDriver(renewalNotice.getRid());
 				request.setAttribute("registration", registration);
 				request.setAttribute("notice", renewalNotice);
+
+				if (renewalNotice.getStatus().equals("accepted")) {
+					List<Payment> paymentList = restClient.getPaymentsOfficer();
+					for (Payment p : paymentList) {
+						if (p.getNid().equals(nid)) {
+							request.setAttribute("payment", p);
+							Integer pid1 = p.getPid();
+							Cookie pay1 = new Cookie("pid", pid1.toString());
+							pay1.setMaxAge(60 * 60 * 24);
+							response.addCookie(pay1);
+						}
+					}
+				}
+
+
 				// request.setAttribute("");
 				nextPage = "driverHome.jsp";
 
@@ -164,6 +198,19 @@ public class workflowController extends HttpServlet {
 						request.setAttribute("registration", r);
 						request.setAttribute("notice", renewalNotice);
 
+						if (renewalNotice.getStatus().equals("accepted")) {
+							List<Payment> paymentList = restClient.getPaymentsOfficer();
+							for (Payment p : paymentList) {
+								if (p.getNid().equals(nid)) {
+									request.setAttribute("payment", p);
+									Integer pid1 = p.getPid();
+									Cookie pay1 = new Cookie("pid", pid1.toString());
+									pay1.setMaxAge(60 * 60 * 24);
+									response.addCookie(pay1);
+								}
+							}
+						}
+
 						nextPage = "driverHome.jsp";
 					} else {
 						nextPage = "ERROR.jsp";
@@ -176,7 +223,7 @@ public class workflowController extends HttpServlet {
 					if (respCode.equals(200)) {
 						System.out.println("Requested set");
 						RenewalNotice notice = new RenewalNotice(nid, rid, "requested");
-						
+
 						Integer lodg = 1;
 						Cookie lodged1 = new Cookie("lodged", lodg.toString());
 						lodged1.setMaxAge(60*60*24);
@@ -184,11 +231,39 @@ public class workflowController extends HttpServlet {
 
 						request.setAttribute("registration", r);
 						request.setAttribute("notice", notice);
+
+						if (notice.getStatus().equals("accepted")) {
+							List<Payment> paymentList = restClient.getPaymentsOfficer();
+							for (Payment p : paymentList) {
+								if (p.getNid().equals(nid)) {
+									request.setAttribute("payment", p);
+									Integer pid1 = p.getPid();
+									Cookie pay1 = new Cookie("pid", pid1.toString());
+									pay1.setMaxAge(60 * 60 * 24);
+									response.addCookie(pay1);
+								}
+							}
+						}
+
 						nextPage = "driverHome.jsp";
 					} else {
 						nextPage = "ERROR.jsp";
 					}
 				}
+			} else if (action.equals("pay")) {
+				if (pid != null) {
+					String ccn = request.getParameter("ccn");
+					String ccName = request.getParameter("cca");
+					String ccv = request.getParameter("ccv");
+					System.out.println("Putting payment....");
+					restClient.putPayments(pid.toString(), ccn, ccName, ccv);
+
+					nextPage = "driverHome.jsp";
+				} else {
+					System.out.println("pid was null");
+					nextPage = "ERROR.jsp";
+				}
+				// GET PARAMS
 			}
 		}
 

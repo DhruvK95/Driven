@@ -77,28 +77,28 @@ To change this template use File | Settings | File Templates.
                     <c:choose>
                         <c:when test="${requestScope.notice.getStatus() == 'accepted'}">
                             <%-- Payment Form --%>
-                            <h3>Fee: $X</h3><hr>
+                            <h3>Fee:$ ${requestScope.payment.getAmount()}</h3><hr>
                             <form class="col s12" action="workflowController" method="post">
                                 <p class="flow-text">Payment Details</p>
                                 <div class="row">
                                     <div class="input-field col s6">
                                         <i class="material-icons prefix">credit_card</i>
-                                        <input id="address" type="number" class="validate">
-                                            <label for="address">Credit Card Number</label>
+                                        <input id="ccn" type="number" class="validate" name="ccn" required>
+                                            <label for="ccn">Credit Card Number</label>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="input-field col s6">
                                             <i class="material-icons prefix">credit_card</i>
-                                            <input id="address" type="text" class="validate">
-                                                <label for="address">Credit Card Name</label>
+                                            <input id="cca" type="text" class="validate" name="cca"required>
+                                                <label for="cca">Credit Card Name</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s6">
                                                 <i class="material-icons prefix">credit_card</i>
-                                                <input id="address" type="number" class="validate">
-                                                <label for="address">Credit Card CCV</label>
+                                                <input id="ccv" type="number" class="validate" name="ccv" required>
+                                                <label for="ccv">Credit Card CCV</label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -131,7 +131,7 @@ To change this template use File | Settings | File Templates.
                                                 name="action">Update
                                                 <i class="material-icons right">present_to_all</i>
                                             </button>
-                                        </form>
+                                    </form>
                                         <hr>
                                             <%-- Other Actions --%>
                                             <div class="row">
