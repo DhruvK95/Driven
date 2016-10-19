@@ -8,6 +8,10 @@
 </head>
 <body>
 <%@ include file="navBar.html" %>
+ <div class="row">
+            <div class="col s12"><p></p></div>
+            <div class="col s12 m4 l2"><p></p></div>
+            <div class="col s12 m4 l8"><p></p>
 <h1 align="center">Hi Officer, Welcome to Driven</h1>
  
 			
@@ -29,9 +33,13 @@
 	                <i class="material-icons right">input</i>
 	            </button>
 		        </form>
+		        
+		        
 	        	</td>
 	        
 	        
+ </div>
+                                        <div class="col s12 m4 l2"><p></p></div>
 	
 
 

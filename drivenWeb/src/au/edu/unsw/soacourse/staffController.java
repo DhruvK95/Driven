@@ -142,6 +142,8 @@ public class staffController extends HttpServlet {
         	
         	System.out.println(request.getParameter("rejection"));
         	restClient.putNoticesOfficer(nid, "rejected-"+request.getParameter("rejection"));
+        	nextPage = "officerHome.jsp";
+        	
         }else if(action.equals("getRegistrationsDetails")){
         	System.out.print("hhjkgg");
         	System.out.print(request.getParameter("rid") + "  " +Integer.parseInt(request.getParameter("rid")) );
