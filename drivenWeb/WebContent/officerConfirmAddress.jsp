@@ -32,14 +32,13 @@
 	  <c:otherwise>
 					<form class="col s12" action="officerhome" method="post">
 					ExactMatch Not found
-		        	<input type="hidden" name="action" value="createPayment" />
-		        	<input type="hidden" name="nid" value="${nid}" />
+		        	<input type="hidden" name="action" value="rejectPayment" />
 		        	
 		            <br>
 		             <p class="flow-text">Reject Payment</p>
                                         <div class="row">
                                             <div class="input-field col s6">
-                                                <input value="" id="rejection" name="address" type="text" class="validate">
+                                                <input value="" id="rejection" name="rejection" type="text" class="validate">
                                                     <label class="active" for="address">Reason for Rejections</label>
                                                 </div>
                                             </div>

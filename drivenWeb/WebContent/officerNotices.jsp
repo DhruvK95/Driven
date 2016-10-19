@@ -42,7 +42,15 @@
 		        
 		    
 				<td>
-		
+				 <form class="col s12" action="officerhome" method="post">
+			        <input type="hidden" name="rid" value="${n.getRid()}" /> 
+		        	<input type="hidden" name="action" value="getRegistrationsDetails" />
+		            <br>
+		            
+		            <button class="btn waves-effect waves-light" type="submit" name="action">Details
+		                <i class="material-icons right">input</i>
+		            </button>
+		        </form>
 		        <form class="col s12" action="officerhome" method="post">
 			        
 		        	<input type="hidden" name="action" value="check" />

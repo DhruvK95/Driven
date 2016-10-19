@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import bpelSpawner.soapClient;
 import restClient.json.*;
 import restClient.*;
+import restClient.Registration;
 
 /**
  * Servlet implementation class workflowController
@@ -118,13 +119,28 @@ public class staffController extends HttpServlet {
             
         }else if(action.equals("createPayment")){
         	
-        	System.out.print(">>>>>>>>>>>CREATE WITH:" + request.getParameter("amount") + " NID:" + request.getParameter("nid") +" <<<<<<<<<<<<<<<<<<");
+//        	System.out.print(">>>>>>>>>>>CREATE WITH:" + request.getParameter("amount") + " NID:" + request.getParameter("nid") +" <<<<<<<<<<<<<<<<<<");
 
         	restClient.postPayments(nid, request.getParameter("amount").toString());
             
         	nextPage = "officerHome.jsp";
 
         	
+        }else if(action.equals("rejectPayment")){
+        	
+        	System.out.println(request.getParameter("rejection"));
+        	restClient.putNoticesOfficer(nid, "rejected-"+request.getParameter("rejection"));
+        }else if(action.equals("getRegistrationsDetails")){
+        	System.out.print("hhjkgg");
+        	System.out.print(request.getParameter("rid") + "  " +Integer.parseInt(request.getParameter("rid")) );
+        	Registration r = restClient.getRegistrationDriver(Integer.parseInt(request.getParameter("rid")));
+        	request.setAttribute("registration", r);
+        	
+        	
+        	nextPage = "registrationDetails.jsp";
+
+        	
+
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/"+nextPage);
