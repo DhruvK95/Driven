@@ -122,6 +122,11 @@ public class workflowController extends HttpServlet {
 						}
 					}
 
+					if (renewalNotice.getStatus().contains("rejected")) {
+
+						String[] data = renewalNotice.getStatus().split("\\-");
+						request.setAttribute("reason", data[1]);
+					}
 
 					Cookie rid1 = new Cookie("rid", registration.getrID().toString());
 					Cookie nid1 = new Cookie("nid", renewalNotice.getNid().toString());
@@ -155,6 +160,12 @@ public class workflowController extends HttpServlet {
 							response.addCookie(pay1);
 						}
 					}
+				}
+
+				if (renewalNotice.getStatus().contains("rejected")) {
+
+					String[] data = renewalNotice.getStatus().split("\\-");
+					request.setAttribute("reason", data[1]);
 				}
 
 
@@ -200,6 +211,12 @@ public class workflowController extends HttpServlet {
 						request.setAttribute("registration", r);
 						request.setAttribute("notice", renewalNotice);
 
+						if (renewalNotice.getStatus().contains("rejected")) {
+
+							String[] data = renewalNotice.getStatus().split("\\-");
+							request.setAttribute("reason", data[1]);
+						}
+
 						if (renewalNotice.getStatus().equals("accepted")) {
 							List<Payment> paymentList = restClient.getPaymentsOfficer();
 							for (Payment p : paymentList) {
@@ -233,6 +250,12 @@ public class workflowController extends HttpServlet {
 
 						request.setAttribute("registration", r);
 						request.setAttribute("notice", notice);
+
+						if (notice.getStatus().contains("rejected")) {
+
+							String[] data = notice.getStatus().split("\\-");
+							request.setAttribute("reason", data[1]);
+						}
 
 						if (notice.getStatus().equals("accepted")) {
 							List<Payment> paymentList = restClient.getPaymentsOfficer();

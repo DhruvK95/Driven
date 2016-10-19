@@ -115,6 +115,8 @@ To change this template use File | Settings | File Templates.
 
                                 <c:when test="${requestScope.notice.getStatus() == 'under-review'}">
                                 </c:when>
+                                <c:when test="${not empty requestScope.reason}"> ${requestScope.reason}
+                                </c:when>
                                 <c:when test="${requestScope.notice.getStatus() == 'cancelled'}"> CANCEL BUTTON
                                 </c:when>
                                 <c:otherwise>
