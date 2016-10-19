@@ -109,7 +109,8 @@ public class staffController extends HttpServlet {
         	}
         	//System.out.println("Dffwrfregegetgerwgegewgewth"+request.getParameter("nid"));
         	request.setAttribute("nid", request.getParameter("nid"));
-        	
+        	request.setAttribute("message", sP.message);
+
 			Cookie nidC = new Cookie("nidC", request.getParameter("nid"));
 			nidC.setMaxAge(60*60*24);
 			response.addCookie(nidC);

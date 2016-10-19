@@ -9,6 +9,23 @@
 </head>
 <body>
 <%@ include file="navBar.html" %>
+		  
+<div class="row">
+            <div class="col s12"><p></p></div>
+            <div class="col s12 m4 l2"><p></p></div>
+            <div class="col s12 m4 l8"><p></p>
+            
+            
+        <div class="col s12 m6">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Card Title</span>
+                 <p>    <c:out value="${message}"/></p>
+            </div>
+           
+          </div>
+        </div>
+      </div>
 	 <c:choose>
 	  <c:when test="${exact}">
 	<form class="col s12" action="officerhome" method="post">
@@ -50,6 +67,7 @@
 			        </form>
 		         </c:otherwise>
 	</c:choose>
-
+</div>
+                                        <div class="col s12 m4 l2"><p></p></div>
 </body>
 </html>

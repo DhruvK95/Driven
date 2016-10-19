@@ -8,7 +8,10 @@
 </head>
 <body>
 <%@ include file="navBar.html" %>
-
+<div class="row">
+            <div class="col s12"><p></p></div>
+            <div class="col s12 m4 l2"><p></p></div>
+            <div class="col s12 m4 l8"><p></p>
 <table class="striped centered">
                         <thead>
                             <tr>
@@ -52,6 +55,9 @@
                             </tr>
                         </tbody>
                     </table>
+                    
+                    </div>
+                                        <div class="col s12 m4 l2"><p></p></div>
 
 </body>
 </html>
