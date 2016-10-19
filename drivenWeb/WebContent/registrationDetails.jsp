@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file="navBar.html" %>
+
 <table class="striped centered">
                         <thead>
                             <tr>
