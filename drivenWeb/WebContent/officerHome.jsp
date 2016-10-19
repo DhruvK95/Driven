@@ -12,7 +12,17 @@
  
 			
 		        <form class="col s12" action="officerhome" method="post">
-	        	<input type="hidden" name="action" value="generate" />
+	        	<input type="hidden" name="action" value="getPending" />
+	            <br>
+	            
+	            <button class="btn waves-effect waves-light" type="submit" name="action">get Pending
+	                <i class="material-icons right">input</i>
+	            </button>
+		        </form>
+	        	
+	        	
+		        <form class="col s12" action="officerhome" method="post">
+	        	<input type="hidden" name="action" value="generateNotices" />
 	            <br>
 	            
 	            <button class="btn waves-effect waves-light" type="submit" name="action">generate Notices
@@ -20,6 +30,7 @@
 	            </button>
 		        </form>
 	        	</td>
+	        
 	        
 	
 

@@ -9,30 +9,45 @@
 </head>
 <body>
 <%@ include file="navBar.html" %>
- <c:choose>
-  <c:when test="${exact}">
-<form class="col s12" action="officerhome" method="post">
-	ExactMatch found
-	        	<input type="hidden" name="action" value="generate" />
-	            <br>
-	            
-	            <button class="btn waves-effect waves-light" type="submit" name="action">Confirm
-	                <i class="material-icons right">input</i>
-	            </button>
-		        </form>
-		          </c:when>
-  <c:otherwise>
-<form class="col s12" action="officerhome" method="post">
-	Not Fooud
-	        	<input type="hidden" name="action" value="generate" />
-	            <br>
-	            
-	            <button class="btn waves-effect waves-light" type="submit" name="action">Reject
-	                <i class="material-icons right">input</i>
-	            </button>
-		        </form>
-	         </c:otherwise>
-</c:choose>
+	 <c:choose>
+	  <c:when test="${exact}">
+	<form class="col s12" action="officerhome" method="post">
+		ExactMatch found
+		        	<input type="hidden" name="action" value="createPayment" />
+		            <br>
+		             <p class="flow-text">Create Payment</p>
+                                        <div class="row">
+                                            <div class="input-field col s6">
+                                                <input value="" id="address" name="address" type="text" class="validate">
+                                                    <label class="active" for="address">Amount for Payment</label>
+                                                </div>
+                                            </div>
+                                            
+                                                                                        
+		            <button class="btn waves-effect waves-light" type="submit" name="action">Confirm
+			            <i class="material-icons right">input</i>
+		            </button>
+			        </form>
+			          </c:when>
+	  <c:otherwise>
+					<form class="col s12" action="officerhome" method="post">
+					ExactMatch Not found
+		        	<input type="hidden" name="action" value="createPayment" />
+		            <br>
+		             <p class="flow-text">Reject Payment</p>
+                                        <div class="row">
+                                            <div class="input-field col s6">
+                                                <input value="" id="rejection" name="address" type="text" class="validate">
+                                                    <label class="active" for="address">Reason for Rejections</label>
+                                                </div>
+                                            </div>
+                                                                                        
+		            <button class="btn waves-effect waves-light" type="submit" name="action">Confirm
+			            <i class="material-icons right">input</i>
+		            </button>
+			        </form>
+		         </c:otherwise>
+	</c:choose>
 
 </body>
 </html>

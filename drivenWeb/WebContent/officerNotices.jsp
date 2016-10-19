@@ -16,6 +16,9 @@
 					[Details]
 				</th>
 				<th>
+					[Status]
+				</th>
+				<th>
 					[Address Check]
 				</th>
 			</tr>
@@ -27,22 +30,23 @@
 							<td>
 			
 			<tr>	
-		        <td>Link: <c:out value="${n.getRegistration().getrID()}"/>
+		        <td>Rid: <c:out value="${n.getRid()}"/> Nid: <c:out value="${n.getNid()}"/></td>
 		        
+		        <td>Link: <c:out value="${n.getStatus()}"/></td>
 		        
+		       
 		        <%-- 
 		        Status: <c:out value="${n.RenewalNoticeResponse.renewalNotice.status}"/>  
 		        nid: <c:out value="${n.RenewalNoticeResponse.renewalNotice.nid}"/> 
 		        rid: <c:out value="${n.renewalNotice.rid}"/> --%> 
 		        
 		    
-				</td>
 				<td>
 		
 		        <form class="col s12" action="officerhome" method="post">
 			        
 		        	<input type="hidden" name="action" value="check" />
-					 <input type="hidden" name="field" value="${n.getRegistration().getrID()}" /> 
+					 <input type="hidden" name="field" value="${n.getRid()}" /> 
 		            <br>
 		            
 		            <button class="btn waves-effect waves-light" type="submit" name="action">check
@@ -50,9 +54,9 @@
 		            </button>
 		        </form>
 	        	</td>
+	        				        </tr>	
 	        
 			</c:forEach>
-				        </tr>	
 					
 
 

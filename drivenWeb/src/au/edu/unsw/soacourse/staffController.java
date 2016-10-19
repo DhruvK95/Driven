@@ -54,21 +54,23 @@ public class staffController extends HttpServlet {
 
         if (action == null) {
             nextPage = "officerHome.jsp";
-        }else if(action.equals("generate")){
+        }else if(action.equals("generateNotices")){
+        	restClient.postNotices();	
+        }else if(action.equals("getPending")){
+        	
+    		System.out.print("generate");
+    		ArrayList<RenewalNotice> rN1 = new ArrayList<RenewalNotice>();
     		
-    		ArrayList<RenewalNoticeResponse> rN = restClient.postNotices();		
-    		ArrayList<registrationAddressType> rAT = new ArrayList<registrationAddressType>();
-    		
-			for(RenewalNoticeResponse r : rN){
-				registrationAddressType rA = new registrationAddressType();
-				
-				rA.setRegistration(restClient.getRegistrationDriver(r.getRenewalNotice().getRid()));
-				rA.setRenewalNoticeResponse(r);
+    		ArrayList<RenewalNotice> rN = restClient.getRenewalNoticeOfficer();		
+			for(RenewalNotice r : rN){
 
-				rAT.add(rA);
+				if(r.getStatus().equals("requested")){
+					rN1.add(r);
+				}
 	
 			}
-        	request.setAttribute("notices", rAT);
+			
+        	request.setAttribute("notices", rN1);
 
             nextPage = "officerNotices.jsp";
 
@@ -95,6 +97,12 @@ public class staffController extends HttpServlet {
     		nextPage = "officerConfirmAddress.jsp";
 
             
+        }else if(action.equals("createPayment")){
+        	System.out.print("CREATE SOMETHING" );
+        	
+        	System.out.print("CREATE WITH : " + request.getParameter("address") );
+
+        	
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/"+nextPage);

@@ -229,12 +229,12 @@ public class DrivenRest {
                                 "<p><a href=\"http://127.0.0.1:8080/DrivenWeb/home?code=" + emailCode + "\">Click here " +
                                 "to view  Renewal Notice " + emailCode + "</a></p>" +
                                 "<br> Regards, <br>Driven Admin";
-//                try {
-//                    // Send the email with the URL
-//                    mailHandler.generateAndSendEmail(emailTo, "dhruvk995@gmail.com", "Driven Notice", htmlMessage);
-//                } catch (MessagingException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    // Send the email with the URL
+                    mailHandler.generateAndSendEmail(emailTo, "dhruvk995@gmail.com", "Driven Notice", htmlMessage);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
 
                 System.out.println(renewalNoticeResponses);
             }
