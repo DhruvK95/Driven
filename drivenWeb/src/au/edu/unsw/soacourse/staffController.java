@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bpelSpawner.soapClient;
 import restClient.json.*;
 import restClient.*;
 
@@ -52,27 +53,48 @@ public class staffController extends HttpServlet {
 		restJavaOperation restClient = new restJavaOperation(); // Init.
 
         if (action == null) {
-        	
             nextPage = "officerHome.jsp";
-        }else{
+        }else if(action.equals("generate")){
     		
     		ArrayList<RenewalNoticeResponse> rN = restClient.postNotices();		
     		ArrayList<registrationAddressType> rAT = new ArrayList<registrationAddressType>();
     		
 			for(RenewalNoticeResponse r : rN){
 				registrationAddressType rA = new registrationAddressType();
-				System.out.println("DDDDD" + restClient.getRegistrationDriver(r.getRenewalNotice().getRid()).getDriver().getAddress());
-				System.out.println("DDDDDDD" + r.getLink());
-	
+				
 				rA.setRegistration(restClient.getRegistrationDriver(r.getRenewalNotice().getRid()));
 				rA.setRenewalNoticeResponse(r);
-	        	request.setAttribute("notices", rAT);
 
 				rAT.add(rA);
 	
 			}
+        	request.setAttribute("notices", rAT);
+
             nextPage = "officerNotices.jsp";
 
+        }else if(action.equals("check")){
+        	nextPage = "Unauthorized.jsp";
+        	Integer rID = Integer.parseInt(request.getParameter("field"));
+        	System.out.print(rID);
+        	String address = restClient.getRegistrationDriver(rID).getDriver().getAddress();
+        	System.out.print("SSS" + restClient.getRegistrationDriver(rID).getDriver().getAddress());
+        	
+        	soapClient sP = new soapClient();
+        	
+        	sP.doSoap(address);
+        	
+        	System.out.print("SSSSSSSSSSSS"  + sP.Exact);
+        	if(sP.Exact){
+            	request.setAttribute("exact", true);
+
+        	}else{        		
+            	request.setAttribute("exact", false);
+
+        	}
+        	
+    		nextPage = "officerConfirmAddress.jsp";
+
+            
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/"+nextPage);

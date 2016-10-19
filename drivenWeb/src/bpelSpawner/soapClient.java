@@ -96,6 +96,7 @@ public class soapClient {
             System.err.println("Error occurred while sending SOAP Request to Server");
             e.printStackTrace();
         }
+        
     }
 
 

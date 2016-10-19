@@ -76,9 +76,9 @@ public class restJavaOperation {
             String email = jDriverObj.getString("email");
             Driver currDriver = new Driver(lastName, firstName, licenseNumber, address, email);
 
-            System.out.println("vallidTill==>" +  jObj.getLong("validTill"));
-            System.out.println("registrationNumber==>" +jObj.getString("registrationNumber"));
-            System.out.println("rID==>" +jObj.getInt("rID"));
+//            System.out.println("vallidTill==>" +  jObj.getLong("validTill"));
+//            System.out.println("registrationNumber==>" +jObj.getString("registrationNumber"));
+//            System.out.println("rID==>" +jObj.getInt("rID"));
             Date date = new Date();
             date.setTime(jObj.getLong("validTill"));
 
