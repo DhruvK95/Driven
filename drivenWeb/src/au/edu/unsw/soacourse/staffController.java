@@ -86,6 +86,16 @@ public class staffController extends HttpServlet {
 			}
 			
         	request.setAttribute("notices", rN1);
+        	ArrayList<RenewalNotice> rN2 = restClient.getRenewalNoticeOfficer();		
+			for(RenewalNotice r : rN){
+
+				if(!r.getStatus().equals("requested")){
+					rN1.add(r);
+				}
+	
+			}
+			
+        	request.setAttribute("noticesNotAllowed", rN2);
 
             nextPage = "officerNotices.jsp";
 

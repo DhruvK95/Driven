@@ -8,8 +8,14 @@
 </head>
 <body>
 <%@ include file="navBar.html" %>
- 
-		<table class="table">
+ <div class="row">
+            <div class="col s12"><p></p></div>
+            <div class="col s12 m4 l2"><p></p></div>
+            <div class="col s12 m4 l8"><p></p>
+	<div class="chip">
+			driver create payment allowed
+    <i class="close material-icons">close</i>
+  </div>		<table class="table">
 		<thead>
 			<tr>
 				<th>
@@ -67,6 +73,60 @@
 	        				        </tr>	
 	        
 			</c:forEach>
+			
+		</tbody>
+		
+	</table>
+	<div class="chip">
+			driver create payment not allowed
+    <i class="close material-icons">close</i>
+  </div>
+	
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					[Details]
+				</th>
+				<th>
+					[Status]
+				</th>
+				<th>
+					[Address Check]
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${notices}" var="n">
+							<td>
+			
+			<tr>	
+		        <td>Rid: <c:out value="${n.getRid()}"/> Nid: <c:out value="${n.getNid()}"/></td>
+		        
+		        <td>Link: <c:out value="${n.getStatus()}"/></td>
+		        
+		       
+		        <%-- 
+		        Status: <c:out value="${n.RenewalNoticeResponse.renewalNotice.status}"/>  
+		        nid: <c:out value="${n.RenewalNoticeResponse.renewalNotice.nid}"/> 
+		        rid: <c:out value="${n.renewalNotice.rid}"/> --%> 
+		        
+		    
+				<td>
+				 <form class="col s12" action="officerhome" method="post">
+			        <input type="hidden" name="rid" value="${n.getRid()}" /> 
+		        	<input type="hidden" name="action" value="getRegistrationsDetails" />
+		            <br>
+		            
+		            <button class="btn waves-effect waves-light" type="submit" name="action">Details
+		                <i class="material-icons right">input</i>
+		            </button>
+		        </form>
+		        
+	        	</td>
+	        				        </tr>	
+	        
+			</c:forEach>
 					
 
 
@@ -77,7 +137,8 @@
 
 
 
-
+ </div>
+                                        <div class="col s12 m4 l2"><p></p></div>
 
 
 
