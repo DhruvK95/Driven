@@ -70,8 +70,16 @@ To change this template use File | Settings | File Templates.
                     </table>
 
                     <c:if test="${requestScope.notice.getStatus() != 'created'}">
-                        <h2 class"header" align="center" style="color: #ee6e73;font-weight: 300;">
-                            Notice status: ${requestScope.notice.getStatus()}</h2>
+                        <c:choose>
+                            <c:when test="${not empty requestScope.reason}">
+                                <h2 class="header" align="center" style="color: #ee6e73;font-weight: 300;">
+                                Notice status: Rejected</h2>
+                            </c:when>
+                            <c:otherwise>
+                                <h2 class="header" align="center" style="color: #ee6e73;font-weight: 300;">
+                                    Notice status: ${requestScope.notice.getStatus()}</h2>
+                            </c:otherwise>
+                        </c:choose>
                     </c:if>
 
                     <c:choose>
@@ -115,7 +123,16 @@ To change this template use File | Settings | File Templates.
 
                                 <c:when test="${requestScope.notice.getStatus() == 'under-review'}">
                                 </c:when>
-                                <c:when test="${not empty requestScope.reason}"> ${requestScope.reason}
+                                <c:when test="${not empty requestScope.reason}">
+                                <p style="font-size: 20;">Reason: ${requestScope.reason}</p>
+                                    <form class="col s3" action="workflowController" method="post">
+                                        <p class="flow-text">&nbsp;</p>
+                                        <input type="hidden" name="action" value="cancel" />
+                                        <button class="btn waves-effect waves-light btn-large" style="background-color: #b5665f" type="submit"
+                                                name="action">Cancel
+                                            <i class="material-icons right">error</i>
+                                        </button>
+                                    </form>
                                 </c:when>
                                 <c:when test="${requestScope.notice.getStatus() == 'cancelled'}"> CANCEL BUTTON
                                 </c:when>
