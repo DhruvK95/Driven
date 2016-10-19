@@ -16,17 +16,9 @@
     <div class="col s12"><p></p></div>
     <div class="col s12 m4 l2"><p></p></div>
     <div class="col s12 m4 l8"><p></p>
-        <h1 align="center">Hi ${requestScope.fname} ${requestScope.lname}, Welcome to Driven</h1>
+        <h1 align="center">Hi ${requestScope.registration.getDriver().getFirstName()} ${requestScope.registration.getDriver().getLastName()}, Welcome to Driven</h1>
         <hr>
-        <b>Please choose an action to proceed with for your RegistrationNumber:
-            ${requestScope.RegistrationNumber}</b>
-        <form class="col s12" action="workflowController" method="post">
-            <input type="hidden" name="action" value="vaaaaaaa" />
-
-            <button class="btn waves-effect waves-light" type="submit" name="action">Cancel
-                <i class="material-icons right">error</i>
-            </button>
-        </form>
+        <blockquote> Current Registration details: </blockquote>
 
         <br>
 
@@ -76,21 +68,40 @@
         </table>
 
 
-        <%--${requestScope.registration.getRegistrationNumber()}--%>
-
         <form class="col s12" action="workflowController" method="post">
-        <div class="row">
-                    <div class="input-field col s6">
-                <input value="${requestScope.address}" id="address" name="address" type="text" class="validate">
-                <label class="active" for="address">Address</label>
-            </div><br>
-        </div>
+            <p class="flow-text">Update Address</p>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input value="${requestScope.registration.getDriver().getAddress()}" id="address" name="address" type="text" class="validate">
+                    <label class="active" for="address">Address</label>
+                </div>
+            </div>
+            <input type="hidden" name="action" value="update" />
+            <button class="btn waves-effect waves-light" style="background-color: #417ab5" type="submit"
+                    name="action">Update
+                <i class="material-icons right">present_to_all</i>
+            </button>
+        </form>
+        <hr>
+
+        <form class="col s4" action="workflowController" method="post">
+            <p class="flow-text">Other Actions</p>
             <input type="hidden" name="action" value="process" />
-            <br>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Process
+            <button class="btn waves-effect waves-light btn-large" type="submit"
+                    name="action">Lodge process request
                 <i class="material-icons right">input</i>
             </button>
         </form>
+
+        <form class="col s3" action="workflowController" method="post">
+            <p class="flow-text">&nbsp;</p>
+            <input type="hidden" name="action" value="cancel" />
+            <button class="btn waves-effect waves-light btn-large" style="background-color: #b5665f" type="submit"
+                    name="action">Cancel
+                <i class="material-icons right">error</i>
+            </button>
+        </form>
+
     </div>
     <div class="col s12 m4 l2"><p></p></div>
 </body>

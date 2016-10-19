@@ -10,6 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import restClient.json.*;
 import restClient.*;
+import restClient.Registration;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
 
 /**
  * Servlet implementation class workflowController
@@ -61,6 +67,16 @@ public class workflowController extends HttpServlet {
 		//restClient.postPayments("1", "200");
 		if (action == null) {
 
+			Integer nid = null;
+			Cookie[] cookies = request.getCookies();
+			for (int i = 0; i < cookies.length; i++) {
+				String name = cookies[i].getName();
+				String value = cookies[i].getValue();
+				if (cookies[i].getName().equals("nid")) {
+					nid = Integer.parseInt(cookies[i].getValue());
+				}
+			}
+
 			if (code != null) { // The driver just arrived from the email
 				System.out.println("Code found in GET request " + code);
 				// Check the code
@@ -74,11 +90,16 @@ public class workflowController extends HttpServlet {
 					// Use RID with 'http://localhost:8080/DrivenRest/driven/registrations/?rid=' to get Driver
 					Registration registration = restClient.getRegistrationDriver(renewalNotice.getRid());
 					// Set params for JSP to access
-					request.setAttribute("fname", registration.getDriver().getFirstName());
-					request.setAttribute("lname", registration.getDriver().getLastName());
 					request.setAttribute("registration", registration);
-					request.setAttribute("RegistrationNumber", registration.getRegistrationNumber());
-					request.setAttribute("address", registration.getDriver().getAddress());
+
+					Cookie rid = new Cookie("rid", registration.getrID().toString());
+					Cookie nid1 = new Cookie("nid", renewalNotice.getNid().toString());
+					// Set expiry date after 24 Hrs for both the cookies.
+					rid.setMaxAge(60*60*24);
+					nid1.setMaxAge(60*60*24);
+					// Add to response
+					response.addCookie(rid);
+					response.addCookie(nid1);
 
 					nextPage = "driverHome.jsp";
 				} else {
@@ -86,20 +107,72 @@ public class workflowController extends HttpServlet {
 					System.out.println("Correct code NOT found");
 					nextPage = "Unauthorized.jsp";
 				}
+			} else if (nid != null) {
+				// Cookies found
+				System.out.println("Cookie found ");
+				RenewalNotice renewalNotice = restClient.getRenewalNoticeDriver(nid);
+				Registration registration = restClient.getRegistrationDriver(renewalNotice.getRid());
+				request.setAttribute("registration", registration);
+				nextPage = "driverHome.jsp";
+
 			} else {
 				System.out.println("No Code found in GET request");
 				// Return error...
+				nextPage = "ERROR.jsp";
 			}
 		} else {
 
 			if (action.equals("cancel")) {
 				System.out.println("cancel requested by the driver...");
-				nextPage = "Unauthorized.jsp"; //TODO: Change to new JSP
-			} else if (action.equals("process")) {
-				System.out.println("process requested by the driver...");
-				// Get the address string that was passed in
 
-				nextPage = "Unauthorized.jsp"; //TODO: Change to new JSP
+				Integer nid = null;
+				Cookie[] cookies = request.getCookies();
+				for (int i = 0; i < cookies.length; i++) {
+					String name = cookies[i].getName();
+					String value = cookies[i].getValue();
+					if (cookies[i].getName().equals("nid")) {
+						nid = Integer.parseInt(cookies[i].getValue());
+					}
+				}
+				System.out.println("Nid found " + nid);
+				if (nid != null) {
+					Integer respCode = restClient.deleteNotice(nid.toString());
+					if (respCode.equals(200)) {
+						nextPage = "Cancelled.jsp";
+					} else {
+						nextPage = "ERROR.jsp";
+					}
+				} else {
+					nextPage = "ERROR.jsp";
+				}
+			} else if (action.equals("update")) {
+				System.out.println("Update requested by the driver...");
+				// Get the address string that was passed in
+				String newAddress = request.getParameter("address");
+				Integer rid = null;
+				Cookie[] cookies = request.getCookies();
+				for (int i = 0; i < cookies.length; i++) {
+					String name = cookies[i].getName();
+					String value = cookies[i].getValue();
+					if (cookies[i].getName().equals("rid")) {
+						rid = Integer.parseInt(cookies[i].getValue());
+					}
+				}
+				Registration r = restClient.getRegistrationDriver(rid);
+				if (!rid.equals(null)) {
+					Integer respCode = restClient.putRegistration(rid.toString(), r.getDriver().getEmail(), newAddress);
+					if (respCode.equals(200)) {
+						System.out.println("Updated!");
+						Driver d = new Driver(r.getDriver().getLastName(), r.getDriver().getFirstName(), r.getDriver
+								().getLicenseNumber(), newAddress, r.getDriver().getEmail());
+						r.setDriver(d);
+						request.setAttribute("registration", r);
+						nextPage = "driverHome.jsp";
+					} else {
+						nextPage = "ERROR.jsp";
+					}
+
+				}
 			}
 		}
 
