@@ -16,20 +16,21 @@
             <div class="col s12 m4 l8"><p></p>
             
             
-        <div class="col s12 m6">
+
+      
+	 <c:choose>
+	  <c:when test="${exact}">
+	     <div class="col s12 m6">
           <div class="card blue-grey darken-1">
             <div class="card-content white-text">
-              <span class="card-title">Card Title</span>
+              <span class="card-title">		ExactMatch found</span>
                  <p>    <c:out value="${message}"/></p>
             </div>
            
           </div>
         </div>
-      </div>
-	 <c:choose>
-	  <c:when test="${exact}">
 	<form class="col s12" action="officerhome" method="post">
-		ExactMatch found
+		     
 		        	<input type="hidden" name="action" value="createPayment" />
 		            <br>
 		             <p class="flow-text">Create Payment</p>
@@ -47,9 +48,18 @@
 			        </form>
 			          </c:when>
 	  <c:otherwise>
+	   <div class="col s12 m6">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">		ExactMatch Not found</span>
+                 <p>    <c:out value="${message}"/></p>
+            </div>
+           
+          </div>
+          </div>	
 					<form class="col s12" action="officerhome" method="post">
-					ExactMatch Not found
-		        	<input type="hidden" name="action" value="rejectPayment" />
+       
+        	        	<input type="hidden" name="action" value="rejectPayment" />
 		        	
 		            <br>
 		             <p class="flow-text">Reject Payment</p>

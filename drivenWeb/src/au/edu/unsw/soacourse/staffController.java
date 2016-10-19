@@ -123,7 +123,8 @@ public class staffController extends HttpServlet {
 //        	System.out.print(">>>>>>>>>>>CREATE WITH:" + request.getParameter("amount") + " NID:" + request.getParameter("nid") +" <<<<<<<<<<<<<<<<<<");
 
         	restClient.postPayments(nid, request.getParameter("amount").toString());
-            
+        	restClient.putNoticesOfficer(nid, "accepted");
+
         	nextPage = "officerHome.jsp";
 
         	
