@@ -1,6 +1,8 @@
 package au.edu.unsw.soacourse;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -257,8 +259,13 @@ public class workflowController extends HttpServlet {
 					String ccv = request.getParameter("ccv");
 					System.out.println("Putting payment....");
 					restClient.putPayments(pid.toString(), ccn, ccName, ccv);
-
-					nextPage = "driverHome.jsp";
+					Registration r = restClient.getRegistrationDriver(rid);
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(r.getValidTill());
+					cal.add(Calendar.YEAR, 1);
+					Date vdate = cal.getTime();
+					request.setAttribute("vdate", vdate);
+					nextPage = "paid.jsp";
 				} else {
 					System.out.println("pid was null");
 					nextPage = "ERROR.jsp";
