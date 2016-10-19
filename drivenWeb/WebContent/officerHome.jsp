@@ -21,20 +21,22 @@
 		<thead>
 			<tr>
 				<th>
-					[HEADER]
+					[Details]
 				</th>
 				<th>
-					[HEADER]
+					[Address Check]
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			
-		<tr>	
+		
 			<c:forEach items="${notices}" var="n">
-				<td>
+							<td>
 			
-		        <td>Link: <c:out value="${n.RenewalNoticeResponse.link}"/><%-- 
+			<tr>	
+		        <td>Link: <c:out value="${n.getRenewalNoticeResponse().getLink()}"/>
+		        <%-- 
 		        Status: <c:out value="${n.RenewalNoticeResponse.renewalNotice.status}"/>  
 		        nid: <c:out value="${n.RenewalNoticeResponse.renewalNotice.nid}"/> 
 		        rid: <c:out value="${n.renewalNotice.rid}"/> --%> 
@@ -54,8 +56,8 @@
 	        	</td>
 	        
 			</c:forEach>
+				        </tr>	
 					
-		</tr>	
 
 
 

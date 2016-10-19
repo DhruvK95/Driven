@@ -56,8 +56,12 @@ public class staffController extends HttpServlet {
 		
 		for(RenewalNoticeResponse r : rN){
 			registrationAddressType rA = new registrationAddressType();
+			System.out.println("DDDDD" + restClient.getRegistrationDriver(r.getRenewalNotice().getRid()).getDriver().getAddress());
+			System.out.println("DDDDDDD" + r.getLink());
+
 			rA.setRegistration(restClient.getRegistrationDriver(r.getRenewalNotice().getRid()));
 			rA.setRenewalNoticeResponse(r);
+			rAT.add(rA);
 
 		}
 		
