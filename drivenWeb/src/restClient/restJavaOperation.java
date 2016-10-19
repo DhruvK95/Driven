@@ -298,6 +298,7 @@ public class restJavaOperation {
         ArrayList<RenewalNoticeResponse> rN = new ArrayList<RenewalNoticeResponse>();
 
         Response s = drivenClient.post(form);
+        if(s.getStatus()==200){
     	//JSONObject jObj = new JSONObject();
         JSONArray jArrObj = new JSONArray(s.readEntity(String.class)); 
         
@@ -309,7 +310,10 @@ public class restJavaOperation {
    
             rN.add(rNRi);
         }
-        return rN;
+        	return rN;
+        }else{
+        	return null;
+        }
 
     
     }

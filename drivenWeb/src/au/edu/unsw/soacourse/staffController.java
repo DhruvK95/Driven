@@ -1,12 +1,15 @@
 package au.edu.unsw.soacourse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import restClient.json.*;
 import restClient.*;
 
@@ -46,8 +49,24 @@ public class staffController extends HttpServlet {
         String nextPage = "";
         String action = request.getParameter("action");
         System.out.println("Action was: " + action);
+		restJavaOperation restClient = new restJavaOperation(); // Init.
+		
+		ArrayList<RenewalNoticeResponse> rN = restClient.postNotices();		
+		ArrayList<registrationAddressType> rAT = new ArrayList<registrationAddressType>();
+		
+		for(RenewalNoticeResponse r : rN){
+			registrationAddressType rA = new registrationAddressType();
+			rA.setRegistration(restClient.getRegistrationDriver(r.getRenewalNotice().getRid()));
+			rA.setRenewalNoticeResponse(r);
 
+		}
+		
         if (action == null) {
+        	
+        	request.setAttribute("notices", rAT);
+                	
+        	
+        	
             nextPage = "officerHome.jsp";
         }
 
