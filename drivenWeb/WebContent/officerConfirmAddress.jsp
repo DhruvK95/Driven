@@ -37,7 +37,8 @@
                                         <div class="row">
                                             <div class="input-field col s6">
                                                 <input value="" id="amount" name="amount" type="number" class="validate">
-                                                    <label class="active" for="amount">Amount for Payment</label>
+                                                    <label class="active" for="amount" required>Amount for
+                                                        Payment</label>
                                                 </div>
                                             </div>
                                             
@@ -66,7 +67,7 @@
                                         <div class="row">
                                             <div class="input-field col s6">
                                                 <input value="" id="rejection" name="rejection" type="text" class="validate">
-                                                    <label class="active" for="address">Reason for Rejections</label>
+                                                    <label class="active" for="address" required>Reason for Rejections</label>
                                                 </div>
                                             </div>
                                                                  

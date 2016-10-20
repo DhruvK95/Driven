@@ -8,26 +8,27 @@
     <script type="text/javascript" src="http://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 </head>
 <body>
+<!--asdfasd  -->
 <%@ include file="navBar.html" %>
  <div class="row">
             <div class="col s12"><p></p></div>
             <div class="col s12 m4 l2"><p></p></div>
             <div class="col s12 m4 l8"><p></p>
 	<div class="chip">
-			driver create payment allowed
+			autocheck address allowed
     <i class="close material-icons">close</i>
-  </div>		<table class="table">
+  </div>		<table class="table striped">
   
 		<thead>
 			<tr>
 				<th>
-					[Details]
+					Details
 				</th>
 				<th>
-					[Status]
+					Status
 				</th>
 				<th>
-					[Address Check]
+					Address Check
 				</th>
 			</tr>
 		</thead>
@@ -35,12 +36,11 @@
 			
 		
 			<c:forEach items="${notices}" var="n">
-							<td>
 			
 			<tr>	
 		        <td>Rid: <c:out value="${n.getRid()}"/> Nid: <c:out value="${n.getNid()}"/></td>
 		        
-		        <td>Link: <c:out value="${n.getStatus()}"/></td>
+		        <td><c:out value="${n.getStatus()}"/></td>
 		        
 		       
 		        <%-- 
@@ -79,33 +79,33 @@
 		</tbody>
 		
 	</table>
+	<br><br>
 	<div class="chip">
-			driver create payment not allowed
+			driver autocheck not allowed
     <i class="close material-icons">close</i>
   </div>
 	
-	<table class="sortable">
+	<table class="sortable striped">
 		<thead>
 			<tr>
 				<th>
-					[Details]
+					Details
 				</th>
 				<th>
-					[Status]
+					Status
 				</th>
 				<th>
-					[Address Check]
+					Address Check
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${noticesNotAllowed}" var="n">
-							<td>
 			
 			<tr>	
 		        <td>Rid: <c:out value="${n.getRid()}"/> Nid: <c:out value="${n.getNid()}"/></td>
 		        
-		        <td>Link: <c:out value="${n.getStatus()}"/></td>
+		        <td><c:out value="${n.getStatus()}"/></td>
 		        
 		       
 		        <%-- 

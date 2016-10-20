@@ -11,6 +11,7 @@ public class Registration {
     private Date validTill;
     private Driver driver;
 
+
     @Override
     public String toString() {
         return "Registration{" +

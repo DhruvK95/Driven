@@ -50,7 +50,8 @@
                       <sourceRoot>src/main/java-generated</sourceRoot>
                       <wsdlOptions>
                           <wsdlOption>
-                              <wsdl>${basedir}/src/main/resources/wsdl/AddressService.wsdl</wsdl>
+                              <wsdl>${basedir}/src/main/resources/wsdl/ExactMatchService.wsdl</wsdl>
+                              <wsdl>${basedir}/src/main/resources/wsdl/SimilarMatchService.wsdl</wsdl>
                           </wsdlOption>
                       </wsdlOptions>
                   </configuration>
