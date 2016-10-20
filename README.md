@@ -1,5 +1,7 @@
 # Driven
 COMP9322 - Assignment 2 RMS Car Registration Service
+![alt tag](ss2.png)
+![alt tag](ss1.png)
 
 ## BPEL services setup
 1. Import `rmsService` into Eclipse as a Maven project
